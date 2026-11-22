@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookWebCATC | Librarian Physical Circulation, Catalog & Library Card Registry</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --catc-navy: #002366;
+            --catc-royal: #0047AB;
+            --catc-sky: #0099FF;
+            --catc-gold: #D4AF37;
+            --catc-slate: #0F172A;
+        }
+
+        body {
+            background:
+                    linear-gradient(135deg, rgba(0, 18, 52, 0.78), rgba(0, 44, 118, 0.72)),
+                    url('/images/catc-bg.jpg') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #102A43;
+        }
+
+        .catc-navbar {
+            background: rgba(0, 23, 68, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--catc-gold);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+        }
+
+        .side-brand-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid var(--catc-gold);
+            background: #FFFFFF;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            box-shadow: 0 16px 40px rgba(0, 15, 45, 0.25);
+        }
+
+        .hero-banner {
+            background: linear-gradient(120deg, rgba(0, 35, 102, 0.96), rgba(0, 71, 171, 0.92));
+            color: #FFFFFF;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 18px 42px rgba(0, 12, 36, 0.35);
+        }
+
+        .hero-badge-box {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 16px;
+            padding: 14px 18px;
+        }
+
+        .hero-badge-box img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid var(--catc-gold);
+            background: #FFFFFF;
+        }
+
+        .nav-tabs .nav-link {
+            color: #334155;
+            font-weight: 600;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 12px 18px;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: var(--catc-navy);
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--catc-navy);
+            background: transparent;
+            border-bottom: 3px solid var(--catc-gold);
+        }
+
+        .desk-form-card {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-top: 4px solid var(--catc-navy);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .registry-file-box {
+            background: #F8FAFC;
+            border: 1px solid #CBD5E1;
+            border-left: 5px solid var(--catc-gold);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        /* CATC Official Library Card Design */
+        .catc-library-card {
+            background: linear-gradient(145deg, #FFFFFF 0%, #F1F5F9 100%);
+            border: 2.5px solid var(--catc-navy);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 14px 30px rgba(0, 23, 68, 0.22);
+            position: relative;
+        }
+
+        .catc-card-header {
+            background: linear-gradient(120deg, var(--catc-navy), var(--catc-royal));
+            color: #FFFFFF;
+            padding: 12px 18px;
+            border-bottom: 3px solid var(--catc-gold);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .catc-card-header img {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            border: 2px solid var(--catc-gold);
+            background: #FFFFFF;
+            object-fit: cover;
+        }
+
+        .catc-card-body {
+            padding: 18px 20px;
+            color: #0F172A;
+        }
+
+        .catc-card-photo-box {
+            width: 82px;
+            height: 92px;
+            border-radius: 12px;
+            border: 2px solid var(--catc-navy);
+            background: #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--catc-navy);
+            flex-shrink: 0;
+        }
+
+        .catc-card-barcode {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 3px;
+            font-weight: 800;
+            background: #0F172A;
+            color: #FFFFFF;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            display: inline-block;
+        }
+
+        .catc-card-footer {
+            background: #002366;
+            color: #FFFFFF;
+            padding: 8px 18px;
+            font-size: 0.74rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid var(--catc-gold);
+        }
+
+        .table thead th {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #475569;
+            white-space: nowrap;
+        }
+
+        .table tbody td {
+            vertical-align: middle;
+            font-size: 0.9rem;
+        }
+
+        .btn-gold {
+            background: var(--catc-gold);
+            color: #0F172A;
+            font-weight: 700;
+            border: none;
+        }
+
+        .btn-gold:hover {
+            background: #C29B27;
+            color: #0F172A;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableLibraryCardArea, #printableLibraryCardArea * {
+                visibility: visible;
+            }
+            #printableLibraryCardArea {
+                position: fixed;
+                left: 50%;
+                top: 24px;
+                transform: translateX(-50%);
+                width: 440px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark catc-navbar sticky-top px-3 px-lg-5 py-2">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center gap-3 m-0" href="#">
+            <img src="/images/catc-logo.jpg" alt="CAT College Logo" class="side-brand-logo">
+            <div>
+                <div class="fw-bold lh-1">BookWebCATC &bull; Librarian Console</div>
+                <small class="text-info" style="font-size: 0.74rem;">Physical Borrowing Desk, Catalog Publishing &amp; Library Card Registry</small>
+            </div>
+        </a>
+
+        <div class="d-flex align-items-center gap-3 text-white mt-2 mt-lg-0">
+            <div class="text-end d-none d-md-block">
+                <div class="small fw-bold" id="librarianNameNav">Librarian Account</div>
+                <div class="text-info" style="font-size: 0.72rem;" id="librarianMetaNav">Head Librarian &bull; CATC Main Library</div>
+            </div>
+            <span class="badge bg-warning text-dark fw-bold px-3 py-2">LIBRARIAN</span>
+            <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="logoutLibrarian()" title="Logout">
+                <i class="bi bi-box-arrow-right me-1"></i> Logout
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-4 py-lg-5">
+    <!-- Hero Header -->
+    <div class="hero-banner p-4 p-lg-5 mb-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <span class="badge bg-warning text-dark fw-bold mb-2 px-3 py-1 rounded-pill">
+                    CAT COLLEGE PHYSICAL LIBRARY CIRCULATION &amp; MEMBER REGISTRY
+                </span>
+                <h2 class="fw-bold mb-2">Librarian Desk, Catalog &amp; Card File</h2>
+                <p class="text-light opacity-85 mb-0">
+                    Record walk-in physical borrowings with return dates, switch returned books back to <strong>AVAILABLE</strong>, post or update catalog books, and issue/print official CATC Library Cards.
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <div class="hero-badge-box d-flex align-items-center gap-3">
+                    <img src="/images/catc-logo.jpg" alt="CATC Emblem">
+                    <div>
+                        <div class="fw-bold text-white">Walk-In Circulation Desk</div>
+                        <div class="small text-info">Physical Borrowing &amp; Returns</div>
+                        <div class="small text-light opacity-75">Card Registry &amp; Catalog Control</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary KPI Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="glass-panel p-3 h-100">
+                <div class="small text-muted fw-semibold">Total Catalog Books</div>
+                <div class="fs-3 fw-bold text-primary" id="kpiTotalBooks">0</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="glass-panel p-3 h-100">
+                <div class="small text-muted fw-semibold">Available on Shelf</div>
+                <div class="fs-3 fw-bold text-success" id="kpiAvailable">0</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="glass-panel p-3 h-100">
+                <div class="small text-muted fw-semibold">Checked Out (Physical)</div>
+                <div class="fs-3 fw-bold text-warning" id="kpiCheckedOut">0</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="glass-panel p-3 h-100">
+                <div class="small text-muted fw-semibold">Registered Card Holders</div>
+                <div class="fs-3 fw-bold text-info" id="kpiCardsIssued">0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Banner -->
+    <div id="alertBox" class="alert alert-success alert-dismissible fade show d-none rounded-4 shadow-sm mb-4" role="alert">
+        <span id="alertMessage"></span>
+        <button type="button" class="btn-close" onclick="hideAlert()"></button>
+    </div>
+
+    <!-- Main Workspace Tabs -->
+    <div class="glass-panel p-3 p-md-4">
+        <ul class="nav nav-tabs mb-4" id="librarianTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-circulation" data-bs-toggle="tab" data-bs-target="#pane-circulation" type="button" role="tab">
+                    <i class="bi bi-journal-arrow-up me-2"></i>Physical Borrowing &amp; Returns
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-catalog" data-bs-toggle="tab" data-bs-target="#pane-catalog" type="button" role="tab">
+                    <i class="bi bi-book-half me-2"></i>Post &amp; Update Book Catalog
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-accounts" data-bs-toggle="tab" data-bs-target="#pane-accounts" type="button" role="tab">
+                    <i class="bi bi-person-badge-fill me-2"></i>Student Accounts &amp; Library Card File
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- TAB 1: PHYSICAL BORROWING DESK FORM & RETURN LOG -->
+            <div class="tab-pane fade show active" id="pane-circulation" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="desk-form-card h-100">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h5 class="fw-bold text-primary mb-0">Physical Borrowing Form</h5>
+                                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Walk-In Desk</span>
+                            </div>
+                            <p class="small text-muted mb-3">
+                                Fill out when a student comes to the library desk to borrow a physical book.
+                            </p>
+
+                            <form id="physicalBorrowForm" onsubmit="recordPhysicalBorrow(event)">
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold">Select Registered Card Holder (Optional)</label>
+                                    <select id="quickStudentPicker" class="form-select form-select-sm" onchange="autofillBorrowerFromDirectory()">
+                                        <option value="">-- Enter manually or select registered student --</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold">Student Full Name <span class="text-danger">*</span></label>
+                                    <input type="text" id="borrowStudentName" class="form-control form-control-sm" placeholder="e.g. Jay Lauro Basquiñas" required>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold">Student No. / Library Card ID <span class="text-danger">*</span></label>
+                                    <input type="text" id="borrowStudentNo" class="form-control form-control-sm" placeholder="e.g. C24-000111" required>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold">Book Borrowed (Available Only) <span class="text-danger">*</span></label>
+                                    <select id="borrowBookSelect" class="form-select form-select-sm" required></select>
+                                </div>
+
+                                <div class="row g-2 mb-3">
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">Date Borrowed <span class="text-danger">*</span></label>
+                                        <input type="date" id="borrowDate" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">Date of Return <span class="text-danger">*</span></label>
+                                        <input type="date" id="returnDueDate" class="form-control form-control-sm" required>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-gold w-100 rounded-pill py-2">
+                                    <i class="bi bi-check2-square me-1"></i> Record Physical Borrow
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                            <div>
+                                <h5 class="fw-bold text-primary mb-0">Physical Borrowing &amp; Return Log</h5>
+                                <small class="text-muted">Click <strong>Mark Returned</strong> when returned so the book updates from <strong>CHECKED OUT</strong> to <strong>AVAILABLE</strong></small>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <input type="text" id="logSearchInput" class="form-control form-control-sm" placeholder="Search borrower, student no., book..." oninput="renderBorrowLog()">
+                                <select id="logStatusFilter" class="form-select form-select-sm" style="width: 165px;" onchange="renderBorrowLog()">
+                                    <option value="">All Records</option>
+                                    <option value="CHECKED OUT">Checked Out</option>
+                                    <option value="RETURNED">Returned</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                <tr>
+                                    <th>Student Name &amp; No.</th>
+                                    <th>Book Borrowed</th>
+                                    <th>Date Borrowed</th>
+                                    <th>Date of Return</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="borrowLogTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: POST NEW BOOKS & UPDATE CATALOG -->
+            <div class="tab-pane fade" id="pane-catalog" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="desk-form-card h-100">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h5 class="fw-bold text-primary mb-0" id="catalogFormTitle">Post New Book to Catalog</h5>
+                                <span class="badge bg-warning text-dark">Librarian Authority</span>
+                            </div>
+                            <p class="small text-muted mb-3" id="catalogFormSubtitle">
+                                Post a new book into the CATC catalog or click <strong>Edit</strong> on any book to update its details.
+                            </p>
+
+                            <form id="catalogBookForm" onsubmit="saveCatalogBook(event)">
+                                <input type="hidden" id="editBookId" value="">
+
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">Accession Code <span class="text-danger">*</span></label>
+                                        <input type="text" id="bookAccession" class="form-control form-control-sm" placeholder="CATC-BK-061" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">ISBN <span class="text-danger">*</span></label>
+                                        <input type="text" id="bookIsbn" class="form-control form-control-sm" placeholder="978-1-0061-01" required>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold">Book Title <span class="text-danger">*</span></label>
+                                    <input type="text" id="bookTitle" class="form-control form-control-sm" placeholder="e.g. Modern Embedded Systems" required>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold">Author(s) <span class="text-danger">*</span></label>
+                                    <input type="text" id="bookAuthor" class="form-control form-control-sm" placeholder="e.g. Elecia White" required>
+                                </div>
+
+                                <div class="row g-2 mb-2">
+                                    <div class="col-7">
+                                        <label class="form-label small fw-semibold">Department <span class="text-danger">*</span></label>
+                                        <select id="bookCategory" class="form-select form-select-sm" required>
+                                            <option value="Computer Science & IT">Computer Science &amp; IT</option>
+                                            <option value="Business & Accountancy">Business &amp; Accountancy</option>
+                                            <option value="Engineering & Math">Engineering &amp; Math</option>
+                                            <option value="Humanities & Literature">Humanities &amp; Literature</option>
+                                            <option value="Science & Health">Science &amp; Health</option>
+                                            <option value="Reference & Dictionaries">Reference &amp; Dictionaries</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-5">
+                                        <label class="form-label small fw-semibold">Shelf Status <span class="text-danger">*</span></label>
+                                        <select id="bookStatus" class="form-select form-select-sm" required>
+                                            <option value="AVAILABLE">AVAILABLE</option>
+                                            <option value="CHECKED OUT">CHECKED OUT</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold">Edition / Course Tag <span class="text-danger">*</span></label>
+                                    <input type="text" id="bookEditionTag" class="form-control form-control-sm" placeholder="e.g. EMBEDDED C / 2ND ED" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label small fw-semibold">Short Catalog Description <span class="text-danger">*</span></label>
+                                    <textarea id="bookDescription" class="form-control form-control-sm" rows="2" placeholder="Brief overview of the book..." required></textarea>
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary btn-sm flex-grow-1 rounded-pill py-2 fw-semibold" id="saveBookBtn">
+                                        <i class="bi bi-plus-circle me-1"></i> Post Book to Catalog
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 d-none" id="cancelEditBookBtn" onclick="resetCatalogForm()">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="row g-2 mb-3 align-items-center">
+                            <div class="col-md-5">
+                                <input type="text" id="catalogSearchInput" class="form-control form-control-sm"
+                                       placeholder="Search catalog by title, author, accession, ISBN..." oninput="renderCatalogTable()">
+                            </div>
+                            <div class="col-md-4">
+                                <select id="catalogDeptFilter" class="form-select form-select-sm" onchange="renderCatalogTable()">
+                                    <option value="">All Departments</option>
+                                    <option value="Computer Science & IT">Computer Science &amp; IT</option>
+                                    <option value="Business & Accountancy">Business &amp; Accountancy</option>
+                                    <option value="Engineering & Math">Engineering &amp; Math</option>
+                                    <option value="Humanities & Literature">Humanities &amp; Literature</option>
+                                    <option value="Science & Health">Science &amp; Health</option>
+                                    <option value="Reference & Dictionaries">Reference &amp; Dictionaries</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="catalogStatusFilter" class="form-select form-select-sm" onchange="renderCatalogTable()">
+                                    <option value="">All Statuses</option>
+                                    <option value="AVAILABLE">AVAILABLE</option>
+                                    <option value="CHECKED OUT">CHECKED OUT</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive" style="max-height: 540px; overflow-y: auto;">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light sticky-top">
+                                <tr>
+                                    <th>Accession</th>
+                                    <th>Book Title &amp; Author</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Catalog Controls</th>
+                                </tr>
+                                </thead>
+                                <tbody id="catalogTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: CREATE STUDENT ACCOUNT, ISSUE LIBRARY CARD & FIXED CARD REGISTRY FILE -->
+            <div class="tab-pane fade" id="pane-accounts" role="tabpanel">
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-5">
+                        <div class="desk-form-card h-100">
+                            <h5 class="fw-bold text-primary mb-1">Register Student &amp; Issue Library Card</h5>
+                            <p class="small text-muted mb-3">Create a student account and generate their official CATC Library Card.</p>
+
+                            <form id="createStudentAccountForm" onsubmit="createStudentAccountAndCard(event)">
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold">Student Full Name <span class="text-danger">*</span></label>
+                                    <input type="text" id="newAccFullName" class="form-control form-control-sm" placeholder="e.g. Maria Clara Santos" required>
+                                </div>
+
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">Portal Username <span class="text-danger">*</span></label>
+                                        <input type="text" id="newAccUsername" class="form-control form-control-sm" placeholder="e.g. msantos24" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">Student No. / Card ID <span class="text-danger">*</span></label>
+                                        <input type="text" id="newAccCardId" class="form-control form-control-sm" value="C24-000444" required>
+                                    </div>
+                                </div>
+
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">Course / Program <span class="text-danger">*</span></label>
+                                        <select id="newAccCourse" class="form-select form-select-sm" required>
+                                            <option value="BS Information Technology">BS Information Technology</option>
+                                            <option value="BS Computer Science">BS Computer Science</option>
+                                            <option value="BS Accountancy">BS Accountancy</option>
+                                            <option value="BS Business Administration">BS Business Administration</option>
+                                            <option value="BS Computer Engineering">BS Computer Engineering</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">Year Level <span class="text-danger">*</span></label>
+                                        <select id="newAccYear" class="form-select form-select-sm" required>
+                                            <option value="1st Year">1st Year</option>
+                                            <option value="2nd Year">2nd Year</option>
+                                            <option value="3rd Year">3rd Year</option>
+                                            <option value="4th Year">4th Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row g-2 mb-3">
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">Contact Number <span class="text-danger">*</span></label>
+                                        <input type="text" id="newAccContact" class="form-control form-control-sm" placeholder="+63 918 555 0199" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold">CATC Email <span class="text-danger">*</span></label>
+                                        <input type="email" id="newAccEmail" class="form-control form-control-sm" placeholder="m.santos@catc.edu.ph" required>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-100 rounded-pill fw-semibold">
+                                    <i class="bi bi-card-heading me-1"></i> Create Account &amp; Issue Library Card
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- CATC OFFICIAL LIBRARY CARD PREVIEW + PRINT -->
+                    <div class="col-lg-7">
+                        <div class="d-flex flex-column justify-content-between h-100">
+                            <div>
+                                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                                    <div>
+                                        <h5 class="fw-bold text-primary mb-0">Official CATC Library Card Preview</h5>
+                                        <small class="text-muted">Click <strong>View / Print Card</strong> on any student row below or print this card directly.</small>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-gold rounded-pill px-3" onclick="window.print()">
+                                        <i class="bi bi-printer-fill me-1"></i> Print Library Card
+                                    </button>
+                                </div>
+
+                                <div id="printableLibraryCardArea" class="mb-3">
+                                    <div class="catc-library-card">
+                                        <div class="catc-card-header">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <img src="/images/catc-logo.jpg" alt="CATC Logo">
+                                                <div>
+                                                    <div class="fw-bold lh-1" style="font-size: 0.92rem;">COMPUTER ARTS &amp; TECHNOLOGICAL COLLEGE</div>
+                                                    <small class="text-warning fw-semibold" style="font-size: 0.72rem;">OFFICIAL STUDENT LIBRARY CARD</small>
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-warning text-dark fw-bold">SY 2026–2027</span>
+                                        </div>
+
+                                        <div class="catc-card-body">
+                                            <div class="d-flex gap-3 align-items-center">
+                                                <div class="catc-card-photo-box">
+                                                    <i class="bi bi-person-fill" style="font-size: 2.3rem;"></i>
+                                                    <span style="font-size: 0.62rem; font-weight: 700;">CARD HOLDER</span>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <div class="small text-muted text-uppercase fw-bold" style="font-size: 0.68rem;">Student Name</div>
+                                                    <div class="fw-bold fs-5 text-dark lh-sm mb-1" id="previewCardHolder">Jay Lauro Basquiñas</div>
+                                                    <div class="small fw-semibold text-primary mb-2" id="previewCardCourseYear">BS Information Technology &bull; 3rd Year</div>
+                                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                                                        <div>
+                                                            <div class="small text-muted" style="font-size: 0.68rem;">LIBRARY CARD / STUDENT NO.</div>
+                                                            <span class="catc-card-barcode" id="previewCardNumber">C24-000111</span>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <div class="small text-muted" style="font-size: 0.68rem;">PORTAL USERNAME</div>
+                                                            <div class="fw-bold text-dark small" id="previewCardUser">@jaylauro</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="catc-card-footer">
+                                            <span id="previewCardIssued">Date Issued: 2026-11-22</span>
+                                            <span>Authorized by: <strong class="text-warning" id="previewCardLibrarian">CATC Head Librarian</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="small bg-light border rounded-3 p-3 text-muted">
+                                <strong class="text-dark"><i class="bi bi-file-earmark-lock2 me-1 text-primary"></i> Registry File Storage:</strong>
+                                Seeded student accounts from <code>/api/students</code> and newly registered card holders are saved in <code>catc_registered_students_registry_v1</code> and can be exported anytime as <code>.json</code>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Master Registered Students & Issued Library Card File -->
+                <div class="registry-file-box">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                        <div>
+                            <h5 class="fw-bold text-dark mb-0">
+                                <i class="bi bi-archive-fill text-warning me-2"></i>Registered Student Accounts &amp; Issued Library Card File
+                            </h5>
+                            <small class="text-muted">Fixed master directory of CATC student accounts and issued library cards</small>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <input type="text" id="registrySearchInput" class="form-control form-control-sm" style="width: 220px;"
+                                   placeholder="Search name, username, card no..." oninput="renderStudentRegistry()">
+                            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="exportRegistryJson()">
+                                <i class="bi bi-download me-1"></i> Export Registry (.json)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 bg-white rounded-3 overflow-hidden">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Card / Student No.</th>
+                                <th>Student Name</th>
+                                <th>Username</th>
+                                <th>Course &amp; Year</th>
+                                <th>Contact &amp; Email</th>
+                                <th>Card Status</th>
+                                <th class="text-end">Library Card &amp; Desk</th>
+                            </tr>
+                            </thead>
+                            <tbody id="studentRegistryTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const REGISTRY_STORAGE_KEY = "catc_registered_students_registry_v1";
+    const CATALOG_STORAGE_KEY = "catc_librarian_catalog_v1";
+    const BORROW_LOG_STORAGE_KEY = "catc_borrow_log_v1";
+
+    const defaultStudents = [
+        { fullName: "Jay Lauro Basquiñas", username: "jaylauro", cardId: "C24-000111", course: "BS Information Technology", yearLevel: "3rd Year", contact: "+63 917 555 0101", email: "jaylauro@catc.edu.ph", status: "ACTIVE", issuedDate: "2026-10-01" },
+        { fullName: "Sean Rashid Baliza", username: "seanbaliza", cardId: "C24-000222", course: "BS Information Technology", yearLevel: "3rd Year", contact: "+63 917 555 0102", email: "seanbaliza@catc.edu.ph", status: "ACTIVE", issuedDate: "2026-10-01" },
+        { fullName: "Jade Bernal", username: "jadebernal", cardId: "C24-000333", course: "BS Information Technology", yearLevel: "3rd Year", contact: "+63 917 555 0103", email: "jadebernal@catc.edu.ph", status: "ACTIVE", issuedDate: "2026-10-01" }
+    ];
+
+    const defaultBooks = [
+        { id: 1, accessionCode: "CATC-BK-001", isbn: "978-1-0001-01", title: "Effective Java (3rd Edition)", author: "Joshua Bloch", category: "Computer Science & IT", status: "AVAILABLE", editionTag: "JAVA / 3RD ED", description: "Best practices for Java programming and API design." },
+        { id: 2, accessionCode: "CATC-BK-002", isbn: "978-1-0001-02", title: "Spring Boot in Action", author: "Craig Walls", category: "Computer Science & IT", status: "AVAILABLE", editionTag: "SPRING / WEB", description: "Building enterprise web applications with Spring Boot." },
+        { id: 3, accessionCode: "CATC-BK-003", isbn: "978-1-0001-03", title: "Intermediate Accounting Vol. 1", author: "Zeus Vernon B. Millan", category: "Business & Accountancy", status: "AVAILABLE", editionTag: "BSA / ACCTG", description: "Financial accounting standards and reporting." },
+        { id: 4, accessionCode: "CATC-BK-004", isbn: "978-1-0001-04", title: "Engineering Economy & Differential Equations", author: "Hipolito Sta. Maria", category: "Engineering & Math", status: "CHECKED OUT", editionTag: "ENGG / MATH", description: "Engineering economy and differential equations reference." }
+    ];
+
+    let studentRegistry = loadFromStorage(REGISTRY_STORAGE_KEY, defaultStudents);
+    let catalogBooks = loadFromStorage(CATALOG_STORAGE_KEY, defaultBooks);
+    let borrowLogs = loadFromStorage(BORROW_LOG_STORAGE_KEY, []);
+
+    function loadFromStorage(key, fallback) {
+        try {
+            const raw = localStorage.getItem(key);
+            return raw ? JSON.parse(raw) : structuredClone(fallback);
+        } catch (e) {
+            return structuredClone(fallback);
+        }
+    }
+
+    function saveAllState() {
+        localStorage.setItem(REGISTRY_STORAGE_KEY, JSON.stringify(studentRegistry));
+        localStorage.setItem(CATALOG_STORAGE_KEY, JSON.stringify(catalogBooks));
+        localStorage.setItem(BORROW_LOG_STORAGE_KEY, JSON.stringify(borrowLogs));
+    }
+
+    function showAlert(msg, type = "success") {
+        const box = document.getElementById("alertBox");
+        const text = document.getElementById("alertMessage");
+        box.className = `alert alert-${type} alert-dismissible fade show rounded-4 shadow-sm mb-4`;
+        text.textContent = msg;
+        box.classList.remove("d-none");
+    }
+
+    function hideAlert() {
+        document.getElementById("alertBox").classList.add("d-none");
+    }
+
+    async function logoutLibrarian() {
+        try {
+            await fetch("/logout", { method: "POST" });
+        } catch (e) {
+            // ignore network error and redirect to login
+        }
+        window.location.href = "/Login_View.html";
+    }
+
+    async function loadLibrarianSessionAndStudents() {
+        try {
+            const meRes = await fetch("/api/me");
+            if (meRes.ok) {
+                const me = await meRes.json();
+                if (me && me.fullName) {
+                    document.getElementById("librarianNameNav").textContent = me.fullName;
+                    document.getElementById("previewCardLibrarian").textContent = me.fullName;
+                }
+            }
+        } catch (err) {
+            console.error("Failed to fetch /api/me:", err);
+        }
+
+        try {
+            const stuRes = await fetch("/api/students");
+            if (stuRes.ok) {
+                const apiStudents = await stuRes.json();
+                if (Array.isArray(apiStudents)) {
+                    apiStudents.forEach((s, idx) => {
+                        const exists = studentRegistry.some(r => r.username.toLowerCase() === String(s.username || "").toLowerCase());
+                        if (!exists && s.username) {
+                            studentRegistry.push({
+                                fullName: s.fullName || s.username,
+                                username: s.username,
+                                cardId: `C24-000${(idx + 1) * 111}`,
+                                course: "BS Information Technology",
+                                yearLevel: "3rd Year",
+                                contact: "+63 917 555 0100",
+                                email: `${s.username}@catc.edu.ph`,
+                                status: "ACTIVE",
+                                issuedDate: new Date().toISOString().slice(0, 10)
+                            });
+                        }
+                    });
+                    saveAllState();
+                    refreshAllViews();
+                }
+            }
+        } catch (err) {
+            console.error("Failed to fetch /api/students:", err);
+        }
+    }
+
+    function setDefaultDates() {
+        const today = new Date().toISOString().slice(0, 10);
+        const due = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
+        document.getElementById("borrowDate").value = today;
+        document.getElementById("returnDueDate").value = due;
+    }
+
+    function updateKpis() {
+        const total = catalogBooks.length;
+        const available = catalogBooks.filter(b => b.status === "AVAILABLE").length;
+        const checkedOut = catalogBooks.filter(b => b.status === "CHECKED OUT").length;
+
+        document.getElementById("kpiTotalBooks").textContent = total;
+        document.getElementById("kpiAvailable").textContent = available;
+        document.getElementById("kpiCheckedOut").textContent = checkedOut;
+        document.getElementById("kpiCardsIssued").textContent = studentRegistry.length;
+    }
+
+    function populateBorrowBookSelect() {
+        const select = document.getElementById("borrowBookSelect");
+        const availableBooks = catalogBooks.filter(b => b.status === "AVAILABLE");
+        if (availableBooks.length === 0) {
+            select.innerHTML = `<option value="">No AVAILABLE books on shelf</option>`;
+            return;
+        }
+        select.innerHTML = availableBooks.map(b =>
+            `<option value="${b.id}">${b.accessionCode} — ${b.title}</option>`
+        ).join("");
+    }
+
+    function populateQuickStudentPicker() {
+        const picker = document.getElementById("quickStudentPicker");
+        picker.innerHTML = `<option value="">-- Enter manually or select registered student --</option>` +
+            studentRegistry.map((s, i) =>
+                `<option value="${i}">${s.fullName} (${s.cardId} / @${s.username})</option>`
+            ).join("");
+    }
+
+    function autofillBorrowerFromDirectory() {
+        const idx = document.getElementById("quickStudentPicker").value;
+        if (idx === "") return;
+        const student = studentRegistry[Number(idx)];
+        if (!student) return;
+        document.getElementById("borrowStudentName").value = student.fullName;
+        document.getElementById("borrowStudentNo").value = student.cardId;
+    }
+
+    function recordPhysicalBorrow(e) {
+        e.preventDefault();
+        const bookId = Number(document.getElementById("borrowBookSelect").value);
+        const book = catalogBooks.find(b => b.id === bookId);
+        if (!book || book.status !== "AVAILABLE") {
+            showAlert("Selected book is not currently AVAILABLE.", "warning");
+            return;
+        }
+
+        const studentName = document.getElementById("borrowStudentName").value.trim();
+        const studentNo = document.getElementById("borrowStudentNo").value.trim();
+        const borrowDate = document.getElementById("borrowDate").value;
+        const returnDueDate = document.getElementById("returnDueDate").value;
+
+        book.status = "CHECKED OUT";
+        borrowLogs.unshift({
+            id: Date.now(),
+            studentName,
+            studentNo,
+            bookId: book.id,
+            bookTitle: book.title,
+            accessionCode: book.accessionCode,
+            borrowDate,
+            returnDueDate,
+            status: "CHECKED OUT"
+        });
+
+        saveAllState();
+        document.getElementById("physicalBorrowForm").reset();
+        setDefaultDates();
+        refreshAllViews();
+        showAlert(`Recorded physical borrow of "${book.title}" to ${studentName}.`);
+    }
+
+    function markBookReturned(logId) {
+        const log = borrowLogs.find(item => item.id === logId);
+        if (!log) return;
+        log.status = "RETURNED";
+        const book = catalogBooks.find(b => b.id === log.bookId);
+        if (book) {
+            book.status = "AVAILABLE";
+        }
+        saveAllState();
+        refreshAllViews();
+        showAlert(`"${log.bookTitle}" marked as RETURNED and set back to AVAILABLE.`);
+    }
+
+    function renderBorrowLog() {
+        const q = (document.getElementById("logSearchInput").value || "").trim().toLowerCase();
+        const st = document.getElementById("logStatusFilter").value;
+        const tbody = document.getElementById("borrowLogTableBody");
+
+        const filtered = borrowLogs.filter(item => {
+            const matchSt = !st || item.status === st;
+            const matchQ = !q ||
+                item.studentName.toLowerCase().includes(q) ||
+                item.studentNo.toLowerCase().includes(q) ||
+                item.bookTitle.toLowerCase().includes(q);
+            return matchSt && matchQ;
+        });
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-4">No physical borrowing records yet.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = filtered.map(item => `
+            <tr>
+                <td>
+                    <div class="fw-semibold">${item.studentName}</div>
+                    <small class="text-muted">${item.studentNo}</small>
+                </td>
+                <td>
+                    <div class="fw-semibold">${item.bookTitle}</div>
+                    <small class="text-muted">${item.accessionCode}</small>
+                </td>
+                <td>${item.borrowDate}</td>
+                <td>${item.returnDueDate}</td>
+                <td>
+                    <span class="badge ${item.status === "CHECKED OUT" ? "bg-warning text-dark" : "bg-success"}">
+                        ${item.status}
+                    </span>
+                </td>
+                <td class="text-end">
+                    ${item.status === "CHECKED OUT"
+            ? `<button type="button" class="btn btn-sm btn-success rounded-pill px-3" onclick="markBookReturned(${item.id})">Mark Returned</button>`
+            : `<span class="small text-muted">Completed</span>`}
+                </td>
+            </tr>
+        `).join("");
+    }
+
+    function saveCatalogBook(e) {
+        e.preventDefault();
+        const editId = document.getElementById("editBookId").value;
+        const payload = {
+            accessionCode: document.getElementById("bookAccession").value.trim(),
+            isbn: document.getElementById("bookIsbn").value.trim(),
+            title: document.getElementById("bookTitle").value.trim(),
+            author: document.getElementById("bookAuthor").value.trim(),
+            category: document.getElementById("bookCategory").value,
+            status: document.getElementById("bookStatus").value,
+            editionTag: document.getElementById("bookEditionTag").value.trim(),
+            description: document.getElementById("bookDescription").value.trim()
+        };
+
+        if (editId) {
+            const idx = catalogBooks.findIndex(b => String(b.id) === String(editId));
+            if (idx !== -1) {
+                catalogBooks[idx] = { ...catalogBooks[idx], ...payload };
+                showAlert(`Updated catalog book "${payload.title}".`);
+            }
+        } else {
+            catalogBooks.unshift({ id: Date.now(), ...payload });
+            showAlert(`Posted new book "${payload.title}" to catalog.`);
+        }
+
+        saveAllState();
+        resetCatalogForm();
+        refreshAllViews();
+    }
+
+    function startEditBook(id) {
+        const book = catalogBooks.find(b => b.id === id);
+        if (!book) return;
+        document.getElementById("editBookId").value = book.id;
+        document.getElementById("bookAccession").value = book.accessionCode;
+        document.getElementById("bookIsbn").value = book.isbn;
+        document.getElementById("bookTitle").value = book.title;
+        document.getElementById("bookAuthor").value = book.author;
+        document.getElementById("bookCategory").value = book.category;
+        document.getElementById("bookStatus").value = book.status;
+        document.getElementById("bookEditionTag").value = book.editionTag;
+        document.getElementById("bookDescription").value = book.description;
+
+        document.getElementById("catalogFormTitle").textContent = "Update Catalog Book";
+        document.getElementById("saveBookBtn").innerHTML = `<i class="bi bi-save me-1"></i> Save Book Changes`;
+        document.getElementById("cancelEditBookBtn").classList.remove("d-none");
+    }
+
+    function resetCatalogForm() {
+        document.getElementById("catalogBookForm").reset();
+        document.getElementById("editBookId").value = "";
+        document.getElementById("catalogFormTitle").textContent = "Post New Book to Catalog";
+        document.getElementById("saveBookBtn").innerHTML = `<i class="bi bi-plus-circle me-1"></i> Post Book to Catalog`;
+        document.getElementById("cancelEditBookBtn").classList.add("d-none");
+    }
+
+    function renderCatalogTable() {
+        const q = (document.getElementById("catalogSearchInput").value || "").trim().toLowerCase();
+        const dept = document.getElementById("catalogDeptFilter").value;
+        const st = document.getElementById("catalogStatusFilter").value;
+        const tbody = document.getElementById("catalogTableBody");
+
+        const filtered = catalogBooks.filter(b => {
+            const matchDept = !dept || b.category === dept;
+            const matchSt = !st || b.status === st;
+            const matchQ = !q ||
+                b.title.toLowerCase().includes(q) ||
+                b.author.toLowerCase().includes(q) ||
+                b.accessionCode.toLowerCase().includes(q) ||
+                b.isbn.toLowerCase().includes(q);
+            return matchDept && matchSt && matchQ;
+        });
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">No books match your filter.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = filtered.map(b => `
+            <tr>
+                <td><strong>${b.accessionCode}</strong></td>
+                <td>
+                    <div class="fw-semibold">${b.title}</div>
+                    <small class="text-muted">${b.author} &bull; ${b.editionTag}</small>
+                </td>
+                <td><span class="badge bg-light text-dark border">${b.category}</span></td>
+                <td>
+                    <span class="badge ${b.status === "AVAILABLE" ? "bg-success" : "bg-warning text-dark"}">
+                        ${b.status}
+                    </span>
+                </td>
+                <td class="text-end">
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="startEditBook(${b.id})">
+                        <i class="bi bi-pencil-square me-1"></i> Edit
+                    </button>
+                </td>
+            </tr>
+        `).join("");
+    }
+
+    function createStudentAccountAndCard(e) {
+        e.preventDefault();
+        const fullName = document.getElementById("newAccFullName").value.trim();
+        const username = document.getElementById("newAccUsername").value.trim();
+        const cardId = document.getElementById("newAccCardId").value.trim().toUpperCase();
+        const course = document.getElementById("newAccCourse").value;
+        const yearLevel = document.getElementById("newAccYear").value;
+        const contact = document.getElementById("newAccContact").value.trim();
+        const email = document.getElementById("newAccEmail").value.trim();
+        const issuedDate = new Date().toISOString().slice(0, 10);
+
+        const record = { fullName, username, cardId, course, yearLevel, contact, email, status: "ACTIVE", issuedDate };
+        studentRegistry.unshift(record);
+        saveAllState();
+
+        updateCardPreview(record);
+        document.getElementById("createStudentAccountForm").reset();
+        refreshAllViews();
+        showAlert(`Registered ${fullName} (@${username}) with Library Card ${cardId}.`);
+    }
+
+    function updateCardPreview(student) {
+        if (!student) return;
+        document.getElementById("previewCardHolder").textContent = student.fullName;
+        document.getElementById("previewCardCourseYear").textContent = `${student.course} • ${student.yearLevel}`;
+        document.getElementById("previewCardNumber").textContent = student.cardId;
+        document.getElementById("previewCardUser").textContent = `@${student.username}`;
+        document.getElementById("previewCardIssued").textContent = `Date Issued: ${student.issuedDate}`;
+    }
+
+    function previewCardByIndex(idx) {
+        const s = studentRegistry[idx];
+        if (!s) return;
+        updateCardPreview(s);
+        document.getElementById("printableLibraryCardArea").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function renderStudentRegistry() {
+        const q = (document.getElementById("registrySearchInput").value || "").trim().toLowerCase();
+        const tbody = document.getElementById("studentRegistryTableBody");
+
+        const filtered = studentRegistry.filter(s =>
+            !q ||
+            s.fullName.toLowerCase().includes(q) ||
+            s.username.toLowerCase().includes(q) ||
+            s.cardId.toLowerCase().includes(q)
+        );
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-4">No student records found.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = filtered.map((s, idx) => `
+            <tr>
+                <td><strong>${s.cardId}</strong></td>
+                <td class="fw-semibold">${s.fullName}</td>
+                <td><code>@${s.username}</code></td>
+                <td>${s.course} &bull; <small class="text-muted">${s.yearLevel}</small></td>
+                <td>
+                    <div>${s.contact}</div>
+                    <small class="text-muted">${s.email}</small>
+                </td>
+                <td><span class="badge bg-success">${s.status}</span></td>
+                <td class="text-end">
+                    <div class="d-inline-flex gap-1">
+                        <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-2" onclick="previewCardByIndex(${idx})">
+                            <i class="bi bi-card-heading me-1"></i> View Card
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2" onclick="selectStudentForBorrow(${idx})">
+                            Use in Desk
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `).join("");
+    }
+
+    function selectStudentForBorrow(idx) {
+        const s = studentRegistry[idx];
+        if (!s) return;
+        document.getElementById("borrowStudentName").value = s.fullName;
+        document.getElementById("borrowStudentNo").value = s.cardId;
+        updateCardPreview(s);
+        const tabTrigger = new bootstrap.Tab(document.getElementById("tab-circulation"));
+        tabTrigger.show();
+    }
+
+    function exportRegistryJson() {
+        const blob = new Blob([JSON.stringify(studentRegistry, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "catc_registered_students_registry.json";
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function refreshAllViews() {
+        updateKpis();
+        populateBorrowBookSelect();
+        populateQuickStudentPicker();
+        renderBorrowLog();
+        renderCatalogTable();
+        renderStudentRegistry();
+        if (studentRegistry.length > 0) {
+            updateCardPreview(studentRegistry[0]);
+        }
+    }
+
+    setDefaultDates();
+    refreshAllViews();
+    loadLibrarianSessionAndStudents();
+</script>
+</body>
+</html>

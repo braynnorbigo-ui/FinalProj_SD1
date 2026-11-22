@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookWebCATC | Front Canvas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --catc-navy: #002366;
+            --catc-royal: #0047AB;
+            --catc-sky: #0099FF;
+            --catc-gold: #D4AF37;
+            --catc-gold-bright: #FDE047;
+            --catc-dark: #050E24;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body.front-canvas-body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #FFFFFF;
+            background:
+                    linear-gradient(145deg, rgba(4, 14, 38, 0.90), rgba(0, 44, 118, 0.82)),
+                    url('/images/catc-bg.jpg') center center / cover no-repeat fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ambient floating glow orbs */
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.42;
+            animation: floatOrb 10s ease-in-out infinite alternate;
+        }
+
+        .orb-1 {
+            width: 340px;
+            height: 340px;
+            top: -80px;
+            right: -70px;
+            background: radial-gradient(circle, #0099FF, #002366);
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            bottom: 40px;
+            left: -90px;
+            background: radial-gradient(circle, #D4AF37, #0047AB);
+            animation-delay: -4s;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(24px, 28px) scale(1.12); }
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar */
+        .front-topbar {
+            background: rgba(5, 14, 36, 0.78);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.45);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .front-logo-wrap {
+            position: relative;
+            display: inline-flex;
+        }
+
+        .front-logo-img {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 13px;
+            border: 2px solid var(--catc-gold);
+            background: #FFFFFF;
+            box-shadow: 0 0 18px rgba(212, 175, 55, 0.35);
+        }
+
+        /* Hero Glass Panel */
+        .hero-canvas-card {
+            background: linear-gradient(155deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid var(--catc-gold);
+            border-radius: 28px;
+            box-shadow: 0 28px 70px rgba(2, 10, 28, 0.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-canvas-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 85% 15%, rgba(212, 175, 55, 0.12), transparent 45%);
+            pointer-events: none;
+        }
+
+        .brand-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.16);
+            color: var(--catc-gold-bright);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            padding: 7px 16px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.18);
+        }
+
+        .hero-title {
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.08;
+            background: linear-gradient(120deg, #FFFFFF 35%, #FDE047 85%, #7DD3FC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-description {
+            color: rgba(241, 245, 249, 0.92);
+            font-size: 1.04rem;
+            line-height: 1.72;
+            max-width: 820px;
+        }
+
+        .feature-tile {
+            background: rgba(4, 18, 48, 0.62);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 18px;
+            padding: 16px 18px;
+            height: 100%;
+            transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+        }
+
+        .feature-tile:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, 0.6);
+            background: rgba(7, 27, 70, 0.78);
+        }
+
+        .feature-icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(212, 175, 55, 0.16);
+            color: var(--catc-gold-bright);
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        /* Team Member Cards */
+        .member-card {
+            background: rgba(255, 255, 255, 0.97);
+            color: #0F172A;
+            border-radius: 22px;
+            padding: 22px;
+            border: 1px solid rgba(226, 232, 240, 0.95);
+            box-shadow: 0 16px 36px rgba(2, 10, 28, 0.3);
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 24px 48px rgba(2, 10, 28, 0.45);
+            border-color: rgba(0, 71, 171, 0.45);
+        }
+
+        .member-card.lead-dev {
+            border: 2px solid var(--catc-gold);
+            background: linear-gradient(170deg, #FFFDF5 0%, #FFFFFF 65%, #FEF9C3 160%);
+            box-shadow: 0 18px 42px rgba(212, 175, 55, 0.24);
+        }
+
+        .member-card.lead-dev:hover {
+            box-shadow: 0 26px 54px rgba(212, 175, 55, 0.36);
+        }
+
+        .member-avatar {
+            width: 62px;
+            height: 62px;
+            border-radius: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: #FFFFFF;
+            flex-shrink: 0;
+            box-shadow: 0 10px 20px rgba(0, 23, 68, 0.24);
+            position: relative;
+        }
+
+        .avatar-lead {
+            background: linear-gradient(135deg, var(--catc-navy), var(--catc-royal));
+            border: 2.5px solid var(--catc-gold);
+        }
+
+        .avatar-sean {
+            background: linear-gradient(135deg, #0F766E, #14B8A6);
+        }
+
+        .avatar-jerelle {
+            background: linear-gradient(135deg, #1E3A8A, #0284C7);
+        }
+
+        .avatar-jay {
+            background: linear-gradient(135deg, #B45309, #F59E0B);
+        }
+
+        .avatar-jade {
+            background: linear-gradient(135deg, #4C1D95, #8B5CF6);
+        }
+
+        .member-role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            padding: 4px 11px;
+            border-radius: 999px;
+            background: #E0F2FE;
+            color: #0369A1;
+            margin-bottom: 6px;
+        }
+
+        .member-card.lead-dev .member-role-badge {
+            background: linear-gradient(135deg, #FEF08A, #FDE047);
+            color: #713F12;
+            border: 1px solid rgba(212, 175, 55, 0.6);
+        }
+
+        .member-name {
+            font-size: 1.02rem;
+            font-weight: 800;
+            color: #0F172A;
+            margin-bottom: 6px;
+        }
+
+        .member-accomplishment {
+            font-size: 0.89rem;
+            color: #475569;
+            line-height: 1.55;
+            margin-bottom: 0;
+        }
+
+        /* Get Started Button with Shine Effect */
+        .btn-get-started {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FDE047 0%, #D4AF37 100%);
+            color: #050E24;
+            font-weight: 900;
+            font-size: 1.08rem;
+            letter-spacing: 0.02em;
+            padding: 15px 40px;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 255, 255, 0.45);
+            box-shadow: 0 14px 34px rgba(212, 175, 55, 0.42);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-get-started::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 65%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+            transform: skewX(-25deg);
+            animation: buttonShine 3.6s infinite;
+        }
+
+        @keyframes buttonShine {
+            0%, 65% { left: -120%; }
+            100% { left: 160%; }
+        }
+
+        .btn-get-started:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 42px rgba(253, 224, 71, 0.55);
+            color: #050E24;
+        }
+
+        /* Scroll Reveal */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="front-canvas-body d-flex flex-column justify-content-between">
+
+<!-- Ambient Glow Orbs -->
+<div class="ambient-orb orb-1"></div>
+<div class="ambient-orb orb-2"></div>
+
+<!-- Top Header -->
+<header class="front-topbar sticky-top py-3 px-3 px-lg-5 content-layer">
+    <div class="container d-flex align-items-center justify-content-between">
+        <a href="#top" class="d-flex align-items-center gap-3 text-decoration-none">
+            <div class="front-logo-wrap">
+                <img src="/images/catc-logo.jpg" alt="BookWebCATC Logo" class="front-logo-img">
+            </div>
+            <div>
+                <div class="fw-bold fs-5 lh-1 text-white">BookWebCATC</div>
+                <small class="text-info">CAT College Library &amp; Circulation Portal</small>
+            </div>
+        </a>
+
+        <a href="/Login_View.html" class="btn btn-sm btn-outline-warning rounded-pill px-3 py-2 fw-semibold">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+        </a>
+    </div>
+</header>
+
+<!-- Main Front Canvas -->
+<main id="top" class="container py-4 py-lg-5 content-layer">
+    <!-- Hero / Project Description -->
+    <section class="hero-canvas-card p-4 p-lg-5 mb-5 reveal-item">
+        <div class="brand-pill mb-3">
+            <i class="bi bi-sparkles"></i> BookWebCATC • Front Canvas
+        </div>
+
+        <h1 class="hero-title mb-3">BookWebCATC</h1>
+
+        <p class="hero-description mb-4">
+            <strong>BookWebCATC</strong> is an integrated library catalog, physical book borrowing desk, and student library card portal crafted for <strong>CAT College</strong>. Designed to connect walk-in library operations with digital tracking, it helps librarians manage book availability, physical returns, and official student library cards while giving students a clear view of the library catalog and their member profile.
+        </p>
+
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="feature-tile">
+                    <div class="feature-icon-box"><i class="bi bi-book-half"></i></div>
+                    <div class="fw-bold text-white mb-1">Smart Catalog &amp; Search</div>
+                    <div class="small text-light opacity-80">Browse department books, shelf availability, accession codes, and ISBNs.</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-tile">
+                    <div class="feature-icon-box"><i class="bi bi-journal-check"></i></div>
+                    <div class="fw-bold text-white mb-1">Walk-In Borrowing &amp; Returns</div>
+                    <div class="small text-light opacity-80">Record physical checkouts, return schedules, and instant shelf status updates.</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-tile">
+                    <div class="feature-icon-box"><i class="bi bi-person-vcard"></i></div>
+                    <div class="fw-bold text-white mb-1">Official Library Cards</div>
+                    <div class="small text-light opacity-80">Maintain registered student accounts and preview/print CATC library cards.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Members Section -->
+    <section class="mb-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-end mb-4 reveal-item">
+            <div>
+                    <span class="badge bg-warning text-dark fw-bold rounded-pill px-3 py-1 mb-2">
+                        <i class="bi bi-people-fill me-1"></i> PROJECT TEAM
+                    </span>
+                <h2 class="h3 fw-bold text-white mb-0">BookWebCATC Developers &amp; Contributors</h2>
+            </div>
+            <small class="text-info">Lead Web Developer &amp; Team Accomplishments</small>
+        </div>
+
+        <div class="row g-4">
+            <!-- 1. Lead Web Developer -->
+            <div class="col-12 col-md-6 col-lg-4 reveal-item">
+                <div class="member-card lead-dev">
+                    <div>
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="member-avatar avatar-lead" aria-hidden="true">BO</div>
+                            <div>
+                                <span class="member-role-badge"><i class="bi bi-code-slash"></i> Lead Web Developer</span>
+                                <div class="member-name mb-0">ENGR. BRAYN N. ORBIGO</div>
+                            </div>
+                        </div>
+                        <p class="member-accomplishment">
+                            Architected and built the full-stack <strong>BookWebCATC</strong> web application, Spring Boot backend &amp; security flow, role-based dashboards, and frontend-to-API integration.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Engr. Sean Rashid Baliza -->
+            <div class="col-12 col-md-6 col-lg-4 reveal-item">
+                <div class="member-card">
+                    <div>
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="member-avatar avatar-sean" aria-hidden="true">SB</div>
+                            <div>
+                                <span class="member-role-badge"><i class="bi bi-arrow-repeat"></i> Circulation &amp; Desk Flow</span>
+                                <div class="member-name mb-0">ENGR. SEAN RASHID BALIZA</div>
+                            </div>
+                        </div>
+                        <p class="member-accomplishment">
+                            Helped shape physical borrowing and return desk workflows, return-date tracking, and shelf status transition checks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Engr. Jerelle Flores -->
+            <div class="col-12 col-md-6 col-lg-4 reveal-item">
+                <div class="member-card">
+                    <div>
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="member-avatar avatar-jerelle" aria-hidden="true">JF</div>
+                            <div>
+                                <span class="member-role-badge"><i class="bi bi-building-check"></i> Library Operations</span>
+                                <div class="member-name mb-0">ENGR. JERELLE FLORES</div>
+                            </div>
+                        </div>
+                        <p class="member-accomplishment">
+                            Contributed to librarian desk requirements, book catalog organization, and walk-in circulation operational standards.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Engr. Jay Lauro Basquiñas -->
+            <div class="col-12 col-md-6 col-lg-6 reveal-item">
+                <div class="member-card">
+                    <div>
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="member-avatar avatar-jay" aria-hidden="true">JB</div>
+                            <div>
+                                <span class="member-role-badge"><i class="bi bi-shield-check"></i> Catalog &amp; Registry QA</span>
+                                <div class="member-name mb-0">ENGR. JAY LAURO BASQUIÑAS</div>
+                            </div>
+                        </div>
+                        <p class="member-accomplishment">
+                            Assisted in testing catalog filtering, student account records, and end-to-end usability across student and librarian views.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Engr. Jade Bernal -->
+            <div class="col-12 col-md-6 col-lg-6 reveal-item">
+                <div class="member-card">
+                    <div>
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="member-avatar avatar-jade" aria-hidden="true">JB</div>
+                            <div>
+                                <span class="member-role-badge"><i class="bi bi-card-text"></i> UI &amp; Library Card Flow</span>
+                                <div class="member-name mb-0">ENGR. JADE BERNAL</div>
+                            </div>
+                        </div>
+                        <p class="member-accomplishment">
+                            Contributed to portal interface refinement, student profile presentation, and official CATC library card layout details.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Get Started CTA -->
+    <section class="text-center pt-2 pb-4 reveal-item">
+        <a href="/Login_View.html" class="btn-get-started">
+            Get Started <i class="bi bi-arrow-right-circle-fill"></i>
+        </a>
+        <div class="small text-light opacity-75 mt-3">
+            Ready to enter? Click <strong>Get Started</strong> to go to the BookWebCATC Login screen.
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="py-3 text-center text-light opacity-75 small border-top border-light border-opacity-10 content-layer">
+    BookWebCATC &bull; CAT College Library Portal
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, idx) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add("is-visible");
+                }, idx * 70);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal-item").forEach((el) => observer.observe(el));
+</script>
+</body>
+</html>

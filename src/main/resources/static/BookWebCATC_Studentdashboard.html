@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookWebCATC | Student Library Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --catc-navy: #002366;
+            --catc-royal: #0047AB;
+            --catc-sky: #0099FF;
+            --catc-gold: #D4AF37;
+            --portal-blue: #1976D2;
+        }
+
+        body {
+            background:
+                    linear-gradient(135deg, rgba(0, 18, 52, 0.72), rgba(0, 44, 118, 0.65)),
+                    url('/images/catc-bg.jpg') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #102A43;
+        }
+
+        .catc-navbar {
+            background: rgba(0, 23, 68, 0.94);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--catc-gold);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .menu-toggle-btn {
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.08);
+            color: #FFFFFF;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .menu-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #FFFFFF;
+        }
+
+        .side-brand-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid var(--catc-gold);
+            background: #FFFFFF;
+        }
+
+        /* Student Portal Navigation Drawer (matches reference) */
+        .portal-drawer {
+            width: 310px !important;
+            background: #FFFFFF;
+            border-right: 1px solid #E2E8F0;
+        }
+
+        .drawer-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #1E293B;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+
+        .drawer-nav-item:hover {
+            background: #F1F5F9;
+        }
+
+        .drawer-nav-item.active {
+            background: #E8F3FE;
+            color: var(--portal-blue);
+        }
+
+        .drawer-nav-item.active .drawer-item-title {
+            color: var(--portal-blue);
+            font-weight: 700;
+        }
+
+        .drawer-nav-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .drawer-stat-pill {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+        }
+
+        /* Profile Card (matches reference) */
+        .profile-shell {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .profile-header-bar {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 16px 22px;
+            box-shadow: 0 8px 24px rgba(0, 15, 45, 0.16);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile-edit-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1.8px solid var(--portal-blue);
+            background: #FFFFFF;
+            color: var(--portal-blue);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .profile-edit-circle:hover {
+            background: var(--portal-blue);
+            color: #FFFFFF;
+        }
+
+        .profile-main-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            box-shadow: 0 16px 40px rgba(0, 15, 45, 0.22);
+            overflow: hidden;
+        }
+
+        .profile-avatar-circle {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: var(--portal-blue);
+            color: #FFFFFF;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            box-shadow: 0 8px 20px rgba(25, 118, 210, 0.3);
+        }
+
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-row-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 20px;
+            box-shadow: 0 16px 40px rgba(0, 15, 45, 0.25);
+        }
+
+        .hero-banner {
+            background: linear-gradient(120deg, rgba(0, 35, 102, 0.95), rgba(0, 91, 181, 0.92));
+            color: #FFFFFF;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            box-shadow: 0 18px 42px rgba(0, 12, 36, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-side-badge {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 16px;
+            padding: 14px 18px;
+        }
+
+        .hero-side-badge img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid var(--catc-gold);
+            background: #FFFFFF;
+        }
+
+        .book-card {
+            background: rgba(255, 255, 255, 0.97);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+            box-shadow: 0 10px 24px rgba(0, 20, 60, 0.14);
+        }
+
+        .book-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 34px rgba(0, 23, 68, 0.28);
+        }
+
+        .book-front-cover {
+            height: 195px;
+            position: relative;
+            padding: 16px;
+            color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .book-spine-strip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 10px;
+            background: rgba(0, 0, 0, 0.25);
+            border-right: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .book-cover-svg {
+            position: absolute;
+            right: -12px;
+            bottom: -14px;
+            width: 118px;
+            height: 118px;
+            opacity: 0.22;
+            pointer-events: none;
+        }
+
+        .cover-tag {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #FFFFFF;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 4px 10px;
+            border-radius: 999px;
+            display: inline-block;
+            width: fit-content;
+            z-index: 1;
+        }
+
+        .cover-title-box {
+            z-index: 1;
+            padding-left: 8px;
+        }
+
+        .cover-title {
+            font-size: 1.04rem;
+            font-weight: 800;
+            line-height: 1.2;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+        }
+
+        .cover-author {
+            font-size: 0.8rem;
+            opacity: 0.92;
+            margin-top: 4px;
+        }
+
+        .category-pill.active {
+            background-color: var(--catc-navy) !important;
+            color: #FFFFFF !important;
+            border-color: var(--catc-navy) !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark catc-navbar sticky-top px-3 px-lg-5 py-2">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center gap-3">
+            <button class="menu-toggle-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#studentPortalDrawer" aria-controls="studentPortalDrawer" title="Open Student Portal Menu">
+                <i class="bi bi-list"></i>
+            </button>
+            <a class="navbar-brand d-flex align-items-center gap-3 m-0" href="#" onclick="switchPortalTab('dashboard'); return false;">
+                <img src="/images/catc-logo.jpg" alt="CAT College Logo" class="side-brand-logo">
+                <div>
+                    <div class="fw-bold lh-1">Student Portal • BookWebCATC</div>
+                    <small class="text-info" style="font-size: 0.74rem;">CAT College Library Catalog</small>
+                </div>
+            </a>
+        </div>
+
+        <div class="d-flex align-items-center gap-3 text-white mt-2 mt-lg-0">
+            <div class="text-end d-none d-md-block">
+                <div class="small fw-bold" id="studentNameNav">Student Account</div>
+                <div class="text-info" style="font-size: 0.72rem;" id="studentMetaNav">Username: student • BSIT • 3rd Year</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-warning text-dark fw-semibold px-3 rounded-pill" onclick="switchPortalTab('profile')">
+                <i class="bi bi-person-circle me-1"></i> Profile
+            </button>
+            <a href="/BookWebCATC_LoginView.html" class="btn btn-sm btn-outline-light rounded-pill px-3" title="Logout">
+                <i class="bi bi-box-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Slide-Out Student Portal Navigation Drawer -->
+<div class="offcanvas offcanvas-start portal-drawer" tabindex="-1" id="studentPortalDrawer" aria-labelledby="drawerLabel">
+    <div class="offcanvas-header border-bottom px-4 py-3">
+        <div>
+            <div class="text-uppercase small fw-bold text-muted" id="drawerLabel" style="letter-spacing: 0.06em;">Navigation</div>
+            <div class="small text-primary fw-semibold" id="drawerStudentSummary">Student Account • BSIT (3rd Year)</div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body px-3 py-3 d-flex flex-column justify-content-between">
+        <div>
+            <div class="d-flex flex-column gap-1 mb-4">
+                <button type="button" class="drawer-nav-item active" id="navBtnDashboard" onclick="switchPortalTab('dashboard')" data-bs-dismiss="offcanvas">
+                    <i class="bi bi-grid-fill drawer-nav-icon"></i>
+                    <div>
+                        <div class="drawer-item-title fw-semibold">Dashboard</div>
+                        <small class="text-muted">Library catalog &amp; book availability</small>
+                    </div>
+                </button>
+
+                <button type="button" class="drawer-nav-item" id="navBtnProfile" onclick="switchPortalTab('profile')" data-bs-dismiss="offcanvas">
+                    <i class="bi bi-person-fill drawer-nav-icon"></i>
+                    <div>
+                        <div class="drawer-item-title fw-semibold">Profile</div>
+                        <small class="text-muted">View &amp; edit your student information</small>
+                    </div>
+                </button>
+            </div>
+
+            <div class="px-2">
+                <div class="fw-bold text-dark mb-3">Library Overview</div>
+                <div class="d-flex flex-column gap-2">
+                    <div class="drawer-stat-pill" style="border-left: 4px solid #1976D2;">
+                        <span class="small fw-semibold text-secondary"><i class="bi bi-book-fill text-primary me-2"></i>Total Catalog</span>
+                        <span class="fw-bold text-primary" id="drawerTotalBooks">0</span>
+                    </div>
+                    <div class="drawer-stat-pill" style="border-left: 4px solid #16A34A;">
+                        <span class="small fw-semibold text-secondary"><i class="bi bi-check-circle-fill text-success me-2"></i>Available Now</span>
+                        <span class="fw-bold text-success" id="drawerAvailableBooks">0</span>
+                    </div>
+                    <div class="drawer-stat-pill" style="border-left: 4px solid #D97706;">
+                        <span class="small fw-semibold text-secondary"><i class="bi bi-journal-bookmark-fill text-warning me-2"></i>Currently Out</span>
+                        <span class="fw-bold text-warning" id="drawerBorrowedBooks">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-top pt-3 px-2">
+            <a href="/BookWebCATC_LoginView.html" class="btn btn-outline-danger btn-sm w-100 rounded-pill fw-semibold">
+                <i class="bi bi-box-arrow-right me-1"></i> Sign Out
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- VIEW 1: MAIN LIBRARY DASHBOARD -->
+<div id="dashboardView" class="container py-4 py-lg-5">
+    <div class="hero-banner p-4 p-lg-5 mb-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <div class="d-flex flex-wrap gap-2 mb-2">
+                    <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill">
+                        CAT COLLEGE MULTI-DEPARTMENT LIBRARY CATALOG
+                    </span>
+                    <span class="badge bg-light text-dark fw-semibold px-3 py-1 rounded-pill" id="heroCourseYearBadge">
+                        BS Information Technology • 3rd Year
+                    </span>
+                </div>
+                <h2 class="fw-bold mb-2" id="welcomeHeading">Welcome back!</h2>
+                <p class="text-light opacity-85 mb-0">
+                    Browse the books currently displayed in the CAT College Library across Computing, Business &amp; Accountancy, Engineering &amp; Math, Humanities, Sciences, and General Reference.
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <div class="hero-side-badge d-flex align-items-center gap-3">
+                    <img src="/images/catc-logo.jpg" alt="CAT College Emblem">
+                    <div>
+                        <div class="fw-bold text-white" id="heroStudentName">Student Account</div>
+                        <div class="small text-info" id="heroStudentId">Username: student</div>
+                        <button type="button" class="btn btn-sm btn-outline-warning mt-2 py-0 px-2 rounded-pill" onclick="switchPortalTab('profile')">
+                            View Student Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Row -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-4">
+            <div class="glass-panel p-3 h-100">
+                <div class="small text-muted fw-semibold">Total Library Books</div>
+                <div class="fs-3 fw-bold text-primary" id="statTotalBooks">0</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="glass-panel p-3 h-100">
+                <div class="small text-muted fw-semibold">Available on Shelf</div>
+                <div class="fs-3 fw-bold text-success" id="statAvailableBooks">0</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="glass-panel p-3 h-100">
+                <div class="small text-muted fw-semibold">Currently Checked Out</div>
+                <div class="fs-3 fw-bold text-warning" id="statBorrowedCount">0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search & Category Filter Bar -->
+    <div class="glass-panel p-3 p-md-4 mb-4">
+        <div class="row g-3 align-items-center">
+            <div class="col-lg-5">
+                <input type="text" id="searchInput" class="form-control form-control-lg rounded-3"
+                       placeholder="Search library books by title, author, course tag, accession, or ISBN..." oninput="renderBooks()">
+            </div>
+            <div class="col-lg-7">
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-end" id="categoryPills">
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill active" data-cat="" onclick="selectCategory('', this)">All Books</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Computer Science & IT" onclick="selectCategory('Computer Science & IT', this)">CS &amp; IT</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Business & Accountancy" onclick="selectCategory('Business & Accountancy', this)">Business &amp; Acctg</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Engineering & Math" onclick="selectCategory('Engineering & Math', this)">Engineering &amp; Math</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Humanities & Literature" onclick="selectCategory('Humanities & Literature', this)">Humanities &amp; Lit</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Science & Health" onclick="selectCategory('Science & Health', this)">Science &amp; Health</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Reference & Dictionaries" onclick="selectCategory('Reference & Dictionaries', this)">Reference</button>
+                </div>
+            </div>
+        </div>
+        <div class="small text-muted mt-2" id="resultCountLabel">Showing catalog books</div>
+    </div>
+
+    <!-- Books Grid -->
+    <div class="row g-4 mb-4" id="booksGrid"></div>
+</div>
+
+<!-- VIEW 2: STUDENT PROFILE VIEW -->
+<div id="profileView" class="container py-4 py-lg-5 d-none">
+    <div class="profile-shell">
+        <div class="profile-header-bar mb-4">
+            <div class="d-flex align-items-center gap-3">
+                <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3" onclick="switchPortalTab('dashboard')">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Library
+                </button>
+                <h1 class="h4 fw-bold mb-0 text-dark">Profile</h1>
+            </div>
+            <button type="button" class="profile-edit-circle" id="toggleEditProfileBtn" onclick="toggleProfileEdit()" title="Edit Profile Information">
+                <i class="bi bi-pencil-fill"></i>
+            </button>
+        </div>
+
+        <div class="profile-main-card">
+            <div class="text-center py-4 px-3 border-bottom bg-light bg-opacity-50">
+                <div class="profile-avatar-circle mb-3">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <h2 class="h5 fw-bold mb-1" id="profileCardFullName">Student Account</h2>
+                <div class="small text-muted" id="profileCardSubtitle">BS Information Technology • 3rd Year</div>
+            </div>
+
+            <div id="profileReadOnlySection" class="p-4 p-md-5">
+                <h3 class="h5 fw-bold text-dark mb-3">Personal Information</h3>
+
+                <div class="info-row">
+                    <div class="info-row-icon bg-primary bg-opacity-10 text-primary">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div>
+                        <div class="small text-muted">Full Name</div>
+                        <div class="fw-semibold text-dark" id="infoFullName">Student Account</div>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-row-icon bg-primary bg-opacity-10 text-primary">
+                        <i class="bi bi-person-badge-fill"></i>
+                    </div>
+                    <div>
+                        <div class="small text-muted">Username / Portal ID</div>
+                        <div class="fw-semibold text-dark" id="infoStudentId">student</div>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-row-icon bg-info bg-opacity-10 text-info">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <div>
+                        <div class="small text-muted">Course / Program</div>
+                        <div class="fw-semibold text-dark" id="infoCourse">BS Information Technology</div>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-row-icon bg-primary bg-opacity-10 text-primary">
+                        <i class="bi bi-calendar-check-fill"></i>
+                    </div>
+                    <div>
+                        <div class="small text-muted">Year Level</div>
+                        <div class="fw-semibold text-dark" id="infoYearLevel">3rd Year</div>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-row-icon bg-success bg-opacity-10 text-success">
+                        <i class="bi bi-telephone-fill"></i>
+                    </div>
+                    <div>
+                        <div class="small text-muted">Contact</div>
+                        <div class="fw-semibold text-dark" id="infoContact">+63 917 555 0148</div>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-row-icon bg-warning bg-opacity-15 text-warning">
+                        <i class="bi bi-envelope-fill"></i>
+                    </div>
+                    <div>
+                        <div class="small text-muted">Email</div>
+                        <div class="fw-semibold text-dark" id="infoEmail">student@catc.edu.ph</div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="profileEditForm" class="p-4 p-md-5 d-none" onsubmit="saveStudentProfile(event)">
+                <h3 class="h5 fw-bold text-dark mb-3">Edit Personal Information</h3>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Full Name</label>
+                    <input type="text" id="editFullName" class="form-control" required>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Username / Portal ID</label>
+                        <input type="text" id="editStudentId" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Year Level</label>
+                        <select id="editYearLevel" class="form-select" required>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Course / Program</label>
+                    <select id="editCourse" class="form-select" required>
+                        <option value="BS Information Technology">BS Information Technology</option>
+                        <option value="BS Computer Science">BS Computer Science</option>
+                        <option value="BS Accountancy">BS Accountancy</option>
+                        <option value="BS Business Administration">BS Business Administration</option>
+                        <option value="BS Computer Engineering">BS Computer Engineering</option>
+                        <option value="BS Electronics Engineering">BS Electronics Engineering</option>
+                    </select>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">Contact Number</label>
+                        <input type="text" id="editContact" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-semibold">CATC Email</label>
+                        <input type="email" id="editEmail" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4" onclick="toggleProfileEdit(false)">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const PROFILE_STORAGE_KEY = "catc_student_profile_v1";
+
+    const defaultStudentProfile = {
+        fullName: "Student Account",
+        studentId: "student",
+        course: "BS Information Technology",
+        yearLevel: "3rd Year",
+        contact: "+63 917 555 0148",
+        email: "student@catc.edu.ph"
+    };
+
+    function loadStudentProfile() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEY));
+            return saved ? { ...defaultStudentProfile, ...saved } : { ...defaultStudentProfile };
+        } catch (e) {
+            return { ...defaultStudentProfile };
+        }
+    }
+
+    let studentProfile = loadStudentProfile();
+
+    function applyStudentProfileToUI() {
+        document.getElementById("studentNameNav").textContent = studentProfile.fullName;
+        document.getElementById("studentMetaNav").textContent = `User: ${studentProfile.studentId} • ${studentProfile.course} • ${studentProfile.yearLevel}`;
+        document.getElementById("drawerStudentSummary").textContent = `${studentProfile.fullName} • ${studentProfile.yearLevel}`;
+        document.getElementById("welcomeHeading").textContent = `Welcome back, ${studentProfile.fullName}!`;
+        document.getElementById("heroCourseYearBadge").textContent = `${studentProfile.course} • ${studentProfile.yearLevel}`;
+        document.getElementById("heroStudentName").textContent = studentProfile.fullName;
+        document.getElementById("heroStudentId").textContent = `Account: ${studentProfile.studentId}`;
+
+        document.getElementById("profileCardFullName").textContent = studentProfile.fullName;
+        document.getElementById("profileCardSubtitle").textContent = `${studentProfile.course} • ${studentProfile.yearLevel}`;
+        document.getElementById("infoFullName").textContent = studentProfile.fullName;
+        document.getElementById("infoStudentId").textContent = studentProfile.studentId;
+        document.getElementById("infoCourse").textContent = studentProfile.course;
+        document.getElementById("infoYearLevel").textContent = studentProfile.yearLevel;
+        document.getElementById("infoContact").textContent = studentProfile.contact;
+        document.getElementById("infoEmail").textContent = studentProfile.email;
+    }
+
+    async function loadLoggedInStudent() {
+        try {
+            const res = await fetch("/api/me");
+            if (!res.ok) return;
+            const me = await res.json();
+            if (me && me.fullName) {
+                studentProfile.fullName = me.fullName;
+                if (me.username) {
+                    studentProfile.studentId = me.username;
+                    studentProfile.email = `${me.username}@catc.edu.ph`;
+                }
+                applyStudentProfileToUI();
+            }
+        } catch (err) {
+            console.error("Failed to load /api/me:", err);
+        }
+    }
+
+    function switchPortalTab(tab) {
+        const dashboardView = document.getElementById("dashboardView");
+        const profileView = document.getElementById("profileView");
+        const navDash = document.getElementById("navBtnDashboard");
+        const navProf = document.getElementById("navBtnProfile");
+
+        if (tab === "profile") {
+            dashboardView.classList.add("d-none");
+            profileView.classList.remove("d-none");
+            navDash.classList.remove("active");
+            navProf.classList.add("active");
+            toggleProfileEdit(false);
+        } else {
+            profileView.classList.add("d-none");
+            dashboardView.classList.remove("d-none");
+            navProf.classList.remove("active");
+            navDash.classList.add("active");
+        }
+    }
+
+    function toggleProfileEdit(forceState) {
+        const readOnly = document.getElementById("profileReadOnlySection");
+        const form = document.getElementById("profileEditForm");
+        const isEditing = typeof forceState === "boolean" ? forceState : form.classList.contains("d-none");
+
+        if (isEditing) {
+            document.getElementById("editFullName").value = studentProfile.fullName;
+            document.getElementById("editStudentId").value = studentProfile.studentId;
+            document.getElementById("editCourse").value = studentProfile.course;
+            document.getElementById("editYearLevel").value = studentProfile.yearLevel;
+            document.getElementById("editContact").value = studentProfile.contact;
+            document.getElementById("editEmail").value = studentProfile.email;
+            readOnly.classList.add("d-none");
+            form.classList.remove("d-none");
+        } else {
+            form.classList.add("d-none");
+            readOnly.classList.remove("d-none");
+        }
+    }
+
+    function saveStudentProfile(e) {
+        e.preventDefault();
+        studentProfile = {
+            fullName: document.getElementById("editFullName").value.trim(),
+            studentId: document.getElementById("editStudentId").value.trim(),
+            course: document.getElementById("editCourse").value,
+            yearLevel: document.getElementById("editYearLevel").value,
+            contact: document.getElementById("editContact").value.trim(),
+            email: document.getElementById("editEmail").value.trim()
+        };
+        localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(studentProfile));
+        applyStudentProfileToUI();
+        toggleProfileEdit(false);
+    }
+
+    const catalogBooks = [
+        { id: 1, accessionCode: "CATC-BK-001", isbn: "978-1-0001-01", title: "Effective Java (3rd Edition)", author: "Joshua Bloch", category: "Computer Science & IT", courseTag: "BSIT • BSCS", copies: 4, available: 3, theme: "linear-gradient(135deg, #002366, #0077B6)" },
+        { id: 2, accessionCode: "CATC-BK-002", isbn: "978-1-0001-02", title: "Spring Boot in Action", author: "Craig Walls", category: "Computer Science & IT", courseTag: "BSIT • BSCS", copies: 3, available: 2, theme: "linear-gradient(135deg, #0F766E, #16A34A)" },
+        { id: 3, accessionCode: "CATC-BK-003", isbn: "978-1-0001-03", title: "Intermediate Accounting Vol. 1", author: "Zeus Vernon B. Millan", category: "Business & Accountancy", courseTag: "BSA • BSBA", copies: 5, available: 4, theme: "linear-gradient(135deg, #7C2D12, #D97706)" },
+        { id: 4, accessionCode: "CATC-BK-004", isbn: "978-1-0001-04", title: "Engineering Economy & Differential Equations", author: "Hipolito Sta. Maria", category: "Engineering & Math", courseTag: "BSCpE • BSECE", copies: 4, available: 2, theme: "linear-gradient(135deg, #1E3A8A, #4F46E5)" },
+        { id: 5, accessionCode: "CATC-BK-005", isbn: "978-1-0001-05", title: "Philippine Literature & Cultural Heritage", author: "CATC Humanities Dept.", category: "Humanities & Literature", courseTag: "General Ed", copies: 3, available: 3, theme: "linear-gradient(135deg, #6D28D9, #9333EA)" },
+        { id: 6, accessionCode: "CATC-BK-006", isbn: "978-1-0001-06", title: "Fundamentals of Physics & Electronics", author: "Halliday & Resnick", category: "Science & Health", courseTag: "BSCpE • BSECE", copies: 4, available: 1, theme: "linear-gradient(135deg, #0369A1, #0284C7)" }
+    ];
+
+    let selectedCategory = "";
+
+    function selectCategory(cat, btn) {
+        selectedCategory = cat;
+        document.querySelectorAll(".category-pill").forEach(el => el.classList.remove("active"));
+        if (btn) btn.classList.add("active");
+        renderBooks();
+    }
+
+    function updateStats() {
+        const total = catalogBooks.reduce((sum, b) => sum + b.copies, 0);
+        const available = catalogBooks.reduce((sum, b) => sum + b.available, 0);
+        const out = Math.max(0, total - available);
+
+        document.getElementById("statTotalBooks").textContent = total;
+        document.getElementById("statAvailableBooks").textContent = available;
+        document.getElementById("statBorrowedCount").textContent = out;
+
+        document.getElementById("drawerTotalBooks").textContent = total;
+        document.getElementById("drawerAvailableBooks").textContent = available;
+        document.getElementById("drawerBorrowedBooks").textContent = out;
+    }
+
+    function renderBooks() {
+        const query = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+        const filtered = catalogBooks.filter(book => {
+            const matchesCat = !selectedCategory || book.category === selectedCategory;
+            const matchesQuery = !query ||
+                book.title.toLowerCase().includes(query) ||
+                book.author.toLowerCase().includes(query) ||
+                book.courseTag.toLowerCase().includes(query) ||
+                book.accessionCode.toLowerCase().includes(query) ||
+                book.isbn.toLowerCase().includes(query);
+            return matchesCat && matchesQuery;
+        });
+
+        document.getElementById("resultCountLabel").textContent =
+            `Showing ${filtered.length} of ${catalogBooks.length} catalog titles`;
+
+        const grid = document.getElementById("booksGrid");
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div class="col-12"><div class="glass-panel p-4 text-center text-muted">No matching books found.</div></div>`;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(book => {
+            const isAvailable = book.available > 0;
+            return `
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="book-card h-100 d-flex flex-column">
+                        <div class="book-front-cover" style="background: ${book.theme};">
+                            <div class="book-spine-strip"></div>
+                            <span class="cover-tag">${book.courseTag}</span>
+                            <div class="cover-title-box">
+                                <div class="cover-title">${book.title}</div>
+                                <div class="cover-author">${book.author}</div>
+                            </div>
+                            <i class="bi bi-book-half book-cover-svg" style="font-size: 5rem;"></i>
+                        </div>
+                        <div class="p-3 d-flex flex-column justify-content-between flex-grow-1">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-light text-dark border">${book.category}</span>
+                                    <span class="badge ${isAvailable ? "bg-success" : "bg-secondary"} rounded-pill">
+                                        ${isAvailable ? `${book.available} / ${book.copies} Available` : "Checked Out"}
+                                    </span>
+                                </div>
+                                <div class="small text-muted">Accession: <strong>${book.accessionCode}</strong></div>
+                                <div class="small text-muted">ISBN: ${book.isbn}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join("");
+    }
+
+    applyStudentProfileToUI();
+    updateStats();
+    renderBooks();
+    loadLoggedInStudent();
+</script>
+</body>
+</html>

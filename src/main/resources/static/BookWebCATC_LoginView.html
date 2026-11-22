@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookWebCATC | CAT College Library Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background:
+                    linear-gradient(rgba(0, 20, 60, 0.58), rgba(0, 35, 102, 0.68)),
+                    url('/images/catc-bg.jpg') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        .login-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(6px);
+        }
+        .brand-bar {
+            background: linear-gradient(90deg, #002366, #0047AB);
+            border-bottom: 3px solid #D4AF37;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-5">
+            <div class="card login-card">
+                <div class="brand-bar text-white p-4 d-flex align-items-center gap-3">
+                    <div id="logoMount" class="bg-white rounded-3 p-1 flex-shrink-0"></div>
+                    <div>
+                        <h4 class="mb-0 fw-bold">BookWebCATC</h4>
+                        <small class="text-info">Computer Arts Technological College • Online Library System</small>
+                    </div>
+                </div>
+                <div class="p-4 p-sm-5">
+                    <h5 class="fw-bold text-primary mb-1">Sign In to Library Portal</h5>
+                    <p class="text-muted small mb-4">Enter your Username and Library ID No. (e.g., <code>C24-003454</code>)</p>
+
+                    <div id="alertBox" class="alert alert-danger d-none py-2 small">
+                        Invalid Username or Library ID No., or account is locked.
+                    </div>
+                    <div id="logoutBox" class="alert alert-success d-none py-2 small">
+                        You have been logged out.
+                    </div>
+
+                    <form method="post" action="/login">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Username</label>
+                            <input type="text" name="username" id="usernameInput" class="form-control form-control-lg" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold small">Library ID No.</label>
+                            <input type="password" name="password" id="passwordInput" class="form-control form-control-lg" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-semibold" style="background:#002366;border:none;">
+                            Sign In
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script>
+    if (typeof getCatcLogoSvg === "function") {
+        document.getElementById("logoMount").innerHTML = getCatcLogoSvg(46);
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("error")) document.getElementById("alertBox").classList.remove("d-none");
+    if (params.get("logout")) document.getElementById("logoutBox").classList.remove("d-none");
+</script>
+</body>
+</html>
