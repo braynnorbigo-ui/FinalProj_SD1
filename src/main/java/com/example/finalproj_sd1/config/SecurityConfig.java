@@ -23,18 +23,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
                                 "/BookWebCATC.html",
                                 "/BookWebCATC_LoginView.html",
+                                "/login",
                                 "/images/**",
                                 "/css/**",
                                 "/js/**",
                                 "/error"
                         ).permitAll()
-                        .requestMatchers("/api/students").hasAnyRole("LIBRARIAN")
-                        .requestMatchers("/api/me").authenticated()
                         .requestMatchers("/BookWebCATC_Librariandashboard.html").hasRole("LIBRARIAN")
                         .requestMatchers("/BookWebCATC_Studentdashboard.html").hasRole("STUDENT")
                         .anyRequest().authenticated()
@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/BookWebCATC_LoginView.html")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/BookWebCATC_LoginView.html", true)
+                        .defaultSuccessUrl("/login-redirect", true)
                         .failureUrl("/BookWebCATC_LoginView.html?error=true")
                         .permitAll()
                 )
@@ -60,17 +60,19 @@ public class SecurityConfig {
     @Bean
     public CommandLineRunner seedUsers(AppUserRepository repo, PasswordEncoder encoder) {
         return args -> {
-            if (repo.findByUsername("librarian1").isEmpty()) {
+            if (repo.findByUsername("librarian").isEmpty()) {
                 repo.save(new AppUser("librarian", encoder.encode("LIB-111-222"), "LIBRARIAN", "Engr.Jerelle Flores"));
             }
-            if (repo.findByUsername("student1").isEmpty()) {
+            if (repo.findByUsername("jaylauro").isEmpty()) {
                 repo.save(new AppUser("jaylauro", encoder.encode("C24-000111"), "STUDENT", "Jay Lauro Basquiñas"));
             }
-            if (repo.findByUsername("student2").isEmpty()) {
+            if (repo.findByUsername("seanbaliza").isEmpty()) {
                 repo.save(new AppUser("seanbaliza", encoder.encode("C24-000222"), "STUDENT", "Sean Rashid Baliza"));
             }
-            if (repo.findByUsername("student3").isEmpty()) {
+            if (repo.findByUsername("jadebernal").isEmpty()) {
                 repo.save(new AppUser("jadebernal", encoder.encode("C24-000333"), "STUDENT", "Jade Bernal"));
+            }if (repo.findByUsername("braynorbigo").isEmpty()) {
+                repo.save(new AppUser("braynorbigo", encoder.encode("C24-000444"), "STUDENT", "Brayn Orbigo"));
             }
         };
     }

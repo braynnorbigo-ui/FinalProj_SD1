@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookWebCATC | Librarian Physical Circulation, Catalog & Library Card Registry</title>
+    <title>BookWebCATC | Librarian Physical Circulation, Catalog &amp; Library Card Registry</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
@@ -12,12 +12,13 @@
             --catc-royal: #0047AB;
             --catc-sky: #0099FF;
             --catc-gold: #D4AF37;
+            --catc-gold-bright: #FDE047;
             --catc-slate: #0F172A;
         }
 
         body {
             background:
-                    linear-gradient(135deg, rgba(0, 18, 52, 0.78), rgba(0, 44, 118, 0.72)),
+                    linear-gradient(135deg, rgba(4, 16, 44, 0.84), rgba(0, 44, 118, 0.76)),
                     url('/images/catc-bg.jpg') center center / cover no-repeat fixed;
             min-height: 100vh;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -25,10 +26,10 @@
         }
 
         .catc-navbar {
-            background: rgba(0, 23, 68, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(5, 16, 42, 0.94);
+            backdrop-filter: blur(12px);
             border-bottom: 3px solid var(--catc-gold);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
 
         .side-brand-logo {
@@ -41,19 +42,19 @@
         }
 
         .glass-panel {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.65);
             border-radius: 20px;
             box-shadow: 0 16px 40px rgba(0, 15, 45, 0.25);
         }
 
         .hero-banner {
-            background: linear-gradient(120deg, rgba(0, 35, 102, 0.96), rgba(0, 71, 171, 0.92));
+            background: linear-gradient(120deg, rgba(0, 26, 78, 0.96), rgba(0, 71, 171, 0.92));
             color: #FFFFFF;
-            border-radius: 20px;
+            border-radius: 22px;
             border: 1px solid rgba(212, 175, 55, 0.5);
-            box-shadow: 0 18px 42px rgba(0, 12, 36, 0.35);
+            box-shadow: 0 18px 42px rgba(0, 12, 36, 0.38);
         }
 
         .hero-badge-box {
@@ -98,22 +99,12 @@
             padding: 20px;
         }
 
-        .registry-file-box {
-            background: #F8FAFC;
-            border: 1px solid #CBD5E1;
-            border-left: 5px solid var(--catc-gold);
-            border-radius: 16px;
-            padding: 20px;
-        }
-
-        /* CATC Official Library Card Design */
         .catc-library-card {
             background: linear-gradient(145deg, #FFFFFF 0%, #F1F5F9 100%);
             border: 2.5px solid var(--catc-navy);
             border-radius: 18px;
             overflow: hidden;
             box-shadow: 0 14px 30px rgba(0, 23, 68, 0.22);
-            position: relative;
         }
 
         .catc-card-header {
@@ -192,15 +183,44 @@
         }
 
         .btn-gold {
-            background: var(--catc-gold);
+            background: linear-gradient(135deg, #FDE047, var(--catc-gold));
             color: #0F172A;
             font-weight: 700;
             border: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .btn-gold:hover {
-            background: #C29B27;
+            background: linear-gradient(135deg, #FACC15, #C29B27);
             color: #0F172A;
+            transform: translateY(-1px);
+        }
+
+        .sync-toast {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            z-index: 1080;
+            background: rgba(5, 18, 48, 0.96);
+            color: #FFFFFF;
+            border: 1px solid rgba(253, 224, 71, 0.65);
+            border-left: 5px solid #22C55E;
+            border-radius: 14px;
+            padding: 12px 18px;
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.42);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88rem;
+            opacity: 0;
+            transform: translateY(16px);
+            pointer-events: none;
+            transition: opacity 0.28s ease, transform 0.28s ease;
+        }
+
+        .sync-toast.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         @media print {
@@ -225,7 +245,7 @@
 <!-- Top Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark catc-navbar sticky-top px-3 px-lg-5 py-2">
     <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center gap-3 m-0" href="#">
+        <a class="navbar-brand d-flex align-items-center gap-3 m-0" href="/BookWebCATC.html">
             <img src="/images/catc-logo.jpg" alt="CAT College Logo" class="side-brand-logo">
             <div>
                 <div class="fw-bold lh-1">BookWebCATC &bull; Librarian Console</div>
@@ -235,13 +255,15 @@
 
         <div class="d-flex align-items-center gap-3 text-white mt-2 mt-lg-0">
             <div class="text-end d-none d-md-block">
-                <div class="small fw-bold" id="librarianNameNav">Librarian Account</div>
+                <div class="small fw-bold" id="librarianNameNav">Engr. Jerelle Flores</div>
                 <div class="text-info" style="font-size: 0.72rem;" id="librarianMetaNav">Head Librarian &bull; CATC Main Library</div>
             </div>
             <span class="badge bg-warning text-dark fw-bold px-3 py-2">LIBRARIAN</span>
-            <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="logoutLibrarian()" title="Logout">
-                <i class="bi bi-box-arrow-right me-1"></i> Logout
-            </button>
+            <form action="/logout" method="post" class="d-inline m-0" onsubmit="clearLocalSession()">
+                <button type="submit" class="btn btn-sm btn-outline-light rounded-pill px-3" title="Logout">
+                    <i class="bi bi-box-arrow-right me-1"></i> Logout
+                </button>
+            </form>
         </div>
     </div>
 </nav>
@@ -256,7 +278,7 @@
                 </span>
                 <h2 class="fw-bold mb-2">Librarian Desk, Catalog &amp; Card File</h2>
                 <p class="text-light opacity-85 mb-0">
-                    Record walk-in physical borrowings with return dates, switch returned books back to <strong>AVAILABLE</strong>, post or update catalog books, and issue/print official CATC Library Cards.
+                    Record walk-in physical borrowings (automatically sets book to <strong>CHECKED OUT / UNAVAILABLE</strong> on Student Dashboard), switch returned books back to <strong>AVAILABLE</strong>, post catalog books, and register official CATC Library Cards.
                 </p>
             </div>
             <div class="col-lg-4">
@@ -264,7 +286,7 @@
                     <img src="/images/catc-logo.jpg" alt="CATC Emblem">
                     <div>
                         <div class="fw-bold text-white">Walk-In Circulation Desk</div>
-                        <div class="small text-info">Physical Borrowing &amp; Returns</div>
+                        <div class="small text-info">Live Sync to Student Portal</div>
                         <div class="small text-light opacity-75">Card Registry &amp; Catalog Control</div>
                     </div>
                 </div>
@@ -288,7 +310,7 @@
         </div>
         <div class="col-6 col-md-3">
             <div class="glass-panel p-3 h-100">
-                <div class="small text-muted fw-semibold">Checked Out (Physical)</div>
+                <div class="small text-muted fw-semibold">Checked Out (Unavailable)</div>
                 <div class="fs-3 fw-bold text-warning" id="kpiCheckedOut">0</div>
             </div>
         </div>
@@ -337,7 +359,7 @@
                                 <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Walk-In Desk</span>
                             </div>
                             <p class="small text-muted mb-3">
-                                Fill out when a student comes to the library desk to borrow a physical book.
+                                Confirm physical borrowing here—the selected book will immediately show as <strong>UNAVAILABLE</strong> on the Student Dashboard.
                             </p>
 
                             <form id="physicalBorrowForm" onsubmit="recordPhysicalBorrow(event)">
@@ -375,7 +397,7 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-gold w-100 rounded-pill py-2">
-                                    <i class="bi bi-check2-square me-1"></i> Record Physical Borrow
+                                    <i class="bi bi-check2-square me-1"></i> Confirm &amp; Record Borrow
                                 </button>
                             </form>
                         </div>
@@ -385,7 +407,7 @@
                         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
                             <div>
                                 <h5 class="fw-bold text-primary mb-0">Physical Borrowing &amp; Return Log</h5>
-                                <small class="text-muted">Click <strong>Mark Returned</strong> when returned so the book updates from <strong>CHECKED OUT</strong> to <strong>AVAILABLE</strong></small>
+                                <small class="text-muted">Click <strong>Mark Returned</strong> when returned so the book becomes <strong>AVAILABLE</strong> again on Student Dashboard</small>
                             </div>
                             <div class="d-flex gap-2">
                                 <input type="text" id="logSearchInput" class="form-control form-control-sm" placeholder="Search borrower, student no., book..." oninput="renderBorrowLog()">
@@ -423,10 +445,10 @@
                         <div class="desk-form-card h-100">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h5 class="fw-bold text-primary mb-0" id="catalogFormTitle">Post New Book to Catalog</h5>
-                                <span class="badge bg-warning text-dark">Librarian Authority</span>
+                                <span class="badge bg-warning text-dark">Synced to Student</span>
                             </div>
                             <p class="small text-muted mb-3" id="catalogFormSubtitle">
-                                Post a new book into the CATC catalog or click <strong>Edit</strong> on any book to update its details.
+                                Post a new book into the CATC catalog—it will immediately appear on the Student Dashboard.
                             </p>
 
                             <form id="catalogBookForm" onsubmit="saveCatalogBook(event)">
@@ -435,7 +457,7 @@
                                 <div class="row g-2 mb-2">
                                     <div class="col-6">
                                         <label class="form-label small fw-semibold">Accession Code <span class="text-danger">*</span></label>
-                                        <input type="text" id="bookAccession" class="form-control form-control-sm" placeholder="CATC-BK-061" required>
+                                        <input type="text" id="bookAccession" class="form-control form-control-sm" placeholder="ACC-CS-061" required>
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label small fw-semibold">ISBN <span class="text-danger">*</span></label>
@@ -469,7 +491,7 @@
                                         <label class="form-label small fw-semibold">Shelf Status <span class="text-danger">*</span></label>
                                         <select id="bookStatus" class="form-select form-select-sm" required>
                                             <option value="AVAILABLE">AVAILABLE</option>
-                                            <option value="CHECKED OUT">CHECKED OUT</option>
+                                            <option value="CHECKED OUT">CHECKED OUT (UNAVAILABLE)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -517,7 +539,7 @@
                                 <select id="catalogStatusFilter" class="form-select form-select-sm" onchange="renderCatalogTable()">
                                     <option value="">All Statuses</option>
                                     <option value="AVAILABLE">AVAILABLE</option>
-                                    <option value="CHECKED OUT">CHECKED OUT</option>
+                                    <option value="CHECKED OUT">UNAVAILABLE / CHECKED OUT</option>
                                 </select>
                             </div>
                         </div>
@@ -540,13 +562,13 @@
                 </div>
             </div>
 
-            <!-- TAB 3: CREATE STUDENT ACCOUNT, ISSUE LIBRARY CARD & FIXED CARD REGISTRY FILE -->
+            <!-- TAB 3: CREATE STUDENT ACCOUNT, ISSUE LIBRARY CARD & CARD REGISTRY -->
             <div class="tab-pane fade" id="pane-accounts" role="tabpanel">
                 <div class="row g-4 mb-4">
                     <div class="col-lg-5">
                         <div class="desk-form-card h-100">
                             <h5 class="fw-bold text-primary mb-1">Register Student &amp; Issue Library Card</h5>
-                            <p class="small text-muted mb-3">Create a student account and generate their official CATC Library Card.</p>
+                            <p class="small text-muted mb-3">Once created, the student can immediately sign in on the Login Dashboard using their Username and Card ID / Password.</p>
 
                             <form id="createStudentAccountForm" onsubmit="createStudentAccountAndCard(event)">
                                 <div class="mb-2">
@@ -560,7 +582,7 @@
                                         <input type="text" id="newAccUsername" class="form-control form-control-sm" placeholder="e.g. msantos24" required>
                                     </div>
                                     <div class="col-6">
-                                        <label class="form-label small fw-semibold">Student No. / Card ID <span class="text-danger">*</span></label>
+                                        <label class="form-label small fw-semibold">Student No. / Card ID (Password) <span class="text-danger">*</span></label>
                                         <input type="text" id="newAccCardId" class="form-control form-control-sm" value="C24-000444" required>
                                     </div>
                                 </div>
@@ -574,6 +596,7 @@
                                             <option value="BS Accountancy">BS Accountancy</option>
                                             <option value="BS Business Administration">BS Business Administration</option>
                                             <option value="BS Computer Engineering">BS Computer Engineering</option>
+                                            <option value="BS Electronics Engineering">BS Electronics Engineering</option>
                                         </select>
                                     </div>
                                     <div class="col-6">
@@ -605,105 +628,72 @@
                         </div>
                     </div>
 
-                    <!-- CATC OFFICIAL LIBRARY CARD PREVIEW + PRINT -->
                     <div class="col-lg-7">
-                        <div class="d-flex flex-column justify-content-between h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
                             <div>
-                                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
-                                    <div>
-                                        <h5 class="fw-bold text-primary mb-0">Official CATC Library Card Preview</h5>
-                                        <small class="text-muted">Click <strong>View / Print Card</strong> on any student row below or print this card directly.</small>
-                                    </div>
-                                    <button type="button" class="btn btn-sm btn-gold rounded-pill px-3" onclick="window.print()">
-                                        <i class="bi bi-printer-fill me-1"></i> Print Library Card
-                                    </button>
-                                </div>
-
-                                <div id="printableLibraryCardArea" class="mb-3">
-                                    <div class="catc-library-card">
-                                        <div class="catc-card-header">
-                                            <div class="d-flex align-items-center gap-2">
-                                                <img src="/images/catc-logo.jpg" alt="CATC Logo">
-                                                <div>
-                                                    <div class="fw-bold lh-1" style="font-size: 0.92rem;">COMPUTER ARTS &amp; TECHNOLOGICAL COLLEGE</div>
-                                                    <small class="text-warning fw-semibold" style="font-size: 0.72rem;">OFFICIAL STUDENT LIBRARY CARD</small>
-                                                </div>
-                                            </div>
-                                            <span class="badge bg-warning text-dark fw-bold">SY 2026–2027</span>
-                                        </div>
-
-                                        <div class="catc-card-body">
-                                            <div class="d-flex gap-3 align-items-center">
-                                                <div class="catc-card-photo-box">
-                                                    <i class="bi bi-person-fill" style="font-size: 2.3rem;"></i>
-                                                    <span style="font-size: 0.62rem; font-weight: 700;">CARD HOLDER</span>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <div class="small text-muted text-uppercase fw-bold" style="font-size: 0.68rem;">Student Name</div>
-                                                    <div class="fw-bold fs-5 text-dark lh-sm mb-1" id="previewCardHolder">Jay Lauro Basquiñas</div>
-                                                    <div class="small fw-semibold text-primary mb-2" id="previewCardCourseYear">BS Information Technology &bull; 3rd Year</div>
-                                                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
-                                                        <div>
-                                                            <div class="small text-muted" style="font-size: 0.68rem;">LIBRARY CARD / STUDENT NO.</div>
-                                                            <span class="catc-card-barcode" id="previewCardNumber">C24-000111</span>
-                                                        </div>
-                                                        <div class="text-end">
-                                                            <div class="small text-muted" style="font-size: 0.68rem;">PORTAL USERNAME</div>
-                                                            <div class="fw-bold text-dark small" id="previewCardUser">@jaylauro</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="catc-card-footer">
-                                            <span id="previewCardIssued">Date Issued: 2026-11-22</span>
-                                            <span>Authorized by: <strong class="text-warning" id="previewCardLibrarian">CATC Head Librarian</strong></span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h5 class="fw-bold text-primary mb-0">Official CATC Library Card Preview</h5>
+                                <small class="text-muted">Click <strong>Preview Card</strong> on any registered student below, then print or issue.</small>
                             </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="window.print()">
+                                <i class="bi bi-printer me-1"></i> Print Card
+                            </button>
+                        </div>
 
-                            <div class="small bg-light border rounded-3 p-3 text-muted">
-                                <strong class="text-dark"><i class="bi bi-file-earmark-lock2 me-1 text-primary"></i> Registry File Storage:</strong>
-                                Seeded student accounts from <code>/api/students</code> and newly registered card holders are saved in <code>catc_registered_students_registry_v1</code> and can be exported anytime as <code>.json</code>.
+                        <div id="printableLibraryCardArea">
+                            <div class="catc-library-card">
+                                <div class="catc-card-header">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img src="/images/catc-logo.jpg" alt="CATC Logo">
+                                        <div>
+                                            <div class="fw-bold small text-uppercase" style="letter-spacing: 0.04em;">Computer Arts Technological College</div>
+                                            <div class="small text-warning fw-semibold">OFFICIAL STUDENT LIBRARY CARD</div>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-success rounded-pill px-3" id="cardStatusBadge">ACTIVE</span>
+                                </div>
+                                <div class="catc-card-body">
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <div class="catc-card-photo-box">
+                                            <i class="bi bi-person-fill fs-2"></i>
+                                            <small class="fw-bold" style="font-size: 0.65rem;">CATC ID</small>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold fs-5 text-dark" id="cardHolderName">Jay Lauro Basquiñas</div>
+                                            <div class="small text-muted" id="cardHolderCourseYear">BS Information Technology &bull; 3rd Year</div>
+                                            <div class="small mt-1"><strong>Card No.:</strong> <span id="cardHolderNo">C24-000111</span> &bull; <strong>User:</strong> <span id="cardHolderUser">jaylauro</span></div>
+                                            <div class="small text-muted" id="cardHolderContactEmail">+63 917 555 0148 &bull; jaylauro@catc.edu.ph</div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
+                                        <span class="catc-card-barcode" id="cardHolderBarcode">C24-000111</span>
+                                        <small class="text-muted">Issued: <span id="cardIssuedDate">2026-11-23</span></small>
+                                    </div>
+                                </div>
+                                <div class="catc-card-footer">
+                                    <span>Present card at CATC Library Circulation Desk</span>
+                                    <span class="text-warning fw-semibold">BookWebCATC</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Master Registered Students & Issued Library Card File -->
-                <div class="registry-file-box">
-                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-                        <div>
-                            <h5 class="fw-bold text-dark mb-0">
-                                <i class="bi bi-archive-fill text-warning me-2"></i>Registered Student Accounts &amp; Issued Library Card File
-                            </h5>
-                            <small class="text-muted">Fixed master directory of CATC student accounts and issued library cards</small>
-                        </div>
-                        <div class="d-flex flex-wrap gap-2">
-                            <input type="text" id="registrySearchInput" class="form-control form-control-sm" style="width: 220px;"
-                                   placeholder="Search name, username, card no..." oninput="renderStudentRegistry()">
-                            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="exportRegistryJson()">
-                                <i class="bi bi-download me-1"></i> Export Registry (.json)
-                            </button>
-                        </div>
-                    </div>
-
+                <!-- Registered Student Accounts & Card Registry Table -->
+                <div class="mt-4">
+                    <h6 class="fw-bold text-primary mb-2">Registered Student Accounts &amp; Library Card Directory</h6>
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0 bg-white rounded-3 overflow-hidden">
+                        <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                             <tr>
                                 <th>Card / Student No.</th>
-                                <th>Student Name</th>
-                                <th>Username</th>
+                                <th>Student Name &amp; Username</th>
                                 <th>Course &amp; Year</th>
                                 <th>Contact &amp; Email</th>
                                 <th>Card Status</th>
-                                <th class="text-end">Library Card &amp; Desk</th>
+                                <th class="text-end">Card Actions</th>
                             </tr>
                             </thead>
-                            <tbody id="studentRegistryTableBody"></tbody>
+                            <tbody id="studentDirectoryTableBody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -712,42 +702,131 @@
     </div>
 </div>
 
+<!-- Sync Notification -->
+<div id="syncToast" class="sync-toast" role="status">
+    <i class="bi bi-check-circle-fill text-success fs-5"></i>
+    <span id="syncToastText">Catalog synced with Student Dashboard</span>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const REGISTRY_STORAGE_KEY = "catc_registered_students_registry_v1";
-    const CATALOG_STORAGE_KEY = "catc_librarian_catalog_v1";
-    const BORROW_LOG_STORAGE_KEY = "catc_borrow_log_v1";
+    const SHARED_CATALOG_KEY = "bookwebcatc_shared_books_v1";
+    const BORROW_LOG_KEY = "bookwebcatc_borrow_logs_v1";
+    const STUDENT_CARDS_KEY = "bookwebcatc_student_cards_v1";
+    const REGISTERED_ACCOUNTS_KEY = "bookwebcatc_registered_accounts_v1";
+    const ACTIVE_SESSION_KEY = "bookwebcatc_active_user_v1";
 
-    const defaultStudents = [
-        { fullName: "Jay Lauro Basquiñas", username: "jaylauro", cardId: "C24-000111", course: "BS Information Technology", yearLevel: "3rd Year", contact: "+63 917 555 0101", email: "jaylauro@catc.edu.ph", status: "ACTIVE", issuedDate: "2026-10-01" },
-        { fullName: "Sean Rashid Baliza", username: "seanbaliza", cardId: "C24-000222", course: "BS Information Technology", yearLevel: "3rd Year", contact: "+63 917 555 0102", email: "seanbaliza@catc.edu.ph", status: "ACTIVE", issuedDate: "2026-10-01" },
-        { fullName: "Jade Bernal", username: "jadebernal", cardId: "C24-000333", course: "BS Information Technology", yearLevel: "3rd Year", contact: "+63 917 555 0103", email: "jadebernal@catc.edu.ph", status: "ACTIVE", issuedDate: "2026-10-01" }
+    const DEFAULT_60_BOOKS = [
+        { id: "BK-001", accessionCode: "ACC-CS-001", isbn: "978-0132350884", title: "Clean Code: A Handbook of Agile Software Craftsmanship", author: "Robert C. Martin", category: "Computer Science & IT", editionTag: "CLEAN CODE / 1ST ED", description: "A handbook of agile software craftsmanship and clean coding practices.", status: "AVAILABLE" },
+        { id: "BK-002", accessionCode: "ACC-CS-002", isbn: "978-1617292545", title: "Spring Boot in Action", author: "Craig Walls", category: "Computer Science & IT", editionTag: "SPRING BOOT / ENTERPRISE", description: "Building production-ready Java applications with Spring Boot.", status: "AVAILABLE" },
+        { id: "BK-003", accessionCode: "ACC-CS-003", isbn: "978-0262033848", title: "Introduction to Algorithms", author: "Thomas H. Cormen", category: "Computer Science & IT", editionTag: "ALGORITHMS / 3RD ED", description: "Comprehensive guide to algorithms, data structures, and complexity analysis.", status: "CHECKED OUT" },
+        { id: "BK-004", accessionCode: "ACC-CS-004", isbn: "978-0201633610", title: "Design Patterns: Elements of Reusable Object-Oriented Software", author: "Erich Gamma et al.", category: "Computer Science & IT", editionTag: "OOP / DESIGN PATTERNS", description: "Classic object-oriented software design patterns reference.", status: "AVAILABLE" },
+        { id: "BK-005", accessionCode: "ACC-CS-005", isbn: "978-0078022159", title: "Database System Concepts", author: "Abraham Silberschatz", category: "Computer Science & IT", editionTag: "DBMS / RELATIONAL SQL", description: "Relational databases, indexing, transactions, and storage architecture.", status: "AVAILABLE" },
+        { id: "BK-006", accessionCode: "ACC-CS-006", isbn: "978-0133594140", title: "Computer Networking: A Top-Down Approach", author: "James F. Kurose", category: "Computer Science & IT", editionTag: "NETWORKING / TCP-IP", description: "Internet protocols from application layer down to physical link.", status: "CHECKED OUT" },
+        { id: "BK-007", accessionCode: "ACC-CS-007", isbn: "978-1118063330", title: "Operating System Concepts", author: "Abraham Silberschatz", category: "Computer Science & IT", editionTag: "OS / CONCURRENCY", description: "Process scheduling, memory management, file systems, and synchronization.", status: "AVAILABLE" },
+        { id: "BK-008", accessionCode: "ACC-CS-008", isbn: "978-0134685991", title: "Effective Java", author: "Joshua Bloch", category: "Computer Science & IT", editionTag: "JAVA / BEST PRACTICES", description: "Essential idioms and best practices for modern Java programming.", status: "AVAILABLE" },
+        { id: "BK-009", accessionCode: "ACC-CS-009", isbn: "978-1118008188", title: "Web Development with HTML, CSS, and JavaScript", author: "Jon Duckett", category: "Computer Science & IT", editionTag: "WEB DEV / FRONTEND", description: "Foundational web markup, styling, and interactive scripting.", status: "AVAILABLE" },
+        { id: "BK-010", accessionCode: "ACC-CS-010", isbn: "978-0134610993", title: "Artificial Intelligence: A Modern Approach", author: "Stuart Russell & Peter Norvig", category: "Computer Science & IT", editionTag: "AI / SEARCH & LOGIC", description: "Intelligent agents, problem solving, and machine learning foundations.", status: "AVAILABLE" },
+        { id: "BK-011", accessionCode: "ACC-BA-011", isbn: "978-9719814011", title: "Intermediate Accounting Vol. 1", author: "Conrado T. Robles", category: "Business & Accountancy", editionTag: "ACCOUNTING / VOL 1", description: "Financial accounting standards, cash, receivables, and inventory.", status: "AVAILABLE" },
+        { id: "BK-012", accessionCode: "ACC-BA-012", isbn: "978-9719814028", title: "Intermediate Accounting Vol. 2", author: "Conrado T. Robles", category: "Business & Accountancy", editionTag: "ACCOUNTING / VOL 2", description: "Non-current assets, liabilities, equity, and financial reporting.", status: "CHECKED OUT" },
+        { id: "BK-013", accessionCode: "ACC-BA-013", isbn: "978-0134472454", title: "Principles of Marketing", author: "Philip Kotler & Gary Armstrong", category: "Business & Accountancy", editionTag: "MARKETING / STRATEGY", description: "Customer value creation, market segmentation, and brand positioning.", status: "AVAILABLE" },
+        { id: "BK-014", accessionCode: "ACC-BA-014", isbn: "978-9719815100", title: "Cost Accounting: Principles and Applications", author: "Esteban B. Cabrera", category: "Business & Accountancy", editionTag: "COST ACCTG / JOB-PROCESS", description: "Product costing systems, overhead allocation, and variance analysis.", status: "AVAILABLE" },
+        { id: "BK-015", accessionCode: "ACC-BA-015", isbn: "978-1337902656", title: "Financial Management", author: "Eugene F. Brigham", category: "Business & Accountancy", editionTag: "FINANCE / VALUATION", description: "Capital budgeting, cost of capital, and corporate financial decisions.", status: "AVAILABLE" },
+        { id: "BK-016", accessionCode: "ACC-BA-016", isbn: "978-9719816015", title: "Auditing and Assurance Principles", author: "Win Ballada", category: "Business & Accountancy", editionTag: "AUDITING / ASSURANCE", description: "Audit risk, internal controls, evidence, and assurance standards.", status: "CHECKED OUT" },
+        { id: "BK-017", accessionCode: "ACC-BA-017", isbn: "978-9719816022", title: "Fundamentals of Accountancy, Business, and Management", author: "Win Ballada", category: "Business & Accountancy", editionTag: "FABM / FOUNDATIONS", description: "Basic accounting cycle and business management principles.", status: "AVAILABLE" },
+        { id: "BK-018", accessionCode: "ACC-BA-018", isbn: "978-0134207117", title: "Strategic Management", author: "Fred R. David", category: "Business & Accountancy", editionTag: "STRATEGY / COMPETITIVE", description: "Formulating, implementing, and evaluating organizational strategy.", status: "AVAILABLE" },
+        { id: "BK-019", accessionCode: "ACC-BA-019", isbn: "978-9719817012", title: "Income Taxation Laws and Principles", author: "Rex B. Banggawan", category: "Business & Accountancy", editionTag: "TAXATION / INCOME TAX", description: "Principles and rules governing individual and corporate income taxation.", status: "AVAILABLE" },
+        { id: "BK-020", accessionCode: "ACC-BA-020", isbn: "978-9719818019", title: "Business Law and Obligations & Contracts", author: "Hector S. De Leon", category: "Business & Accountancy", editionTag: "LAW / OBLIGATIONS", description: "Commercial law concepts, obligations, and binding contracts.", status: "AVAILABLE" },
+        { id: "BK-021", accessionCode: "ACC-EM-021", isbn: "978-1260411355", title: "Engineering Economy", author: "Leland Blank & Anthony Tarquin", category: "Engineering & Math", editionTag: "ENG ECON / TIME VALUE", description: "Present worth, annual worth, rate of return, and depreciation.", status: "AVAILABLE" },
+        { id: "BK-022", accessionCode: "ACC-EM-022", isbn: "978-0024001600", title: "Elementary Differential Equations", author: "Earl D. Rainville", category: "Engineering & Math", editionTag: "DIFF EQ / LINEAR ODE", description: "First-order and linear higher-order differential equations.", status: "AVAILABLE" },
+        { id: "BK-023", accessionCode: "ACC-EM-023", isbn: "978-0078028229", title: "Fundamentals of Electric Circuits", author: "Charles K. Alexander", category: "Engineering & Math", editionTag: "CIRCUITS / AC-DC", description: "Nodal/mesh analysis, AC steady state, and transient circuit response.", status: "CHECKED OUT" },
+        { id: "BK-024", accessionCode: "ACC-EM-024", isbn: "978-0201722024", title: "Calculus with Analytic Geometry", author: "Louis Leithold", category: "Engineering & Math", editionTag: "CALCULUS / LIMITS & INTEGRALS", description: "Differential and integral calculus with analytic geometry.", status: "AVAILABLE" },
+        { id: "BK-025", accessionCode: "ACC-EM-025", isbn: "978-0123944245", title: "Digital Design and Computer Architecture", author: "David Harris & Sarah Harris", category: "Engineering & Math", editionTag: "DIGITAL / LOGIC & CPU", description: "Combinational/sequential logic and processor microarchitecture.", status: "AVAILABLE" },
+        { id: "BK-026", accessionCode: "ACC-EM-026", isbn: "978-0199339136", title: "Microelectronic Circuits", author: "Adel S. Sedra & Kenneth C. Smith", category: "Engineering & Math", editionTag: "ELECTRONICS / DEVICES", description: "Diodes, BJTs, MOSFETs, and analog amplifier circuits.", status: "AVAILABLE" },
+        { id: "BK-027", accessionCode: "ACC-EM-027", isbn: "978-0980232776", title: "Linear Algebra and Its Applications", author: "Gilbert Strang", category: "Engineering & Math", editionTag: "LINEAR ALG / MATRICES", description: "Vector spaces, eigenvalues, orthogonality, and matrix factorizations.", status: "CHECKED OUT" },
+        { id: "BK-028", accessionCode: "ACC-EM-028", isbn: "978-0138147570", title: "Signals and Systems", author: "Alan V. Oppenheim", category: "Engineering & Math", editionTag: "SIGNALS / FOURIER & LAPLACE", description: "Continuous and discrete-time signals and LTI systems.", status: "AVAILABLE" },
+        { id: "BK-029", accessionCode: "ACC-EM-029", isbn: "978-1119442424", title: "Control Systems Engineering", author: "Norman S. Nise", category: "Engineering & Math", editionTag: "CONTROL / FEEDBACK", description: "Root locus, frequency response, and PID control design.", status: "AVAILABLE" },
+        { id: "BK-030", accessionCode: "ACC-EM-030", isbn: "978-0321629111", title: "Probability and Statistics for Engineers", author: "Ronald E. Walpole", category: "Engineering & Math", editionTag: "STATS / PROBABILITY", description: "Probability distributions, hypothesis testing, and regression.", status: "AVAILABLE" },
+        { id: "BK-031", accessionCode: "ACC-HL-031", isbn: "978-9715505104", title: "Kasaysayan ng Musikang Pilipino", author: "Antonio J. Molina", category: "Humanities & Literature", editionTag: "PH MUSIC / HISTORY", description: "Historical survey of Philippine music traditions and composers.", status: "AVAILABLE" },
+        { id: "BK-032", accessionCode: "ACC-HL-032", isbn: "978-9719801233", title: "The Life and Works of Jose Rizal", author: "Gregorio F. Zaide", category: "Humanities & Literature", editionTag: "RIZAL / BIOGRAPHY", description: "Biography, writings, and historical context of Jose Rizal.", status: "AVAILABLE" },
+        { id: "BK-033", accessionCode: "ACC-HL-033", isbn: "978-9719809987", title: "Readings in Philippine History", author: "John Lee P. Candelaria", category: "Humanities & Literature", editionTag: "PH HISTORY / PRIMARY SOURCES", description: "Primary source analysis across milestones of Philippine history.", status: "CHECKED OUT" },
+        { id: "BK-034", accessionCode: "ACC-HL-034", isbn: "978-9719810013", title: "Purposive Communication", author: "Marilu R. Madrunio", category: "Humanities & Literature", editionTag: "COMM / ACADEMIC & WORK", description: "Oral, written, and multimodal communication across contexts.", status: "AVAILABLE" },
+        { id: "BK-035", accessionCode: "ACC-HL-035", isbn: "978-9719811027", title: "Art Appreciation: Introduction to the Humanities", author: "Menandro V. Mariano", category: "Humanities & Literature", editionTag: "HUMANITIES / VISUAL ARTS", description: "Elements, principles, and cultural meaning of the arts.", status: "AVAILABLE" },
+        { id: "BK-036", accessionCode: "ACC-HL-036", isbn: "978-9719802223", title: "Ethics: Principles of Moral Life in Society", author: "Ramon B. Agapay", category: "Humanities & Literature", editionTag: "ETHICS / MORAL PHILOSOPHY", description: "Foundational ethical frameworks and moral decision-making.", status: "AVAILABLE" },
+        { id: "BK-037", accessionCode: "ACC-HL-037", isbn: "978-9719812031", title: "Understanding the Self", author: "Eden Joy P. Alata", category: "Humanities & Literature", editionTag: "SELF / IDENTITY & SOCIETY", description: "Psychological, sociological, and cultural perspectives of the self.", status: "CHECKED OUT" },
+        { id: "BK-038", accessionCode: "ACC-HL-038", isbn: "978-9719812048", title: "Contemporary World Politics & Society", author: "Prince Kennex R. Aldama", category: "Humanities & Literature", editionTag: "GLOBAL / CONTEMPORARY", description: "Globalization, governance, and contemporary social dynamics.", status: "AVAILABLE" },
+        { id: "BK-039", accessionCode: "ACC-HL-039", isbn: "978-9715426324", title: "Philippine Literature: A Regional Anthology", author: "Bien Lumbera", category: "Humanities & Literature", editionTag: "LIT / REGIONAL ANTHOLOGY", description: "Curated literary works from diverse Philippine regions.", status: "AVAILABLE" },
+        { id: "BK-040", accessionCode: "ACC-HL-040", isbn: "978-1285197363", title: "Critical Thinking and Logic", author: "Patrick J. Hurley", category: "Humanities & Literature", editionTag: "LOGIC / DEDUCTIVE-INDUCTIVE", description: "Argument evaluation, informal fallacies, and formal logic.", status: "AVAILABLE" },
+        { id: "BK-041", accessionCode: "ACC-SH-041", isbn: "978-0135159552", title: "University Physics with Modern Physics", author: "Hugh D. Young & Roger A. Freedman", category: "Science & Health", editionTag: "PHYSICS / MECHANICS & OPTICS", description: "Calculus-based mechanics, thermodynamics, electromagnetism, and modern physics.", status: "AVAILABLE" },
+        { id: "BK-042", accessionCode: "ACC-SH-042", isbn: "978-0134414232", title: "Chemistry: The Central Science", author: "Theodore L. Brown", category: "Science & Health", editionTag: "CHEMISTRY / GENERAL", description: "Atomic structure, chemical bonding, stoichiometry, and kinetics.", status: "AVAILABLE" },
+        { id: "BK-043", accessionCode: "ACC-SH-043", isbn: "978-0134093413", title: "Campbell Biology", author: "Lisa A. Urry et al.", category: "Science & Health", editionTag: "BIOLOGY / CELL & GENETICS", description: "Cellular biology, genetics, evolution, and ecology.", status: "CHECKED OUT" },
+        { id: "BK-044", accessionCode: "ACC-SH-044", isbn: "978-0134394954", title: "Anatomy and Physiology Essentials", author: "Elaine N. Marieb", category: "Science & Health", editionTag: "ANATOMY / HUMAN SYSTEMS", description: "Structure and function of human organ systems.", status: "AVAILABLE" },
+        { id: "BK-045", accessionCode: "ACC-SH-045", isbn: "978-1319059620", title: "Environmental Science for a Changing World", author: "Susan Karr", category: "Science & Health", editionTag: "ENV SCI / SUSTAINABILITY", description: "Ecosystems, resource management, and environmental sustainability.", status: "AVAILABLE" },
+        { id: "BK-046", accessionCode: "ACC-SH-046", isbn: "978-0134688640", title: "Microbiology: An Introduction", author: "Gerard J. Tortora", category: "Science & Health", editionTag: "MICROBIO / PATHOGENS", description: "Microbial metabolism, genetics, and host-pathogen interactions.", status: "AVAILABLE" },
+        { id: "BK-047", accessionCode: "ACC-SH-047", isbn: "978-0134042282", title: "Organic Chemistry", author: "Paula Yurkanis Bruice", category: "Science & Health", editionTag: "ORG CHEM / SYNTHESIS", description: "Functional groups, reaction mechanisms, and stereochemistry.", status: "CHECKED OUT" },
+        { id: "BK-048", accessionCode: "ACC-SH-048", isbn: "978-0323462129", title: "Health Informatics and Digital Care", author: "Nancy Staggers", category: "Science & Health", editionTag: "HEALTH IT / CLINICAL DATA", description: "Health information systems, clinical data, and digital care.", status: "AVAILABLE" },
+        { id: "BK-049", accessionCode: "ACC-SH-049", isbn: "978-0805376017", title: "Biochemistry Concepts and Connections", author: "Dean R. Appling", category: "Science & Health", editionTag: "BIOCHEM / METABOLISM", description: "Biomolecules, enzyme catalysis, and metabolic pathways.", status: "AVAILABLE" },
+        { id: "BK-050", accessionCode: "ACC-SH-050", isbn: "978-9719819016", title: "Occupational Safety and Health Standards", author: "DOLE Technical Guide", category: "Science & Health", editionTag: "OSH / WORKPLACE SAFETY", description: "Workplace hazard control, safety compliance, and health standards.", status: "AVAILABLE" },
+        { id: "BK-051", accessionCode: "ACC-RF-051", isbn: "978-0877798095", title: "Merriam-Webster Collegiate Dictionary", author: "Merriam-Webster Inc.", category: "Reference & Dictionaries", editionTag: "DICTIONARY / COLLEGIATE", description: "Authoritative English definitions, etymologies, and usage notes.", status: "AVAILABLE" },
+        { id: "BK-052", accessionCode: "ACC-RF-052", isbn: "978-0199571123", title: "Oxford Dictionary of English", author: "Angus Stevenson", category: "Reference & Dictionaries", editionTag: "DICTIONARY / OXFORD", description: "Comprehensive reference dictionary of contemporary English.", status: "AVAILABLE" },
+        { id: "BK-053", accessionCode: "ACC-RF-053", isbn: "978-1433832161", title: "APA Publication Manual (7th Edition)", author: "American Psychological Association", category: "Reference & Dictionaries", editionTag: "STYLE GUIDE / APA 7TH", description: "Citation rules, academic formatting, and scholarly writing guide.", status: "CHECKED OUT" },
+        { id: "BK-054", accessionCode: "ACC-RF-054", isbn: "978-1504475518", title: "IEEE Citation and Technical Writing Guide", author: "IEEE Editorial Board", category: "Reference & Dictionaries", editionTag: "STYLE GUIDE / IEEE", description: "Technical paper formatting and IEEE reference conventions.", status: "AVAILABLE" },
+        { id: "BK-055", accessionCode: "ACC-RF-055", isbn: "978-9719819504", title: "Diksyunaryong Wikang Filipino", author: "Komisyon sa Wikang Filipino", category: "Reference & Dictionaries", editionTag: "DICTIONARY / FILIPINO", description: "Standard Filipino dictionary and orthography reference.", status: "AVAILABLE" },
+        { id: "BK-056", accessionCode: "ACC-RF-056", isbn: "978-0226287058", title: "The Chicago Manual of Style", author: "University of Chicago Press", category: "Reference & Dictionaries", editionTag: "STYLE GUIDE / CHICAGO", description: "Editorial style, publishing standards, and citation manual.", status: "AVAILABLE" },
+        { id: "BK-057", accessionCode: "ACC-RF-057", isbn: "978-0470864128", title: "Encyclopedia of Computer Science", author: "Anthony Ralston", category: "Reference & Dictionaries", editionTag: "ENCYCLOPEDIA / COMPUTING", description: "Reference encyclopedia covering computing theory and systems.", status: "CHECKED OUT" },
+        { id: "BK-058", accessionCode: "ACC-RF-058", isbn: "978-1426219689", title: "World Atlas and Geographic Reference", author: "National Geographic Society", category: "Reference & Dictionaries", editionTag: "ATLAS / GEOGRAPHY", description: "Detailed world maps, geographic data, and regional profiles.", status: "AVAILABLE" },
+        { id: "BK-059", accessionCode: "ACC-RF-059", isbn: "978-1260010510", title: "Handbook of Mathematical Formulas", author: "Murray R. Spiegel", category: "Reference & Dictionaries", editionTag: "REFERENCE / MATH FORMULAS", description: "Quick reference formulas for algebra, calculus, and transforms.", status: "AVAILABLE" },
+        { id: "BK-060", accessionCode: "ACC-RF-060", isbn: "978-9719819993", title: "Academic Research & Thesis Formatting Manual", author: "CATC Library Reference Desk", category: "Reference & Dictionaries", editionTag: "THESIS / CATC MANUAL", description: "Institutional guide for capstone, research, and thesis manuscripts.", status: "AVAILABLE" }
     ];
 
-    const defaultBooks = [
-        { id: 1, accessionCode: "CATC-BK-001", isbn: "978-1-0001-01", title: "Effective Java (3rd Edition)", author: "Joshua Bloch", category: "Computer Science & IT", status: "AVAILABLE", editionTag: "JAVA / 3RD ED", description: "Best practices for Java programming and API design." },
-        { id: 2, accessionCode: "CATC-BK-002", isbn: "978-1-0001-02", title: "Spring Boot in Action", author: "Craig Walls", category: "Computer Science & IT", status: "AVAILABLE", editionTag: "SPRING / WEB", description: "Building enterprise web applications with Spring Boot." },
-        { id: 3, accessionCode: "CATC-BK-003", isbn: "978-1-0001-03", title: "Intermediate Accounting Vol. 1", author: "Zeus Vernon B. Millan", category: "Business & Accountancy", status: "AVAILABLE", editionTag: "BSA / ACCTG", description: "Financial accounting standards and reporting." },
-        { id: 4, accessionCode: "CATC-BK-004", isbn: "978-1-0001-04", title: "Engineering Economy & Differential Equations", author: "Hipolito Sta. Maria", category: "Engineering & Math", status: "CHECKED OUT", editionTag: "ENGG / MATH", description: "Engineering economy and differential equations reference." }
+    const DEFAULT_STUDENT_CARDS = [
+        { cardId: "C24-000111", fullName: "Jay Lauro Basquiñas", username: "jaylauro", password: "C24-000111", course: "BS Information Technology", yearLevel: "3rd Year", contact: "+63 917 555 0148", email: "jaylauro@catc.edu.ph", status: "ACTIVE", issuedDate: "2026-08-15" },
+        { cardId: "C24-000222", fullName: "Sean Rashid Baliza", username: "seanbaliza", password: "C24-000222", course: "BS Information Technology", yearLevel: "3rd Year", contact: "+63 917 555 0149", email: "seanbaliza@catc.edu.ph", status: "ACTIVE", issuedDate: "2026-08-15" },
+        { cardId: "C24-000333", fullName: "Jade Bernal", username: "jadebernal", password: "C24-000333", course: "BS Information Technology", yearLevel: "3rd Year", contact: "+63 917 555 0150", email: "jadebernal@catc.edu.ph", status: "ACTIVE", issuedDate: "2026-08-15" }
     ];
 
-    let studentRegistry = loadFromStorage(REGISTRY_STORAGE_KEY, defaultStudents);
-    let catalogBooks = loadFromStorage(CATALOG_STORAGE_KEY, defaultBooks);
-    let borrowLogs = loadFromStorage(BORROW_LOG_STORAGE_KEY, []);
+    const DEFAULT_BORROW_LOGS = [
+        { logId: "BRW-101", studentName: "Jay Lauro Basquiñas", studentNo: "C24-000111", bookId: "BK-003", bookTitle: "Introduction to Algorithms", accessionCode: "ACC-CS-003", borrowDate: "2026-11-16", returnDate: "2026-11-26", status: "CHECKED OUT" },
+        { logId: "BRW-102", studentName: "Sean Rashid Baliza", studentNo: "C24-000222", bookId: "BK-006", bookTitle: "Computer Networking: A Top-Down Approach", accessionCode: "ACC-CS-006", borrowDate: "2026-11-17", returnDate: "2026-11-27", status: "CHECKED OUT" },
+        { logId: "BRW-103", studentName: "Jade Bernal", studentNo: "C24-000333", bookId: "BK-001", bookTitle: "Clean Code: A Handbook of Agile Software Craftsmanship", accessionCode: "ACC-CS-001", borrowDate: "2026-11-05", returnDate: "2026-11-14", status: "RETURNED" }
+    ];
 
-    function loadFromStorage(key, fallback) {
+    function loadStorage(key, fallback) {
         try {
             const raw = localStorage.getItem(key);
-            return raw ? JSON.parse(raw) : structuredClone(fallback);
+            if (!raw) {
+                localStorage.setItem(key, JSON.stringify(fallback));
+                return JSON.parse(JSON.stringify(fallback));
+            }
+            const parsed = JSON.parse(raw);
+            return Array.isArray(parsed) ? parsed : JSON.parse(JSON.stringify(fallback));
         } catch (e) {
-            return structuredClone(fallback);
+            return JSON.parse(JSON.stringify(fallback));
         }
     }
 
-    function saveAllState() {
-        localStorage.setItem(REGISTRY_STORAGE_KEY, JSON.stringify(studentRegistry));
-        localStorage.setItem(CATALOG_STORAGE_KEY, JSON.stringify(catalogBooks));
-        localStorage.setItem(BORROW_LOG_STORAGE_KEY, JSON.stringify(borrowLogs));
+    function saveSharedBooks(updatedBooks) {
+        localStorage.setItem(SHARED_CATALOG_KEY, JSON.stringify(updatedBooks));
+        window.dispatchEvent(new Event("catcCatalogUpdated"));
+    }
+
+    let books = loadStorage(SHARED_CATALOG_KEY, DEFAULT_60_BOOKS);
+    let borrowLogs = loadStorage(BORROW_LOG_KEY, DEFAULT_BORROW_LOGS);
+    let studentCards = loadStorage(STUDENT_CARDS_KEY, DEFAULT_STUDENT_CARDS);
+    let toastTimer = null;
+
+    function clearLocalSession() {
+        localStorage.removeItem(ACTIVE_SESSION_KEY);
+    }
+
+    function showToast(msg) {
+        const el = document.getElementById("syncToast");
+        const txt = document.getElementById("syncToastText");
+        if (!el || !txt) return;
+        txt.textContent = msg;
+        el.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove("show"), 3400);
     }
 
     function showAlert(msg, type = "success") {
@@ -762,242 +841,232 @@
         document.getElementById("alertBox").classList.add("d-none");
     }
 
-    async function logoutLibrarian() {
-        try {
-            await fetch("/logout", { method: "POST" });
-        } catch (e) {
-            // ignore network error and redirect to login
-        }
-        window.location.href = "/Login_View.html";
+    function escapeHtml(val) {
+        return String(val ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
     }
 
-    async function loadLibrarianSessionAndStudents() {
-        try {
-            const meRes = await fetch("/api/me");
-            if (meRes.ok) {
-                const me = await meRes.json();
-                if (me && me.fullName) {
-                    document.getElementById("librarianNameNav").textContent = me.fullName;
-                    document.getElementById("previewCardLibrarian").textContent = me.fullName;
-                }
-            }
-        } catch (err) {
-            console.error("Failed to fetch /api/me:", err);
-        }
-
-        try {
-            const stuRes = await fetch("/api/students");
-            if (stuRes.ok) {
-                const apiStudents = await stuRes.json();
-                if (Array.isArray(apiStudents)) {
-                    apiStudents.forEach((s, idx) => {
-                        const exists = studentRegistry.some(r => r.username.toLowerCase() === String(s.username || "").toLowerCase());
-                        if (!exists && s.username) {
-                            studentRegistry.push({
-                                fullName: s.fullName || s.username,
-                                username: s.username,
-                                cardId: `C24-000${(idx + 1) * 111}`,
-                                course: "BS Information Technology",
-                                yearLevel: "3rd Year",
-                                contact: "+63 917 555 0100",
-                                email: `${s.username}@catc.edu.ph`,
-                                status: "ACTIVE",
-                                issuedDate: new Date().toISOString().slice(0, 10)
-                            });
-                        }
-                    });
-                    saveAllState();
-                    refreshAllViews();
-                }
-            }
-        } catch (err) {
-            console.error("Failed to fetch /api/students:", err);
-        }
+    function isBookAvailable(status) {
+        return (status || "").toUpperCase().trim() === "AVAILABLE";
     }
 
-    function setDefaultDates() {
-        const today = new Date().toISOString().slice(0, 10);
-        const due = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
-        document.getElementById("borrowDate").value = today;
-        document.getElementById("returnDueDate").value = due;
-    }
-
-    function updateKpis() {
-        const total = catalogBooks.length;
-        const available = catalogBooks.filter(b => b.status === "AVAILABLE").length;
-        const checkedOut = catalogBooks.filter(b => b.status === "CHECKED OUT").length;
+    function updateKPIs() {
+        const total = books.length;
+        const available = books.filter(b => isBookAvailable(b.status)).length;
+        const checkedOut = total - available;
 
         document.getElementById("kpiTotalBooks").textContent = total;
         document.getElementById("kpiAvailable").textContent = available;
         document.getElementById("kpiCheckedOut").textContent = checkedOut;
-        document.getElementById("kpiCardsIssued").textContent = studentRegistry.length;
+        document.getElementById("kpiCardsIssued").textContent = studentCards.length;
     }
 
-    function populateBorrowBookSelect() {
-        const select = document.getElementById("borrowBookSelect");
-        const availableBooks = catalogBooks.filter(b => b.status === "AVAILABLE");
-        if (availableBooks.length === 0) {
-            select.innerHTML = `<option value="">No AVAILABLE books on shelf</option>`;
-            return;
-        }
-        select.innerHTML = availableBooks.map(b =>
-            `<option value="${b.id}">${b.accessionCode} — ${b.title}</option>`
-        ).join("");
-    }
-
-    function populateQuickStudentPicker() {
+    /* ---------------- BORROWING & RETURNS ---------------- */
+    function populateBorrowerPicker() {
         const picker = document.getElementById("quickStudentPicker");
         picker.innerHTML = `<option value="">-- Enter manually or select registered student --</option>` +
-            studentRegistry.map((s, i) =>
-                `<option value="${i}">${s.fullName} (${s.cardId} / @${s.username})</option>`
-            ).join("");
+            studentCards.map(s => `<option value="${escapeHtml(s.cardId)}">${escapeHtml(s.fullName)} (${escapeHtml(s.cardId)})</option>`).join("");
     }
 
     function autofillBorrowerFromDirectory() {
-        const idx = document.getElementById("quickStudentPicker").value;
-        if (idx === "") return;
-        const student = studentRegistry[Number(idx)];
+        const cardId = document.getElementById("quickStudentPicker").value;
+        const student = studentCards.find(s => s.cardId === cardId);
         if (!student) return;
         document.getElementById("borrowStudentName").value = student.fullName;
         document.getElementById("borrowStudentNo").value = student.cardId;
     }
 
+    function populateAvailableBookSelect() {
+        const select = document.getElementById("borrowBookSelect");
+        const availableBooks = books.filter(b => isBookAvailable(b.status));
+        if (!availableBooks.length) {
+            select.innerHTML = `<option value="">No available books on shelf</option>`;
+            return;
+        }
+        select.innerHTML = availableBooks.map(b =>
+            `<option value="${escapeHtml(b.id)}">[${escapeHtml(b.accessionCode)}] ${escapeHtml(b.title)}</option>`
+        ).join("");
+    }
+
     function recordPhysicalBorrow(e) {
         e.preventDefault();
-        const bookId = Number(document.getElementById("borrowBookSelect").value);
-        const book = catalogBooks.find(b => b.id === bookId);
-        if (!book || book.status !== "AVAILABLE") {
-            showAlert("Selected book is not currently AVAILABLE.", "warning");
+        const studentName = document.getElementById("borrowStudentName").value.trim();
+        const studentNo = document.getElementById("borrowStudentNo").value.trim();
+        const bookId = document.getElementById("borrowBookSelect").value;
+        const borrowDate = document.getElementById("borrowDate").value;
+        const returnDate = document.getElementById("returnDueDate").value;
+
+        const bookIdx = books.findIndex(b => b.id === bookId);
+        if (bookIdx === -1) {
+            showAlert("Please select an available book.", "danger");
             return;
         }
 
-        const studentName = document.getElementById("borrowStudentName").value.trim();
-        const studentNo = document.getElementById("borrowStudentNo").value.trim();
-        const borrowDate = document.getElementById("borrowDate").value;
-        const returnDueDate = document.getElementById("returnDueDate").value;
+        books[bookIdx].status = "CHECKED OUT";
+        books[bookIdx].borrowedBy = `${studentName} (${studentNo})`;
+        books[bookIdx].returnDate = returnDate;
+        saveSharedBooks(books);
 
-        book.status = "CHECKED OUT";
-        borrowLogs.unshift({
-            id: Date.now(),
+        const newLog = {
+            logId: "BRW-" + String(borrowLogs.length + 101),
             studentName,
             studentNo,
-            bookId: book.id,
-            bookTitle: book.title,
-            accessionCode: book.accessionCode,
+            bookId: books[bookIdx].id,
+            bookTitle: books[bookIdx].title,
+            accessionCode: books[bookIdx].accessionCode,
             borrowDate,
-            returnDueDate,
+            returnDate,
             status: "CHECKED OUT"
-        });
+        };
 
-        saveAllState();
+        borrowLogs.unshift(newLog);
+        localStorage.setItem(BORROW_LOG_KEY, JSON.stringify(borrowLogs));
+
         document.getElementById("physicalBorrowForm").reset();
-        setDefaultDates();
+        setDefaultBorrowDates();
         refreshAllViews();
-        showAlert(`Recorded physical borrow of "${book.title}" to ${studentName}.`);
+        showAlert(`Confirmed physical borrow of "${books[bookIdx].title}" to ${studentName}. Book is now UNAVAILABLE on Student Dashboard.`);
+        showToast(`"${books[bookIdx].title}" is now UNAVAILABLE on Student Dashboard`);
     }
 
     function markBookReturned(logId) {
-        const log = borrowLogs.find(item => item.id === logId);
-        if (!log) return;
-        log.status = "RETURNED";
-        const book = catalogBooks.find(b => b.id === log.bookId);
-        if (book) {
-            book.status = "AVAILABLE";
+        const logIdx = borrowLogs.findIndex(l => l.logId === logId);
+        if (logIdx === -1) return;
+
+        borrowLogs[logIdx].status = "RETURNED";
+        localStorage.setItem(BORROW_LOG_KEY, JSON.stringify(borrowLogs));
+
+        const bookIdx = books.findIndex(b => b.id === borrowLogs[logIdx].bookId);
+        if (bookIdx !== -1) {
+            books[bookIdx].status = "AVAILABLE";
+            delete books[bookIdx].borrowedBy;
+            delete books[bookIdx].returnDate;
+            saveSharedBooks(books);
         }
-        saveAllState();
+
         refreshAllViews();
-        showAlert(`"${log.bookTitle}" marked as RETURNED and set back to AVAILABLE.`);
+        showAlert(`Marked "${borrowLogs[logIdx].bookTitle}" as RETURNED and AVAILABLE on shelf.`);
+        showToast(`"${borrowLogs[logIdx].bookTitle}" is now AVAILABLE on Student Dashboard`);
     }
 
     function renderBorrowLog() {
-        const q = (document.getElementById("logSearchInput").value || "").trim().toLowerCase();
-        const st = document.getElementById("logStatusFilter").value;
         const tbody = document.getElementById("borrowLogTableBody");
+        const q = (document.getElementById("logSearchInput").value || "").trim().toLowerCase();
+        const statusFilter = document.getElementById("logStatusFilter").value;
 
-        const filtered = borrowLogs.filter(item => {
-            const matchSt = !st || item.status === st;
-            const matchQ = !q ||
-                item.studentName.toLowerCase().includes(q) ||
-                item.studentNo.toLowerCase().includes(q) ||
-                item.bookTitle.toLowerCase().includes(q);
-            return matchSt && matchQ;
+        const filtered = borrowLogs.filter(l => {
+            const matchesStatus = !statusFilter || l.status === statusFilter;
+            const hay = `${l.studentName} ${l.studentNo} ${l.bookTitle} ${l.accessionCode}`.toLowerCase();
+            return matchesStatus && (!q || hay.includes(q));
         });
 
-        if (filtered.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-4">No physical borrowing records yet.</td></tr>`;
+        if (!filtered.length) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-4">No borrowing records found.</td></tr>`;
             return;
         }
 
-        tbody.innerHTML = filtered.map(item => `
-            <tr>
-                <td>
-                    <div class="fw-semibold">${item.studentName}</div>
-                    <small class="text-muted">${item.studentNo}</small>
-                </td>
-                <td>
-                    <div class="fw-semibold">${item.bookTitle}</div>
-                    <small class="text-muted">${item.accessionCode}</small>
-                </td>
-                <td>${item.borrowDate}</td>
-                <td>${item.returnDueDate}</td>
-                <td>
-                    <span class="badge ${item.status === "CHECKED OUT" ? "bg-warning text-dark" : "bg-success"}">
-                        ${item.status}
-                    </span>
-                </td>
-                <td class="text-end">
-                    ${item.status === "CHECKED OUT"
-            ? `<button type="button" class="btn btn-sm btn-success rounded-pill px-3" onclick="markBookReturned(${item.id})">Mark Returned</button>`
-            : `<span class="small text-muted">Completed</span>`}
-                </td>
-            </tr>
-        `).join("");
+        tbody.innerHTML = filtered.map(l => {
+            const isCheckedOut = l.status === "CHECKED OUT";
+            return `
+                <tr>
+                    <td>
+                        <div class="fw-bold text-dark">${escapeHtml(l.studentName)}</div>
+                        <small class="text-muted">${escapeHtml(l.studentNo)}</small>
+                    </td>
+                    <td>
+                        <div class="fw-semibold">${escapeHtml(l.bookTitle)}</div>
+                        <small class="text-muted">${escapeHtml(l.accessionCode)}</small>
+                    </td>
+                    <td>${escapeHtml(l.borrowDate)}</td>
+                    <td>${escapeHtml(l.returnDate)}</td>
+                    <td>
+                        <span class="badge ${isCheckedOut ? "bg-warning text-dark" : "bg-success"} rounded-pill px-3">
+                            ${escapeHtml(l.status)}
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        ${isCheckedOut
+                ? `<button type="button" class="btn btn-sm btn-success rounded-pill px-3" onclick="markBookReturned('${escapeHtml(l.logId)}')">Mark Returned</button>`
+                : `<span class="text-muted small"><i class="bi bi-check2-all"></i> Returned</span>`
+            }
+                    </td>
+                </tr>`;
+        }).join("");
     }
 
-    function saveCatalogBook(e) {
+    /* ---------------- POST & UPDATE CATALOG ---------------- */
+    async function saveCatalogBook(e) {
         e.preventDefault();
         const editId = document.getElementById("editBookId").value;
-        const payload = {
-            accessionCode: document.getElementById("bookAccession").value.trim(),
-            isbn: document.getElementById("bookIsbn").value.trim(),
-            title: document.getElementById("bookTitle").value.trim(),
-            author: document.getElementById("bookAuthor").value.trim(),
-            category: document.getElementById("bookCategory").value,
-            status: document.getElementById("bookStatus").value,
-            editionTag: document.getElementById("bookEditionTag").value.trim(),
-            description: document.getElementById("bookDescription").value.trim()
-        };
+        const accessionCode = document.getElementById("bookAccession").value.trim();
+        const isbn = document.getElementById("bookIsbn").value.trim();
+        const title = document.getElementById("bookTitle").value.trim();
+        const author = document.getElementById("bookAuthor").value.trim();
+        const category = document.getElementById("bookCategory").value;
+        const status = document.getElementById("bookStatus").value;
+        const editionTag = document.getElementById("bookEditionTag").value.trim();
+        const description = document.getElementById("bookDescription").value.trim();
 
         if (editId) {
-            const idx = catalogBooks.findIndex(b => String(b.id) === String(editId));
+            const idx = books.findIndex(b => b.id === editId);
             if (idx !== -1) {
-                catalogBooks[idx] = { ...catalogBooks[idx], ...payload };
-                showAlert(`Updated catalog book "${payload.title}".`);
+                books[idx] = { ...books[idx], accessionCode, isbn, title, author, category, status, editionTag, description };
+                saveSharedBooks(books);
+                refreshAllViews();
+                resetCatalogForm();
+                showAlert(`Updated "${title}" in catalog.`);
+                showToast(`Updated "${title}" — synced to Student Dashboard`);
             }
-        } else {
-            catalogBooks.unshift({ id: Date.now(), ...payload });
-            showAlert(`Posted new book "${payload.title}" to catalog.`);
+            return;
         }
 
-        saveAllState();
-        resetCatalogForm();
+        const newBook = {
+            id: "BK-" + String(Date.now()).slice(-6),
+            accessionCode,
+            isbn,
+            title,
+            author,
+            category,
+            status,
+            editionTag,
+            description
+        };
+
+        books.unshift(newBook);
+        saveSharedBooks(books);
+
+        try {
+            await fetch("/api/books", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newBook)
+            });
+        } catch (err) {}
+
         refreshAllViews();
+        resetCatalogForm();
+        showAlert(`Posted new book "${title}" — live on Student Dashboard!`);
+        showToast(`Posted "${title}" — now visible on Student Dashboard`);
     }
 
-    function startEditBook(id) {
-        const book = catalogBooks.find(b => b.id === id);
-        if (!book) return;
-        document.getElementById("editBookId").value = book.id;
-        document.getElementById("bookAccession").value = book.accessionCode;
-        document.getElementById("bookIsbn").value = book.isbn;
-        document.getElementById("bookTitle").value = book.title;
-        document.getElementById("bookAuthor").value = book.author;
-        document.getElementById("bookCategory").value = book.category;
-        document.getElementById("bookStatus").value = book.status;
-        document.getElementById("bookEditionTag").value = book.editionTag;
-        document.getElementById("bookDescription").value = book.description;
+    function editCatalogBook(bookId) {
+        const b = books.find(item => item.id === bookId);
+        if (!b) return;
 
-        document.getElementById("catalogFormTitle").textContent = "Update Catalog Book";
+        document.getElementById("editBookId").value = b.id;
+        document.getElementById("bookAccession").value = b.accessionCode || "";
+        document.getElementById("bookIsbn").value = b.isbn || "";
+        document.getElementById("bookTitle").value = b.title || "";
+        document.getElementById("bookAuthor").value = b.author || "";
+        document.getElementById("bookCategory").value = b.category || "Computer Science & IT";
+        document.getElementById("bookStatus").value = isBookAvailable(b.status) ? "AVAILABLE" : "CHECKED OUT";
+        document.getElementById("bookEditionTag").value = b.editionTag || "";
+        document.getElementById("bookDescription").value = b.description || "";
+
+        document.getElementById("catalogFormTitle").textContent = "Update Existing Catalog Book";
         document.getElementById("saveBookBtn").innerHTML = `<i class="bi bi-save me-1"></i> Save Book Changes`;
         document.getElementById("cancelEditBookBtn").classList.remove("d-none");
     }
@@ -1010,163 +1079,222 @@
         document.getElementById("cancelEditBookBtn").classList.add("d-none");
     }
 
-    function renderCatalogTable() {
-        const q = (document.getElementById("catalogSearchInput").value || "").trim().toLowerCase();
-        const dept = document.getElementById("catalogDeptFilter").value;
-        const st = document.getElementById("catalogStatusFilter").value;
-        const tbody = document.getElementById("catalogTableBody");
-
-        const filtered = catalogBooks.filter(b => {
-            const matchDept = !dept || b.category === dept;
-            const matchSt = !st || b.status === st;
-            const matchQ = !q ||
-                b.title.toLowerCase().includes(q) ||
-                b.author.toLowerCase().includes(q) ||
-                b.accessionCode.toLowerCase().includes(q) ||
-                b.isbn.toLowerCase().includes(q);
-            return matchDept && matchSt && matchQ;
-        });
-
-        if (filtered.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">No books match your filter.</td></tr>`;
-            return;
-        }
-
-        tbody.innerHTML = filtered.map(b => `
-            <tr>
-                <td><strong>${b.accessionCode}</strong></td>
-                <td>
-                    <div class="fw-semibold">${b.title}</div>
-                    <small class="text-muted">${b.author} &bull; ${b.editionTag}</small>
-                </td>
-                <td><span class="badge bg-light text-dark border">${b.category}</span></td>
-                <td>
-                    <span class="badge ${b.status === "AVAILABLE" ? "bg-success" : "bg-warning text-dark"}">
-                        ${b.status}
-                    </span>
-                </td>
-                <td class="text-end">
-                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="startEditBook(${b.id})">
-                        <i class="bi bi-pencil-square me-1"></i> Edit
-                    </button>
-                </td>
-            </tr>
-        `).join("");
+    function deleteCatalogBook(bookId) {
+        const target = books.find(b => b.id === bookId);
+        if (!target) return;
+        books = books.filter(b => b.id !== bookId);
+        saveSharedBooks(books);
+        refreshAllViews();
+        showAlert(`Removed "${target.title}" from catalog.`, "warning");
+        showToast(`Removed "${target.title}" from Student Dashboard`);
     }
 
-    function createStudentAccountAndCard(e) {
+    function renderCatalogTable() {
+        const tbody = document.getElementById("catalogTableBody");
+        const q = (document.getElementById("catalogSearchInput").value || "").trim().toLowerCase();
+        const dept = document.getElementById("catalogDeptFilter").value;
+        const statusFilter = document.getElementById("catalogStatusFilter").value;
+
+        const filtered = books.filter(b => {
+            const matchesDept = !dept || b.category === dept;
+            const normStatus = isBookAvailable(b.status) ? "AVAILABLE" : "CHECKED OUT";
+            const matchesStatus = !statusFilter || normStatus === statusFilter;
+            const hay = `${b.accessionCode} ${b.title} ${b.author} ${b.category} ${b.isbn}`.toLowerCase();
+            return matchesDept && matchesStatus && (!q || hay.includes(q));
+        });
+
+        tbody.innerHTML = filtered.map(b => {
+            const avail = isBookAvailable(b.status);
+            return `
+                <tr>
+                    <td><span class="badge bg-light text-dark border">${escapeHtml(b.accessionCode)}</span></td>
+                    <td>
+                        <div class="fw-bold text-dark">${escapeHtml(b.title)}</div>
+                        <small class="text-muted">${escapeHtml(b.author)} &bull; ISBN: ${escapeHtml(b.isbn || "N/A")}</small>
+                    </td>
+                    <td><span class="small fw-semibold text-primary">${escapeHtml(b.category)}</span></td>
+                    <td>
+                        <span class="badge ${avail ? "bg-success" : "bg-danger"} rounded-pill px-3">
+                            ${avail ? "AVAILABLE" : "UNAVAILABLE"}
+                        </span>
+                    </td>
+                    <td class="text-end text-nowrap">
+                        <button type="button" class="btn btn-sm btn-outline-primary rounded-pill me-1" onclick="editCatalogBook('${escapeHtml(b.id)}')">Edit</button>
+                        <button type="button" class="btn btn-sm btn-outline-danger rounded-pill" onclick="deleteCatalogBook('${escapeHtml(b.id)}')" title="Delete">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>`;
+        }).join("");
+    }
+
+    /* ---------------- STUDENT ACCOUNTS & LIBRARY CARD REGISTRY ---------------- */
+    async function createStudentAccountAndCard(e) {
         e.preventDefault();
         const fullName = document.getElementById("newAccFullName").value.trim();
         const username = document.getElementById("newAccUsername").value.trim();
-        const cardId = document.getElementById("newAccCardId").value.trim().toUpperCase();
+        const cardId = document.getElementById("newAccCardId").value.trim();
         const course = document.getElementById("newAccCourse").value;
         const yearLevel = document.getElementById("newAccYear").value;
         const contact = document.getElementById("newAccContact").value.trim();
         const email = document.getElementById("newAccEmail").value.trim();
         const issuedDate = new Date().toISOString().slice(0, 10);
+        const defaultPassword = cardId;
 
-        const record = { fullName, username, cardId, course, yearLevel, contact, email, status: "ACTIVE", issuedDate };
-        studentRegistry.unshift(record);
-        saveAllState();
+        const newCard = {
+            cardId,
+            fullName,
+            username,
+            password: defaultPassword,
+            course,
+            yearLevel,
+            contact,
+            email,
+            status: "ACTIVE",
+            issuedDate
+        };
 
-        updateCardPreview(record);
+        studentCards.unshift(newCard);
+        localStorage.setItem(STUDENT_CARDS_KEY, JSON.stringify(studentCards));
+
+        const existingAccounts = loadStorage(REGISTERED_ACCOUNTS_KEY, []);
+        const filteredAccounts = existingAccounts.filter(acc => acc.username.toLowerCase() !== username.toLowerCase());
+        filteredAccounts.unshift({
+            username,
+            password: defaultPassword,
+            role: "STUDENT",
+            fullName,
+            cardId,
+            course,
+            yearLevel,
+            email
+        });
+        localStorage.setItem(REGISTERED_ACCOUNTS_KEY, JSON.stringify(filteredAccounts));
+
+        try {
+            await fetch("/api/users/register-student", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    fullName,
+                    username,
+                    password: defaultPassword
+                })
+            });
+        } catch (err) {}
+
         document.getElementById("createStudentAccountForm").reset();
-        refreshAllViews();
-        showAlert(`Registered ${fullName} (@${username}) with Library Card ${cardId}.`);
+        const nextNum = 444 + studentCards.length;
+        document.getElementById("newAccCardId").value = `C24-000${nextNum}`;
+
+        previewLibraryCard(cardId);
+        populateBorrowerPicker();
+        renderStudentDirectory();
+        updateKPIs();
+        showAlert(`Account created! Username: "${username}" | Password: "${defaultPassword}". Pwede na itong i-login agad sa Login Dashboard.`);
+        showToast(`Account "${username}" registered in database & ready for login!`);
     }
 
-    function updateCardPreview(student) {
-        if (!student) return;
-        document.getElementById("previewCardHolder").textContent = student.fullName;
-        document.getElementById("previewCardCourseYear").textContent = `${student.course} • ${student.yearLevel}`;
-        document.getElementById("previewCardNumber").textContent = student.cardId;
-        document.getElementById("previewCardUser").textContent = `@${student.username}`;
-        document.getElementById("previewCardIssued").textContent = `Date Issued: ${student.issuedDate}`;
-    }
-
-    function previewCardByIndex(idx) {
-        const s = studentRegistry[idx];
+    function previewLibraryCard(cardId) {
+        const s = studentCards.find(item => item.cardId === cardId);
         if (!s) return;
-        updateCardPreview(s);
-        document.getElementById("printableLibraryCardArea").scrollIntoView({ behavior: "smooth", block: "center" });
+
+        document.getElementById("cardHolderName").textContent = s.fullName;
+        document.getElementById("cardHolderCourseYear").textContent = `${s.course} • ${s.yearLevel}`;
+        document.getElementById("cardHolderNo").textContent = s.cardId;
+        document.getElementById("cardHolderUser").textContent = s.username;
+        document.getElementById("cardHolderContactEmail").textContent = `${s.contact} • ${s.email}`;
+        document.getElementById("cardHolderBarcode").textContent = s.cardId;
+        document.getElementById("cardIssuedDate").textContent = s.issuedDate;
+
+        const badge = document.getElementById("cardStatusBadge");
+        badge.textContent = s.status;
+        badge.className = `badge ${s.status === "ACTIVE" ? "bg-success" : "bg-secondary"} rounded-pill px-3`;
     }
 
-    function renderStudentRegistry() {
-        const q = (document.getElementById("registrySearchInput").value || "").trim().toLowerCase();
-        const tbody = document.getElementById("studentRegistryTableBody");
+    function toggleCardStatus(cardId) {
+        const idx = studentCards.findIndex(s => s.cardId === cardId);
+        if (idx === -1) return;
+        studentCards[idx].status = studentCards[idx].status === "ACTIVE" ? "SUSPENDED" : "ACTIVE";
+        localStorage.setItem(STUDENT_CARDS_KEY, JSON.stringify(studentCards));
+        renderStudentDirectory();
+        previewLibraryCard(cardId);
+    }
 
-        const filtered = studentRegistry.filter(s =>
-            !q ||
-            s.fullName.toLowerCase().includes(q) ||
-            s.username.toLowerCase().includes(q) ||
-            s.cardId.toLowerCase().includes(q)
-        );
-
-        if (filtered.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-4">No student records found.</td></tr>`;
-            return;
-        }
-
-        tbody.innerHTML = filtered.map((s, idx) => `
+    function renderStudentDirectory() {
+        const tbody = document.getElementById("studentDirectoryTableBody");
+        tbody.innerHTML = studentCards.map(s => `
             <tr>
-                <td><strong>${s.cardId}</strong></td>
-                <td class="fw-semibold">${s.fullName}</td>
-                <td><code>@${s.username}</code></td>
-                <td>${s.course} &bull; <small class="text-muted">${s.yearLevel}</small></td>
+                <td class="fw-bold text-primary">${escapeHtml(s.cardId)}</td>
                 <td>
-                    <div>${s.contact}</div>
-                    <small class="text-muted">${s.email}</small>
+                    <div class="fw-bold text-dark">${escapeHtml(s.fullName)}</div>
+                    <small class="text-muted">User: <strong>${escapeHtml(s.username)}</strong> | Pass: <strong>${escapeHtml(s.password || s.cardId)}</strong></small>
                 </td>
-                <td><span class="badge bg-success">${s.status}</span></td>
-                <td class="text-end">
-                    <div class="d-inline-flex gap-1">
-                        <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-2" onclick="previewCardByIndex(${idx})">
-                            <i class="bi bi-card-heading me-1"></i> View Card
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2" onclick="selectStudentForBorrow(${idx})">
-                            Use in Desk
-                        </button>
-                    </div>
+                <td>
+                    <div>${escapeHtml(s.course)}</div>
+                    <small class="text-muted">${escapeHtml(s.yearLevel)}</small>
                 </td>
-            </tr>
-        `).join("");
+                <td>
+                    <div class="small">${escapeHtml(s.contact)}</div>
+                    <small class="text-muted">${escapeHtml(s.email)}</small>
+                </td>
+                <td>
+                    <span class="badge ${s.status === "ACTIVE" ? "bg-success" : "bg-secondary"} rounded-pill px-3">
+                        ${escapeHtml(s.status)}
+                    </span>
+                </td>
+                <td class="text-end text-nowrap">
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill me-1" onclick="previewLibraryCard('${escapeHtml(s.cardId)}')">Preview Card</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" onclick="toggleCardStatus('${escapeHtml(s.cardId)}')">
+                        ${s.status === "ACTIVE" ? "Suspend" : "Activate"}
+                    </button>
+                </td>
+            </tr>`).join("");
     }
 
-    function selectStudentForBorrow(idx) {
-        const s = studentRegistry[idx];
-        if (!s) return;
-        document.getElementById("borrowStudentName").value = s.fullName;
-        document.getElementById("borrowStudentNo").value = s.cardId;
-        updateCardPreview(s);
-        const tabTrigger = new bootstrap.Tab(document.getElementById("tab-circulation"));
-        tabTrigger.show();
-    }
-
-    function exportRegistryJson() {
-        const blob = new Blob([JSON.stringify(studentRegistry, null, 2)], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "catc_registered_students_registry.json";
-        a.click();
-        URL.revokeObjectURL(url);
+    function setDefaultBorrowDates() {
+        const today = new Date();
+        const due = new Date();
+        due.setDate(today.getDate() + 7);
+        document.getElementById("borrowDate").value = today.toISOString().slice(0, 10);
+        document.getElementById("returnDueDate").value = due.toISOString().slice(0, 10);
     }
 
     function refreshAllViews() {
-        updateKpis();
-        populateBorrowBookSelect();
-        populateQuickStudentPicker();
+        updateKPIs();
+        populateAvailableBookSelect();
         renderBorrowLog();
         renderCatalogTable();
-        renderStudentRegistry();
-        if (studentRegistry.length > 0) {
-            updateCardPreview(studentRegistry[0]);
-        }
     }
 
-    setDefaultDates();
-    refreshAllViews();
-    loadLibrarianSessionAndStudents();
+    async function loadLoggedInLibrarian() {
+        try {
+            const res = await fetch("/api/me");
+            if (!res.ok) return;
+            const me = await res.json();
+            if (me && me.fullName) {
+                document.getElementById("librarianNameNav").textContent = me.fullName;
+            }
+        } catch (e) {}
+    }
+
+    window.addEventListener("storage", (e) => {
+        if (e.key === SHARED_CATALOG_KEY) {
+            books = loadStorage(SHARED_CATALOG_KEY, DEFAULT_60_BOOKS);
+            refreshAllViews();
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        setDefaultBorrowDates();
+        loadLoggedInLibrarian();
+        populateBorrowerPicker();
+        renderStudentDirectory();
+        if (studentCards.length > 0) {
+            previewLibraryCard(studentCards[0].cardId);
+        }
+        refreshAllViews();
+    });
 </script>
 </body>
 </html>

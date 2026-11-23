@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookWebCATC | Student Library Dashboard</title>
+    <title>BookWebCATC | Student Library Portal &amp; Catalog</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
@@ -12,12 +12,12 @@
             --catc-royal: #0047AB;
             --catc-sky: #0099FF;
             --catc-gold: #D4AF37;
-            --portal-blue: #1976D2;
+            --catc-gold-bright: #FDE047;
         }
 
         body {
             background:
-                    linear-gradient(135deg, rgba(0, 18, 52, 0.72), rgba(0, 44, 118, 0.65)),
+                    linear-gradient(135deg, rgba(4, 16, 44, 0.85), rgba(0, 44, 118, 0.78)),
                     url('/images/catc-bg.jpg') center center / cover no-repeat fixed;
             min-height: 100vh;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -25,31 +25,13 @@
         }
 
         .catc-navbar {
-            background: rgba(0, 23, 68, 0.94);
-            backdrop-filter: blur(10px);
+            background: rgba(5, 16, 42, 0.94);
+            backdrop-filter: blur(12px);
             border-bottom: 3px solid var(--catc-gold);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
         }
 
-        .menu-toggle-btn {
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            background: rgba(255, 255, 255, 0.08);
-            color: #FFFFFF;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .menu-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.18);
-            color: #FFFFFF;
-        }
-
-        .side-brand-logo {
+        .brand-logo {
             width: 42px;
             height: 42px;
             object-fit: cover;
@@ -58,777 +40,503 @@
             background: #FFFFFF;
         }
 
-        /* Student Portal Navigation Drawer (matches reference) */
-        .portal-drawer {
-            width: 310px !important;
-            background: #FFFFFF;
-            border-right: 1px solid #E2E8F0;
-        }
-
-        .drawer-nav-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 13px 18px;
-            border-radius: 10px;
-            text-decoration: none;
-            color: #1E293B;
-            cursor: pointer;
-            transition: background 0.15s ease;
-            border: none;
-            background: transparent;
-            width: 100%;
-            text-align: left;
-        }
-
-        .drawer-nav-item:hover {
-            background: #F1F5F9;
-        }
-
-        .drawer-nav-item.active {
-            background: #E8F3FE;
-            color: var(--portal-blue);
-        }
-
-        .drawer-nav-item.active .drawer-item-title {
-            color: var(--portal-blue);
-            font-weight: 700;
-        }
-
-        .drawer-nav-icon {
-            font-size: 1.2rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        .drawer-stat-pill {
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 12px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
-        }
-
-        /* Profile Card (matches reference) */
-        .profile-shell {
-            max-width: 680px;
-            margin: 0 auto;
-        }
-
-        .profile-header-bar {
-            background: #FFFFFF;
-            border-radius: 16px;
-            padding: 16px 22px;
-            box-shadow: 0 8px 24px rgba(0, 15, 45, 0.16);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .profile-edit-circle {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            border: 1.8px solid var(--portal-blue);
-            background: #FFFFFF;
-            color: var(--portal-blue);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s ease;
-        }
-
-        .profile-edit-circle:hover {
-            background: var(--portal-blue);
+        .hero-card {
+            background: linear-gradient(125deg, rgba(0, 26, 78, 0.96), rgba(0, 71, 171, 0.92));
             color: #FFFFFF;
-        }
-
-        .profile-main-card {
-            background: #FFFFFF;
-            border-radius: 20px;
-            box-shadow: 0 16px 40px rgba(0, 15, 45, 0.22);
-            overflow: hidden;
-        }
-
-        .profile-avatar-circle {
-            width: 96px;
-            height: 96px;
-            border-radius: 50%;
-            background: var(--portal-blue);
-            color: #FFFFFF;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.6rem;
-            box-shadow: 0 8px 20px rgba(25, 118, 210, 0.3);
-        }
-
-        .info-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 16px 0;
-            border-bottom: 1px solid #F1F5F9;
-        }
-
-        .info-row:last-child {
-            border-bottom: none;
-        }
-
-        .info-row-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.15rem;
-            flex-shrink: 0;
-            margin-top: 2px;
+            border-radius: 22px;
+            border: 1px solid rgba(253, 224, 71, 0.45);
+            box-shadow: 0 20px 46px rgba(2, 12, 36, 0.4);
         }
 
         .glass-panel {
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.65);
             border-radius: 20px;
-            box-shadow: 0 16px 40px rgba(0, 15, 45, 0.25);
-        }
-
-        .hero-banner {
-            background: linear-gradient(120deg, rgba(0, 35, 102, 0.95), rgba(0, 91, 181, 0.92));
-            color: #FFFFFF;
-            border-radius: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.45);
-            box-shadow: 0 18px 42px rgba(0, 12, 36, 0.35);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-side-badge {
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 16px;
-            padding: 14px 18px;
-        }
-
-        .hero-side-badge img {
-            width: 64px;
-            height: 64px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 2px solid var(--catc-gold);
-            background: #FFFFFF;
+            box-shadow: 0 16px 38px rgba(3, 14, 40, 0.25);
         }
 
         .book-card {
-            background: rgba(255, 255, 255, 0.97);
-            border: 1px solid rgba(226, 232, 240, 0.9);
-            border-radius: 18px;
-            overflow: hidden;
-            transition: transform 0.22s ease, box-shadow 0.22s ease;
-            box-shadow: 0 10px 24px rgba(0, 20, 60, 0.14);
-        }
-
-        .book-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 18px 34px rgba(0, 23, 68, 0.28);
-        }
-
-        .book-front-cover {
-            height: 195px;
-            position: relative;
-            padding: 16px;
-            color: #FFFFFF;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-top: 4px solid var(--catc-navy);
+            border-radius: 16px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+        }
+
+        .book-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 28px rgba(0, 35, 102, 0.16);
+        }
+
+        .book-card.is-unavailable {
+            border-top-color: #DC2626;
+            background: #FFFBFB;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #FDE047, var(--catc-gold));
+            color: #050E24;
+            font-weight: 700;
+            border: none;
+        }
+
+        .btn-gold:hover {
+            background: linear-gradient(135deg, #FACC15, #C29B27);
+            color: #050E24;
+        }
+
+        .slip-ticket {
+            background: linear-gradient(145deg, #FFFFFF, #F8FAFC);
+            border: 2px solid var(--catc-navy);
+            border-radius: 16px;
             overflow: hidden;
         }
 
-        .book-spine-strip {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 10px;
-            background: rgba(0, 0, 0, 0.25);
-            border-right: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .book-cover-svg {
-            position: absolute;
-            right: -12px;
-            bottom: -14px;
-            width: 118px;
-            height: 118px;
-            opacity: 0.22;
-            pointer-events: none;
-        }
-
-        .cover-tag {
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.35);
+        .slip-ticket-header {
+            background: linear-gradient(120deg, var(--catc-navy), var(--catc-royal));
             color: #FFFFFF;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            padding: 4px 10px;
-            border-radius: 999px;
-            display: inline-block;
-            width: fit-content;
-            z-index: 1;
-        }
-
-        .cover-title-box {
-            z-index: 1;
-            padding-left: 8px;
-        }
-
-        .cover-title {
-            font-size: 1.04rem;
-            font-weight: 800;
-            line-height: 1.2;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-        }
-
-        .cover-author {
-            font-size: 0.8rem;
-            opacity: 0.92;
-            margin-top: 4px;
-        }
-
-        .category-pill.active {
-            background-color: var(--catc-navy) !important;
-            color: #FFFFFF !important;
-            border-color: var(--catc-navy) !important;
+            padding: 12px 16px;
+            border-bottom: 3px solid var(--catc-gold);
         }
     </style>
 </head>
 <body>
 
-<!-- Top Navigation Bar -->
+<!-- Top Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark catc-navbar sticky-top px-3 px-lg-5 py-2">
     <div class="container-fluid">
-        <div class="d-flex align-items-center gap-3">
-            <button class="menu-toggle-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#studentPortalDrawer" aria-controls="studentPortalDrawer" title="Open Student Portal Menu">
-                <i class="bi bi-list"></i>
-            </button>
-            <a class="navbar-brand d-flex align-items-center gap-3 m-0" href="#" onclick="switchPortalTab('dashboard'); return false;">
-                <img src="/images/catc-logo.jpg" alt="CAT College Logo" class="side-brand-logo">
-                <div>
-                    <div class="fw-bold lh-1">Student Portal • BookWebCATC</div>
-                    <small class="text-info" style="font-size: 0.74rem;">CAT College Library Catalog</small>
-                </div>
-            </a>
-        </div>
+        <a class="navbar-brand d-flex align-items-center gap-3 m-0" href="/BookWebCATC.html">
+            <img src="/images/catc-logo.jpg" alt="CATC Logo" class="brand-logo">
+            <div>
+                <div class="fw-bold lh-1">BookWebCATC &bull; Student Portal</div>
+                <small class="text-info" style="font-size: 0.74rem;">CAT College Live Library Catalog &amp; Reservation</small>
+            </div>
+        </a>
 
         <div class="d-flex align-items-center gap-3 text-white mt-2 mt-lg-0">
             <div class="text-end d-none d-md-block">
-                <div class="small fw-bold" id="studentNameNav">Student Account</div>
-                <div class="text-info" style="font-size: 0.72rem;" id="studentMetaNav">Username: student • BSIT • 3rd Year</div>
+                <div class="small fw-bold" id="studentNameNav">Jay Lauro Basquiñas</div>
+                <div class="text-info" style="font-size: 0.72rem;" id="studentCardNav">Card ID: C24-000111</div>
             </div>
-            <button type="button" class="btn btn-sm btn-warning text-dark fw-semibold px-3 rounded-pill" onclick="switchPortalTab('profile')">
-                <i class="bi bi-person-circle me-1"></i> Profile
-            </button>
-            <a href="/BookWebCATC_LoginView.html" class="btn btn-sm btn-outline-light rounded-pill px-3" title="Logout">
-                <i class="bi bi-box-arrow-right"></i>
-            </a>
+            <span class="badge bg-info text-dark fw-bold px-3 py-2">STUDENT</span>
+            <form action="/logout" method="post" class="d-inline m-0" onsubmit="clearLocalSession()">
+                <button type="submit" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                    <i class="bi bi-box-arrow-right me-1"></i> Logout
+                </button>
+            </form>
         </div>
     </div>
 </nav>
 
-<!-- Slide-Out Student Portal Navigation Drawer -->
-<div class="offcanvas offcanvas-start portal-drawer" tabindex="-1" id="studentPortalDrawer" aria-labelledby="drawerLabel">
-    <div class="offcanvas-header border-bottom px-4 py-3">
-        <div>
-            <div class="text-uppercase small fw-bold text-muted" id="drawerLabel" style="letter-spacing: 0.06em;">Navigation</div>
-            <div class="small text-primary fw-semibold" id="drawerStudentSummary">Student Account • BSIT (3rd Year)</div>
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body px-3 py-3 d-flex flex-column justify-content-between">
-        <div>
-            <div class="d-flex flex-column gap-1 mb-4">
-                <button type="button" class="drawer-nav-item active" id="navBtnDashboard" onclick="switchPortalTab('dashboard')" data-bs-dismiss="offcanvas">
-                    <i class="bi bi-grid-fill drawer-nav-icon"></i>
-                    <div>
-                        <div class="drawer-item-title fw-semibold">Dashboard</div>
-                        <small class="text-muted">Library catalog &amp; book availability</small>
-                    </div>
-                </button>
-
-                <button type="button" class="drawer-nav-item" id="navBtnProfile" onclick="switchPortalTab('profile')" data-bs-dismiss="offcanvas">
-                    <i class="bi bi-person-fill drawer-nav-icon"></i>
-                    <div>
-                        <div class="drawer-item-title fw-semibold">Profile</div>
-                        <small class="text-muted">View &amp; edit your student information</small>
-                    </div>
-                </button>
-            </div>
-
-            <div class="px-2">
-                <div class="fw-bold text-dark mb-3">Library Overview</div>
-                <div class="d-flex flex-column gap-2">
-                    <div class="drawer-stat-pill" style="border-left: 4px solid #1976D2;">
-                        <span class="small fw-semibold text-secondary"><i class="bi bi-book-fill text-primary me-2"></i>Total Catalog</span>
-                        <span class="fw-bold text-primary" id="drawerTotalBooks">0</span>
-                    </div>
-                    <div class="drawer-stat-pill" style="border-left: 4px solid #16A34A;">
-                        <span class="small fw-semibold text-secondary"><i class="bi bi-check-circle-fill text-success me-2"></i>Available Now</span>
-                        <span class="fw-bold text-success" id="drawerAvailableBooks">0</span>
-                    </div>
-                    <div class="drawer-stat-pill" style="border-left: 4px solid #D97706;">
-                        <span class="small fw-semibold text-secondary"><i class="bi bi-journal-bookmark-fill text-warning me-2"></i>Currently Out</span>
-                        <span class="fw-bold text-warning" id="drawerBorrowedBooks">0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="border-top pt-3 px-2">
-            <a href="/BookWebCATC_LoginView.html" class="btn btn-outline-danger btn-sm w-100 rounded-pill fw-semibold">
-                <i class="bi bi-box-arrow-right me-1"></i> Sign Out
-            </a>
-        </div>
-    </div>
-</div>
-
-<!-- VIEW 1: MAIN LIBRARY DASHBOARD -->
-<div id="dashboardView" class="container py-4 py-lg-5">
-    <div class="hero-banner p-4 p-lg-5 mb-4">
-        <div class="row align-items-center g-4">
+<div class="container py-4 py-lg-5">
+    <!-- Hero Banner -->
+    <div class="hero-card p-4 p-lg-5 mb-4">
+        <div class="row align-items-center g-3">
             <div class="col-lg-8">
-                <div class="d-flex flex-wrap gap-2 mb-2">
-                    <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill">
-                        CAT COLLEGE MULTI-DEPARTMENT LIBRARY CATALOG
-                    </span>
-                    <span class="badge bg-light text-dark fw-semibold px-3 py-1 rounded-pill" id="heroCourseYearBadge">
-                        BS Information Technology • 3rd Year
-                    </span>
-                </div>
-                <h2 class="fw-bold mb-2" id="welcomeHeading">Welcome back!</h2>
+                <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill mb-2">
+                    COMPUTER ARTS TECHNOLOGICAL COLLEGE LIBRARY
+                </span>
+                <h2 class="fw-bold mb-1" id="studentWelcomeTitle">Welcome, Student!</h2>
                 <p class="text-light opacity-85 mb-0">
-                    Browse the books currently displayed in the CAT College Library across Computing, Business &amp; Accountancy, Engineering &amp; Math, Humanities, Sciences, and General Reference.
+                    Browse real-time shelf availability across all academic departments. Request a borrow slip and save it directly to your phone or device.
                 </p>
             </div>
-            <div class="col-lg-4">
-                <div class="hero-side-badge d-flex align-items-center gap-3">
-                    <img src="/images/catc-logo.jpg" alt="CAT College Emblem">
-                    <div>
-                        <div class="fw-bold text-white" id="heroStudentName">Student Account</div>
-                        <div class="small text-info" id="heroStudentId">Username: student</div>
-                        <button type="button" class="btn btn-sm btn-outline-warning mt-2 py-0 px-2 rounded-pill" onclick="switchPortalTab('profile')">
-                            View Student Profile
-                        </button>
-                    </div>
+            <div class="col-lg-4 text-lg-end">
+                <div class="d-inline-block text-start bg-white bg-opacity-10 border border-light border-opacity-25 rounded-4 px-4 py-3">
+                    <div class="small text-info">Active Library Card</div>
+                    <div class="fw-bold fs-5 text-warning" id="heroCardBadge">C24-000111</div>
+                    <div class="small text-light opacity-75" id="heroCourseBadge">BS Information Technology</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Quick Stats Row -->
+    <!-- KPI Row -->
     <div class="row g-3 mb-4">
-        <div class="col-12 col-md-4">
-            <div class="glass-panel p-3 h-100">
+        <div class="col-4">
+            <div class="glass-panel p-3 text-center">
                 <div class="small text-muted fw-semibold">Total Library Books</div>
-                <div class="fs-3 fw-bold text-primary" id="statTotalBooks">0</div>
+                <div class="fs-3 fw-bold text-primary" id="stuTotalBooks">0</div>
             </div>
         </div>
-        <div class="col-6 col-md-4">
-            <div class="glass-panel p-3 h-100">
-                <div class="small text-muted fw-semibold">Available on Shelf</div>
-                <div class="fs-3 fw-bold text-success" id="statAvailableBooks">0</div>
+        <div class="col-4">
+            <div class="glass-panel p-3 text-center">
+                <div class="small text-muted fw-semibold">Available Now</div>
+                <div class="fs-3 fw-bold text-success" id="stuAvailableBooks">0</div>
             </div>
         </div>
-        <div class="col-6 col-md-4">
-            <div class="glass-panel p-3 h-100">
-                <div class="small text-muted fw-semibold">Currently Checked Out</div>
-                <div class="fs-3 fw-bold text-warning" id="statBorrowedCount">0</div>
+        <div class="col-4">
+            <div class="glass-panel p-3 text-center">
+                <div class="small text-muted fw-semibold">Unavailable / Borrowed</div>
+                <div class="fs-3 fw-bold text-danger" id="stuUnavailableBooks">0</div>
             </div>
         </div>
     </div>
 
-    <!-- Search & Category Filter Bar -->
-    <div class="glass-panel p-3 p-md-4 mb-4">
-        <div class="row g-3 align-items-center">
-            <div class="col-lg-5">
-                <input type="text" id="searchInput" class="form-control form-control-lg rounded-3"
-                       placeholder="Search library books by title, author, course tag, accession, or ISBN..." oninput="renderBooks()">
+    <!-- Filter & Search Bar -->
+    <div class="glass-panel p-4 mb-4">
+        <div class="row g-2 align-items-center">
+            <div class="col-md-5">
+                <input type="text" id="stuSearchInput" class="form-control" placeholder="Search book title, author, accession code, ISBN..." oninput="renderStudentCatalog()">
             </div>
-            <div class="col-lg-7">
-                <div class="d-flex flex-wrap gap-2 justify-content-lg-end" id="categoryPills">
-                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill active" data-cat="" onclick="selectCategory('', this)">All Books</button>
-                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Computer Science & IT" onclick="selectCategory('Computer Science & IT', this)">CS &amp; IT</button>
-                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Business & Accountancy" onclick="selectCategory('Business & Accountancy', this)">Business &amp; Acctg</button>
-                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Engineering & Math" onclick="selectCategory('Engineering & Math', this)">Engineering &amp; Math</button>
-                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Humanities & Literature" onclick="selectCategory('Humanities & Literature', this)">Humanities &amp; Lit</button>
-                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Science & Health" onclick="selectCategory('Science & Health', this)">Science &amp; Health</button>
-                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 category-pill" data-cat="Reference & Dictionaries" onclick="selectCategory('Reference & Dictionaries', this)">Reference</button>
-                </div>
+            <div class="col-md-4">
+                <select id="stuDeptFilter" class="form-select" onchange="renderStudentCatalog()">
+                    <option value="">All Academic Departments</option>
+                    <option value="Computer Science & IT">Computer Science &amp; IT</option>
+                    <option value="Business & Accountancy">Business &amp; Accountancy</option>
+                    <option value="Engineering & Math">Engineering &amp; Math</option>
+                    <option value="Humanities & Literature">Humanities &amp; Literature</option>
+                    <option value="Science & Health">Science &amp; Health</option>
+                    <option value="Reference & Dictionaries">Reference &amp; Dictionaries</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select id="stuStatusFilter" class="form-select" onchange="renderStudentCatalog()">
+                    <option value="">All Availability</option>
+                    <option value="AVAILABLE">Available Only</option>
+                    <option value="UNAVAILABLE">Unavailable / Borrowed</option>
+                </select>
             </div>
         </div>
-        <div class="small text-muted mt-2" id="resultCountLabel">Showing catalog books</div>
     </div>
 
-    <!-- Books Grid -->
-    <div class="row g-4 mb-4" id="booksGrid"></div>
+    <!-- Book Catalog Grid -->
+    <div class="row g-4" id="studentBooksGrid"></div>
 </div>
 
-<!-- VIEW 2: STUDENT PROFILE VIEW -->
-<div id="profileView" class="container py-4 py-lg-5 d-none">
-    <div class="profile-shell">
-        <div class="profile-header-bar mb-4">
-            <div class="d-flex align-items-center gap-3">
-                <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3" onclick="switchPortalTab('dashboard')">
-                    <i class="bi bi-arrow-left me-1"></i> Back to Library
+<!-- Borrowing Slip Modal (Save to Device / Phone) -->
+<div class="modal fade" id="borrowSlipModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header bg-primary text-white rounded-top-4">
+                <h5 class="modal-title fw-bold"><i class="bi bi-ticket-perforated-fill me-2"></i>Library Borrowing Slip</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4" id="slipModalBody"></div>
+            <div class="modal-footer border-0 px-4 pb-4 d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-gold rounded-pill px-4" onclick="downloadSlipImage()">
+                    <i class="bi bi-download me-1"></i> Save Slip to Device
                 </button>
-                <h1 class="h4 fw-bold mb-0 text-dark">Profile</h1>
             </div>
-            <button type="button" class="profile-edit-circle" id="toggleEditProfileBtn" onclick="toggleProfileEdit()" title="Edit Profile Information">
-                <i class="bi bi-pencil-fill"></i>
-            </button>
-        </div>
-
-        <div class="profile-main-card">
-            <div class="text-center py-4 px-3 border-bottom bg-light bg-opacity-50">
-                <div class="profile-avatar-circle mb-3">
-                    <i class="bi bi-person-fill"></i>
-                </div>
-                <h2 class="h5 fw-bold mb-1" id="profileCardFullName">Student Account</h2>
-                <div class="small text-muted" id="profileCardSubtitle">BS Information Technology • 3rd Year</div>
-            </div>
-
-            <div id="profileReadOnlySection" class="p-4 p-md-5">
-                <h3 class="h5 fw-bold text-dark mb-3">Personal Information</h3>
-
-                <div class="info-row">
-                    <div class="info-row-icon bg-primary bg-opacity-10 text-primary">
-                        <i class="bi bi-person-fill"></i>
-                    </div>
-                    <div>
-                        <div class="small text-muted">Full Name</div>
-                        <div class="fw-semibold text-dark" id="infoFullName">Student Account</div>
-                    </div>
-                </div>
-
-                <div class="info-row">
-                    <div class="info-row-icon bg-primary bg-opacity-10 text-primary">
-                        <i class="bi bi-person-badge-fill"></i>
-                    </div>
-                    <div>
-                        <div class="small text-muted">Username / Portal ID</div>
-                        <div class="fw-semibold text-dark" id="infoStudentId">student</div>
-                    </div>
-                </div>
-
-                <div class="info-row">
-                    <div class="info-row-icon bg-info bg-opacity-10 text-info">
-                        <i class="bi bi-mortarboard-fill"></i>
-                    </div>
-                    <div>
-                        <div class="small text-muted">Course / Program</div>
-                        <div class="fw-semibold text-dark" id="infoCourse">BS Information Technology</div>
-                    </div>
-                </div>
-
-                <div class="info-row">
-                    <div class="info-row-icon bg-primary bg-opacity-10 text-primary">
-                        <i class="bi bi-calendar-check-fill"></i>
-                    </div>
-                    <div>
-                        <div class="small text-muted">Year Level</div>
-                        <div class="fw-semibold text-dark" id="infoYearLevel">3rd Year</div>
-                    </div>
-                </div>
-
-                <div class="info-row">
-                    <div class="info-row-icon bg-success bg-opacity-10 text-success">
-                        <i class="bi bi-telephone-fill"></i>
-                    </div>
-                    <div>
-                        <div class="small text-muted">Contact</div>
-                        <div class="fw-semibold text-dark" id="infoContact">+63 917 555 0148</div>
-                    </div>
-                </div>
-
-                <div class="info-row">
-                    <div class="info-row-icon bg-warning bg-opacity-15 text-warning">
-                        <i class="bi bi-envelope-fill"></i>
-                    </div>
-                    <div>
-                        <div class="small text-muted">Email</div>
-                        <div class="fw-semibold text-dark" id="infoEmail">student@catc.edu.ph</div>
-                    </div>
-                </div>
-            </div>
-
-            <form id="profileEditForm" class="p-4 p-md-5 d-none" onsubmit="saveStudentProfile(event)">
-                <h3 class="h5 fw-bold text-dark mb-3">Edit Personal Information</h3>
-
-                <div class="mb-3">
-                    <label class="form-label small fw-semibold">Full Name</label>
-                    <input type="text" id="editFullName" class="form-control" required>
-                </div>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Username / Portal ID</label>
-                        <input type="text" id="editStudentId" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Year Level</label>
-                        <select id="editYearLevel" class="form-select" required>
-                            <option value="1st Year">1st Year</option>
-                            <option value="2nd Year">2nd Year</option>
-                            <option value="3rd Year">3rd Year</option>
-                            <option value="4th Year">4th Year</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label small fw-semibold">Course / Program</label>
-                    <select id="editCourse" class="form-select" required>
-                        <option value="BS Information Technology">BS Information Technology</option>
-                        <option value="BS Computer Science">BS Computer Science</option>
-                        <option value="BS Accountancy">BS Accountancy</option>
-                        <option value="BS Business Administration">BS Business Administration</option>
-                        <option value="BS Computer Engineering">BS Computer Engineering</option>
-                        <option value="BS Electronics Engineering">BS Electronics Engineering</option>
-                    </select>
-                </div>
-
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Contact Number</label>
-                        <input type="text" id="editContact" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label small fw-semibold">CATC Email</label>
-                        <input type="email" id="editEmail" class="form-control" required>
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-end gap-2">
-                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4" onclick="toggleProfileEdit(false)">Cancel</button>
-                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">Save Changes</button>
-                </div>
-            </form>
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const PROFILE_STORAGE_KEY = "catc_student_profile_v1";
+    const SHARED_CATALOG_KEY = "bookwebcatc_shared_books_v1";
+    const ACTIVE_SESSION_KEY = "bookwebcatc_active_user_v1";
 
-    const defaultStudentProfile = {
-        fullName: "Student Account",
-        studentId: "student",
-        course: "BS Information Technology",
-        yearLevel: "3rd Year",
-        contact: "+63 917 555 0148",
-        email: "student@catc.edu.ph"
-    };
-
-    function loadStudentProfile() {
-        try {
-            const saved = JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEY));
-            return saved ? { ...defaultStudentProfile, ...saved } : { ...defaultStudentProfile };
-        } catch (e) {
-            return { ...defaultStudentProfile };
-        }
-    }
-
-    let studentProfile = loadStudentProfile();
-
-    function applyStudentProfileToUI() {
-        document.getElementById("studentNameNav").textContent = studentProfile.fullName;
-        document.getElementById("studentMetaNav").textContent = `User: ${studentProfile.studentId} • ${studentProfile.course} • ${studentProfile.yearLevel}`;
-        document.getElementById("drawerStudentSummary").textContent = `${studentProfile.fullName} • ${studentProfile.yearLevel}`;
-        document.getElementById("welcomeHeading").textContent = `Welcome back, ${studentProfile.fullName}!`;
-        document.getElementById("heroCourseYearBadge").textContent = `${studentProfile.course} • ${studentProfile.yearLevel}`;
-        document.getElementById("heroStudentName").textContent = studentProfile.fullName;
-        document.getElementById("heroStudentId").textContent = `Account: ${studentProfile.studentId}`;
-
-        document.getElementById("profileCardFullName").textContent = studentProfile.fullName;
-        document.getElementById("profileCardSubtitle").textContent = `${studentProfile.course} • ${studentProfile.yearLevel}`;
-        document.getElementById("infoFullName").textContent = studentProfile.fullName;
-        document.getElementById("infoStudentId").textContent = studentProfile.studentId;
-        document.getElementById("infoCourse").textContent = studentProfile.course;
-        document.getElementById("infoYearLevel").textContent = studentProfile.yearLevel;
-        document.getElementById("infoContact").textContent = studentProfile.contact;
-        document.getElementById("infoEmail").textContent = studentProfile.email;
-    }
-
-    async function loadLoggedInStudent() {
-        try {
-            const res = await fetch("/api/me");
-            if (!res.ok) return;
-            const me = await res.json();
-            if (me && me.fullName) {
-                studentProfile.fullName = me.fullName;
-                if (me.username) {
-                    studentProfile.studentId = me.username;
-                    studentProfile.email = `${me.username}@catc.edu.ph`;
-                }
-                applyStudentProfileToUI();
-            }
-        } catch (err) {
-            console.error("Failed to load /api/me:", err);
-        }
-    }
-
-    function switchPortalTab(tab) {
-        const dashboardView = document.getElementById("dashboardView");
-        const profileView = document.getElementById("profileView");
-        const navDash = document.getElementById("navBtnDashboard");
-        const navProf = document.getElementById("navBtnProfile");
-
-        if (tab === "profile") {
-            dashboardView.classList.add("d-none");
-            profileView.classList.remove("d-none");
-            navDash.classList.remove("active");
-            navProf.classList.add("active");
-            toggleProfileEdit(false);
-        } else {
-            profileView.classList.add("d-none");
-            dashboardView.classList.remove("d-none");
-            navProf.classList.remove("active");
-            navDash.classList.add("active");
-        }
-    }
-
-    function toggleProfileEdit(forceState) {
-        const readOnly = document.getElementById("profileReadOnlySection");
-        const form = document.getElementById("profileEditForm");
-        const isEditing = typeof forceState === "boolean" ? forceState : form.classList.contains("d-none");
-
-        if (isEditing) {
-            document.getElementById("editFullName").value = studentProfile.fullName;
-            document.getElementById("editStudentId").value = studentProfile.studentId;
-            document.getElementById("editCourse").value = studentProfile.course;
-            document.getElementById("editYearLevel").value = studentProfile.yearLevel;
-            document.getElementById("editContact").value = studentProfile.contact;
-            document.getElementById("editEmail").value = studentProfile.email;
-            readOnly.classList.add("d-none");
-            form.classList.remove("d-none");
-        } else {
-            form.classList.add("d-none");
-            readOnly.classList.remove("d-none");
-        }
-    }
-
-    function saveStudentProfile(e) {
-        e.preventDefault();
-        studentProfile = {
-            fullName: document.getElementById("editFullName").value.trim(),
-            studentId: document.getElementById("editStudentId").value.trim(),
-            course: document.getElementById("editCourse").value,
-            yearLevel: document.getElementById("editYearLevel").value,
-            contact: document.getElementById("editContact").value.trim(),
-            email: document.getElementById("editEmail").value.trim()
-        };
-        localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(studentProfile));
-        applyStudentProfileToUI();
-        toggleProfileEdit(false);
-    }
-
-    const catalogBooks = [
-        { id: 1, accessionCode: "CATC-BK-001", isbn: "978-1-0001-01", title: "Effective Java (3rd Edition)", author: "Joshua Bloch", category: "Computer Science & IT", courseTag: "BSIT • BSCS", copies: 4, available: 3, theme: "linear-gradient(135deg, #002366, #0077B6)" },
-        { id: 2, accessionCode: "CATC-BK-002", isbn: "978-1-0001-02", title: "Spring Boot in Action", author: "Craig Walls", category: "Computer Science & IT", courseTag: "BSIT • BSCS", copies: 3, available: 2, theme: "linear-gradient(135deg, #0F766E, #16A34A)" },
-        { id: 3, accessionCode: "CATC-BK-003", isbn: "978-1-0001-03", title: "Intermediate Accounting Vol. 1", author: "Zeus Vernon B. Millan", category: "Business & Accountancy", courseTag: "BSA • BSBA", copies: 5, available: 4, theme: "linear-gradient(135deg, #7C2D12, #D97706)" },
-        { id: 4, accessionCode: "CATC-BK-004", isbn: "978-1-0001-04", title: "Engineering Economy & Differential Equations", author: "Hipolito Sta. Maria", category: "Engineering & Math", courseTag: "BSCpE • BSECE", copies: 4, available: 2, theme: "linear-gradient(135deg, #1E3A8A, #4F46E5)" },
-        { id: 5, accessionCode: "CATC-BK-005", isbn: "978-1-0001-05", title: "Philippine Literature & Cultural Heritage", author: "CATC Humanities Dept.", category: "Humanities & Literature", courseTag: "General Ed", copies: 3, available: 3, theme: "linear-gradient(135deg, #6D28D9, #9333EA)" },
-        { id: 6, accessionCode: "CATC-BK-006", isbn: "978-1-0001-06", title: "Fundamentals of Physics & Electronics", author: "Halliday & Resnick", category: "Science & Health", courseTag: "BSCpE • BSECE", copies: 4, available: 1, theme: "linear-gradient(135deg, #0369A1, #0284C7)" }
+    const FALLBACK_BOOKS = [
+        { id: "BK-001", accessionCode: "ACC-CS-001", isbn: "978-0132350884", title: "Clean Code: A Handbook of Agile Software Craftsmanship", author: "Robert C. Martin", category: "Computer Science & IT", status: "AVAILABLE" },
+        { id: "BK-002", accessionCode: "ACC-CS-002", isbn: "978-1617292545", title: "Spring Boot in Action", author: "Craig Walls", category: "Computer Science & IT", status: "AVAILABLE" },
+        { id: "BK-003", accessionCode: "ACC-CS-003", isbn: "978-0262033848", title: "Introduction to Algorithms", author: "Thomas H. Cormen", category: "Computer Science & IT", status: "CHECKED OUT" }
     ];
 
-    let selectedCategory = "";
+    let activeStudent = {
+        fullName: "Jay Lauro Basquiñas",
+        cardId: "C24-000111",
+        course: "BS Information Technology"
+    };
 
-    function selectCategory(cat, btn) {
-        selectedCategory = cat;
-        document.querySelectorAll(".category-pill").forEach(el => el.classList.remove("active"));
-        if (btn) btn.classList.add("active");
-        renderBooks();
+    let currentSlipData = null;
+
+    function clearLocalSession() {
+        localStorage.removeItem(ACTIVE_SESSION_KEY);
     }
 
-    function updateStats() {
-        const total = catalogBooks.reduce((sum, b) => sum + b.copies, 0);
-        const available = catalogBooks.reduce((sum, b) => sum + b.available, 0);
-        const out = Math.max(0, total - available);
-
-        document.getElementById("statTotalBooks").textContent = total;
-        document.getElementById("statAvailableBooks").textContent = available;
-        document.getElementById("statBorrowedCount").textContent = out;
-
-        document.getElementById("drawerTotalBooks").textContent = total;
-        document.getElementById("drawerAvailableBooks").textContent = available;
-        document.getElementById("drawerBorrowedBooks").textContent = out;
+    function escapeHtml(val) {
+        return String(val ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
     }
 
-    function renderBooks() {
-        const query = (document.getElementById("searchInput").value || "").trim().toLowerCase();
-        const filtered = catalogBooks.filter(book => {
-            const matchesCat = !selectedCategory || book.category === selectedCategory;
-            const matchesQuery = !query ||
-                book.title.toLowerCase().includes(query) ||
-                book.author.toLowerCase().includes(query) ||
-                book.courseTag.toLowerCase().includes(query) ||
-                book.accessionCode.toLowerCase().includes(query) ||
-                book.isbn.toLowerCase().includes(query);
-            return matchesCat && matchesQuery;
+    function isBookAvailable(status) {
+        return (status || "").toUpperCase().trim() === "AVAILABLE";
+    }
+
+    function getSharedBooks() {
+        try {
+            const raw = localStorage.getItem(SHARED_CATALOG_KEY);
+            if (!raw) return FALLBACK_BOOKS;
+            const parsed = JSON.parse(raw);
+            return Array.isArray(parsed) && parsed.length > 0 ? parsed : FALLBACK_BOOKS;
+        } catch (e) {
+            return FALLBACK_BOOKS;
+        }
+    }
+
+    async function loadActiveStudentProfile() {
+        try {
+            const rawUser = localStorage.getItem(ACTIVE_SESSION_KEY);
+            if (rawUser) {
+                const parsedUser = JSON.parse(rawUser);
+                if (parsedUser && parsedUser.fullName) {
+                    activeStudent = {
+                        fullName: parsedUser.fullName,
+                        cardId: parsedUser.cardId || "C24-000111",
+                        course: parsedUser.course || "CAT College Student"
+                    };
+                }
+            }
+        } catch (e) {}
+
+        try {
+            const res = await fetch("/api/me");
+            if (res.ok) {
+                const me = await res.json();
+                if (me && me.fullName) {
+                    activeStudent.fullName = me.fullName;
+                    if (me.cardId) activeStudent.cardId = me.cardId;
+                }
+            }
+        } catch (e) {}
+
+        document.getElementById("studentNameNav").textContent = activeStudent.fullName;
+        document.getElementById("studentCardNav").textContent = `Card ID: ${activeStudent.cardId}`;
+        document.getElementById("studentWelcomeTitle").textContent = `Welcome, ${activeStudent.fullName}!`;
+        document.getElementById("heroCardBadge").textContent = activeStudent.cardId;
+        document.getElementById("heroCourseBadge").textContent = activeStudent.course;
+    }
+
+    function renderStudentCatalog() {
+        const books = getSharedBooks();
+        const total = books.length;
+        const availableCount = books.filter(b => isBookAvailable(b.status)).length;
+        const unavailableCount = total - availableCount;
+
+        document.getElementById("stuTotalBooks").textContent = total;
+        document.getElementById("stuAvailableBooks").textContent = availableCount;
+        document.getElementById("stuUnavailableBooks").textContent = unavailableCount;
+
+        const q = (document.getElementById("stuSearchInput").value || "").trim().toLowerCase();
+        const dept = document.getElementById("stuDeptFilter").value;
+        const statusFilter = document.getElementById("stuStatusFilter").value;
+
+        const filtered = books.filter(b => {
+            const avail = isBookAvailable(b.status);
+            const matchesDept = !dept || b.category === dept;
+            const matchesStatus = !statusFilter ||
+                (statusFilter === "AVAILABLE" && avail) ||
+                (statusFilter === "UNAVAILABLE" && !avail);
+            const hay = `${b.accessionCode} ${b.title} ${b.author} ${b.category} ${b.isbn}`.toLowerCase();
+            return matchesDept && matchesStatus && (!q || hay.includes(q));
         });
 
-        document.getElementById("resultCountLabel").textContent =
-            `Showing ${filtered.length} of ${catalogBooks.length} catalog titles`;
-
-        const grid = document.getElementById("booksGrid");
-        if (filtered.length === 0) {
-            grid.innerHTML = `<div class="col-12"><div class="glass-panel p-4 text-center text-muted">No matching books found.</div></div>`;
+        const grid = document.getElementById("studentBooksGrid");
+        if (!filtered.length) {
+            grid.innerHTML = `<div class="col-12"><div class="glass-panel p-5 text-center text-muted">No matching books found.</div></div>`;
             return;
         }
 
-        grid.innerHTML = filtered.map(book => {
-            const isAvailable = book.available > 0;
+        grid.innerHTML = filtered.map(b => {
+            const avail = isBookAvailable(b.status);
             return `
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="book-card h-100 d-flex flex-column">
-                        <div class="book-front-cover" style="background: ${book.theme};">
-                            <div class="book-spine-strip"></div>
-                            <span class="cover-tag">${book.courseTag}</span>
-                            <div class="cover-title-box">
-                                <div class="cover-title">${book.title}</div>
-                                <div class="cover-author">${book.author}</div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="book-card ${avail ? "" : "is-unavailable"} p-4">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-light text-dark border">${escapeHtml(b.accessionCode)}</span>
+                                <span class="badge ${avail ? "bg-success" : "bg-danger"} rounded-pill px-3">
+                                    ${avail ? "AVAILABLE" : "UNAVAILABLE"}
+                                </span>
                             </div>
-                            <i class="bi bi-book-half book-cover-svg" style="font-size: 5rem;"></i>
+                            <h6 class="fw-bold text-dark mb-1">${escapeHtml(b.title)}</h6>
+                            <div class="small text-muted mb-2">by ${escapeHtml(b.author)}</div>
+                            <div class="small text-primary fw-semibold mb-2">${escapeHtml(b.category)}</div>
+                            <p class="small text-secondary mb-3">${escapeHtml(b.description || "Available for CAT College student borrowing at the main library desk.")}</p>
                         </div>
-                        <div class="p-3 d-flex flex-column justify-content-between flex-grow-1">
-                            <div>
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="badge bg-light text-dark border">${book.category}</span>
-                                    <span class="badge ${isAvailable ? "bg-success" : "bg-secondary"} rounded-pill">
-                                        ${isAvailable ? `${book.available} / ${book.copies} Available` : "Checked Out"}
-                                    </span>
-                                </div>
-                                <div class="small text-muted">Accession: <strong>${book.accessionCode}</strong></div>
-                                <div class="small text-muted">ISBN: ${book.isbn}</div>
-                            </div>
+                        <div class="pt-2 border-top d-flex justify-content-between align-items-center">
+                            <small class="text-muted">ISBN: ${escapeHtml(b.isbn || "N/A")}</small>
+                            ${avail
+                ? `<button type="button" class="btn btn-sm btn-gold rounded-pill px-3" onclick="openBorrowSlip('${escapeHtml(b.id)}')">Request Borrow Slip</button>`
+                : `<button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3" disabled>Checked Out</button>`
+            }
                         </div>
                     </div>
-                </div>
-            `;
+                </div>`;
         }).join("");
     }
 
-    applyStudentProfileToUI();
-    updateStats();
-    renderBooks();
-    loadLoggedInStudent();
+    function openBorrowSlip(bookId) {
+        const books = getSharedBooks();
+        const b = books.find(item => item.id === bookId);
+        if (!b || !isBookAvailable(b.status)) {
+            renderStudentCatalog();
+            return;
+        }
+
+        const refNo = "SLIP-" + String(Date.now()).slice(-6);
+        const today = new Date().toISOString().slice(0, 10);
+
+        currentSlipData = {
+            refNo,
+            studentName: activeStudent.fullName,
+            cardId: activeStudent.cardId,
+            course: activeStudent.course,
+            bookTitle: b.title,
+            bookAuthor: b.author,
+            accessionCode: b.accessionCode,
+            category: b.category,
+            dateRequested: today
+        };
+
+        document.getElementById("slipModalBody").innerHTML = `
+            <div class="slip-ticket">
+                <div class="slip-ticket-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="fw-bold small">COMPUTER ARTS TECHNOLOGICAL COLLEGE</div>
+                        <div class="small text-warning fw-semibold">LIBRARY BORROWING SLIP</div>
+                    </div>
+                    <span class="badge bg-warning text-dark fw-bold">${refNo}</span>
+                </div>
+                <div class="p-3">
+                    <div class="small mb-1"><strong>Student Name:</strong> ${escapeHtml(currentSlipData.studentName)}</div>
+                    <div class="small mb-1"><strong>Library Card No.:</strong> ${escapeHtml(currentSlipData.cardId)}</div>
+                    <div class="small mb-1"><strong>Book Title:</strong> ${escapeHtml(currentSlipData.bookTitle)}</div>
+                    <div class="small mb-1"><strong>Author:</strong> ${escapeHtml(currentSlipData.bookAuthor)}</div>
+                    <div class="small mb-1"><strong>Accession Code:</strong> ${escapeHtml(currentSlipData.accessionCode)}</div>
+                    <div class="small mb-0"><strong>Date Requested:</strong> ${currentSlipData.dateRequested}</div>
+                </div>
+            </div>
+            <div id="slipSavedBanner" class="alert alert-success py-2 px-3 small rounded-3 mt-3 mb-0 d-none">
+                <i class="bi bi-check-circle-fill me-1"></i> Borrow slip saved to your device! Show this image at the Librarian desk.
+            </div>
+            <p class="small text-muted mt-3 mb-0">
+                Tap <strong>Save Slip to Device</strong> to download a copy of this slip to your phone or computer, then present it at the CATC Library desk.
+            </p>`;
+
+        const modal = new bootstrap.Modal(document.getElementById("borrowSlipModal"));
+        modal.show();
+    }
+
+    function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
+        const words = String(text || "").split(" ");
+        let line = "";
+        let currentY = y;
+
+        for (let n = 0; n < words.length; n++) {
+            const testLine = line + words[n] + " ";
+            const metrics = ctx.measureText(testLine);
+            if (metrics.width > maxWidth && n > 0) {
+                ctx.fillText(line.trim(), x, currentY);
+                line = words[n] + " ";
+                currentY += lineHeight;
+            } else {
+                line = testLine;
+            }
+        }
+        ctx.fillText(line.trim(), x, currentY);
+        return currentY + lineHeight;
+    }
+
+    function downloadSlipImage() {
+        if (!currentSlipData) return;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = 760;
+        canvas.height = 520;
+        const ctx = canvas.getContext("2d");
+
+        // Card background
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Outer border
+        ctx.strokeStyle = "#002366";
+        ctx.lineWidth = 8;
+        ctx.strokeRect(12, 12, canvas.width - 24, canvas.height - 24);
+
+        // Header banner
+        ctx.fillStyle = "#002366";
+        ctx.fillRect(16, 16, canvas.width - 32, 96);
+
+        // Gold accent stripe
+        ctx.fillStyle = "#D4AF37";
+        ctx.fillRect(16, 112, canvas.width - 32, 8);
+
+        // Header text
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "bold 20px Segoe UI, Arial, sans-serif";
+        ctx.fillText("COMPUTER ARTS TECHNOLOGICAL COLLEGE", 36, 56);
+
+        ctx.fillStyle = "#FDE047";
+        ctx.font = "bold 16px Segoe UI, Arial, sans-serif";
+        ctx.fillText("OFFICIAL LIBRARY BORROWING CONFIRMATION SLIP", 36, 86);
+
+        // Reference pill
+        ctx.fillStyle = "#FDE047";
+        ctx.fillRect(canvas.width - 195, 42, 155, 36);
+        ctx.fillStyle = "#050E24";
+        ctx.font = "bold 16px Courier New, monospace";
+        ctx.fillText(currentSlipData.refNo, canvas.width - 180, 66);
+
+        // Body details
+        let y = 160;
+        const labelX = 40;
+        const valueX = 235;
+        const maxValWidth = canvas.width - valueX - 40;
+
+        const rows = [
+            ["Student Name:", currentSlipData.studentName],
+            ["Library Card ID:", currentSlipData.cardId],
+            ["Book Title:", currentSlipData.bookTitle],
+            ["Author:", currentSlipData.bookAuthor],
+            ["Accession Code:", currentSlipData.accessionCode],
+            ["Date Requested:", currentSlipData.dateRequested]
+        ];
+
+        rows.forEach(([label, val]) => {
+            ctx.fillStyle = "#475569";
+            ctx.font = "bold 16px Segoe UI, Arial, sans-serif";
+            ctx.fillText(label, labelX, y);
+
+            ctx.fillStyle = "#0F172A";
+            ctx.font = "600 16px Segoe UI, Arial, sans-serif";
+            y = wrapCanvasText(ctx, val, valueX, y, maxValWidth, 24) + 12;
+        });
+
+        // Footer bar
+        ctx.fillStyle = "#F1F5F9";
+        ctx.fillRect(16, canvas.height - 68, canvas.width - 32, 52);
+        ctx.fillStyle = "#002366";
+        ctx.font = "bold 14px Segoe UI, Arial, sans-serif";
+        ctx.fillText("Present this saved slip & CATC Library Card at the Circulation Desk.", 36, canvas.height - 36);
+
+        // Trigger download to device / phone
+        const link = document.createElement("a");
+        link.download = `BookWebCATC_${currentSlipData.refNo}_${currentSlipData.accessionCode}.png`;
+        link.href = canvas.toDataURL("image/png");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        const banner = document.getElementById("slipSavedBanner");
+        if (banner) banner.classList.remove("d-none");
+    }
+
+    window.addEventListener("storage", (e) => {
+        if (e.key === SHARED_CATALOG_KEY) {
+            renderStudentCatalog();
+        }
+    });
+
+    window.addEventListener("catcCatalogUpdated", () => {
+        renderStudentCatalog();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        loadActiveStudentProfile();
+        renderStudentCatalog();
+    });
 </script>
 </body>
 </html>

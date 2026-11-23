@@ -3,82 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookWebCATC | CAT College Library Login</title>
+    <title>BookWebCATC | Portal Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-        body {
-            background:
-                    linear-gradient(rgba(0, 20, 60, 0.58), rgba(0, 35, 102, 0.68)),
-                    url('/images/catc-bg.jpg') center center / cover no-repeat fixed;
+        :root {
+            --catc-navy: #002366;
+            --catc-royal: #0047AB;
+            --catc-sky: #0099FF;
+            --catc-gold: #D4AF37;
+            --catc-gold-bright: #FDE047;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body.login-body {
+            margin: 0;
             min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #FFFFFF;
+            background:
+                    linear-gradient(140deg, rgba(4, 15, 42, 0.86), rgba(0, 44, 118, 0.78)),
+                    url('/images/catc-bg.jpg') center center / cover no-repeat fixed;
             display: flex;
-            align-items: center;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
         }
+
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(95px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.35;
+            animation: orbFloat 10s ease-in-out infinite alternate;
+        }
+
+        .orb-a {
+            width: 320px;
+            height: 320px;
+            top: -70px;
+            right: -60px;
+            background: radial-gradient(circle, #0099FF, #002366);
+        }
+
+        .orb-b {
+            width: 280px;
+            height: 280px;
+            bottom: 30px;
+            left: -70px;
+            background: radial-gradient(circle, #D4AF37, #0047AB);
+            animation-delay: -4s;
+        }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(20px, 24px) scale(1.1); }
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-topbar {
+            background: rgba(5, 15, 42, 0.82);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.45);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 11px;
+            border: 2px solid var(--catc-gold);
+            background: #FFFFFF;
+        }
+
+        .back-canvas-btn {
+            font-size: 0.78rem;
+            border-color: rgba(253, 224, 71, 0.75);
+            color: var(--catc-gold-bright);
+            transition: all 0.2s ease;
+        }
+
+        .back-canvas-btn:hover {
+            background: var(--catc-gold-bright);
+            color: #050E24;
+            border-color: var(--catc-gold-bright);
+            transform: translateX(-2px);
+        }
+
         .login-card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(6px);
+            width: 100%;
+            max-width: 440px;
+            background: rgba(255, 255, 255, 0.96);
+            color: #0F172A;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            border-top: 4px solid var(--catc-gold);
+            box-shadow: 0 24px 60px rgba(2, 10, 28, 0.52);
+            animation: cardAppear 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
-        .brand-bar {
-            background: linear-gradient(90deg, #002366, #0047AB);
-            border-bottom: 3px solid #D4AF37;
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(18px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .login-avatar {
+            width: 66px;
+            height: 66px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--catc-navy), var(--catc-royal));
+            color: var(--catc-gold-bright);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            border: 2px solid var(--catc-gold);
+            box-shadow: 0 10px 22px rgba(0, 35, 102, 0.25);
+        }
+
+        .form-control:focus {
+            border-color: var(--catc-royal);
+            box-shadow: 0 0 0 0.22rem rgba(0, 153, 255, 0.2);
+        }
+
+        .btn-login-submit {
+            background: linear-gradient(135deg, var(--catc-navy), var(--catc-royal));
+            color: #FFFFFF;
+            font-weight: 700;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 999px;
+            box-shadow: 0 10px 24px rgba(0, 71, 171, 0.32);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-login-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(0, 71, 171, 0.45);
+            color: #FFFFFF;
+        }
+
+        .demo-hint-box {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            font-size: 0.78rem;
         }
     </style>
 </head>
-<body>
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-5">
-            <div class="card login-card">
-                <div class="brand-bar text-white p-4 d-flex align-items-center gap-3">
-                    <div id="logoMount" class="bg-white rounded-3 p-1 flex-shrink-0"></div>
-                    <div>
-                        <h4 class="mb-0 fw-bold">BookWebCATC</h4>
-                        <small class="text-info">Computer Arts Technological College • Online Library System</small>
-                    </div>
-                </div>
-                <div class="p-4 p-sm-5">
-                    <h5 class="fw-bold text-primary mb-1">Sign In to Library Portal</h5>
-                    <p class="text-muted small mb-4">Enter your Username and Library ID No. (e.g., <code>C24-003454</code>)</p>
+<body class="login-body">
 
-                    <div id="alertBox" class="alert alert-danger d-none py-2 small">
-                        Invalid Username or Library ID No., or account is locked.
-                    </div>
-                    <div id="logoutBox" class="alert alert-success d-none py-2 small">
-                        You have been logged out.
-                    </div>
+<div class="ambient-orb orb-a"></div>
+<div class="ambient-orb orb-b"></div>
 
-                    <form method="post" action="/login">
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold small">Username</label>
-                            <input type="text" name="username" id="usernameInput" class="form-control form-control-lg" required>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold small">Library ID No.</label>
-                            <input type="password" name="password" id="passwordInput" class="form-control form-control-lg" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-semibold" style="background:#002366;border:none;">
-                            Sign In
-                        </button>
-                    </form>
+<!-- Top Header with Small Back Button to BookWebCATC.html -->
+<header class="login-topbar sticky-top py-2 px-3 px-lg-5 content-layer">
+    <div class="container d-flex align-items-center justify-content-between">
+        <a href="/BookWebCATC.html" class="d-flex align-items-center gap-2 text-decoration-none">
+            <img src="/images/catc-logo.jpg" alt="BookWebCATC Logo" class="brand-logo">
+            <div>
+                <div class="fw-bold small lh-1 text-white">BookWebCATC</div>
+                <small class="text-info" style="font-size: 0.7rem;">CAT College Library Portal</small>
+            </div>
+        </a>
+
+        <a href="/BookWebCATC.html" class="btn btn-sm rounded-pill px-3 py-1 fw-semibold back-canvas-btn" title="Return to BookWebCATC Front Canvas">
+            <i class="bi bi-arrow-left-short"></i> Front Canvas
+        </a>
+    </div>
+</header>
+
+<!-- Center Login Card -->
+<main class="container py-4 d-flex align-items-center justify-content-center content-layer">
+    <div class="login-card p-4 p-sm-5">
+        <div class="text-center mb-4">
+            <div class="login-avatar mb-3 mx-auto">
+                <i class="bi bi-shield-lock-fill"></i>
+            </div>
+            <h1 class="h4 fw-bold text-dark mb-1">Portal Sign In</h1>
+            <p class="small text-muted mb-0">Sign in to access your CAT College Library dashboard</p>
+        </div>
+
+        <div id="statusAlertContainer"></div>
+
+        <form action="/login" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label small fw-semibold text-dark">Username</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="bi bi-person-fill text-primary"></i></span>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required autofocus>
                 </div>
             </div>
+
+            <div class="mb-4">
+                <label for="password" class="form-label small fw-semibold text-dark">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="bi bi-key-fill text-primary"></i></span>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                    <button class="btn btn-outline-secondary" type="button" id="togglePasswordBtn" onclick="togglePasswordVisibility()" title="Show/Hide Password">
+                        <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-login-submit w-100">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Login
+            </button>
+        </form>
+
+        <div class="demo-hint-box p-3 mt-4 text-secondary">
+            <div class="fw-bold text-dark mb-1"><i class="bi bi-info-circle-fill text-primary me-1"></i>Please make sure you already have a library card for you to login!</div>
+
         </div>
     </div>
-</div>
+</main>
 
-<script src="/js/api.js"></script>
+<!-- Footer -->
+<footer class="py-3 text-center text-light opacity-75 small content-layer">
+    BookWebCATC &bull; CAT College Library Portal
+</footer>
+
 <script>
-    if (typeof getCatcLogoSvg === "function") {
-        document.getElementById("logoMount").innerHTML = getCatcLogoSvg(46);
+    function togglePasswordVisibility() {
+        const input = document.getElementById("password");
+        const icon = document.getElementById("togglePasswordIcon");
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.replace("bi-eye", "bi-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.replace("bi-eye-slash", "bi-eye");
+        }
     }
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("error")) document.getElementById("alertBox").classList.remove("d-none");
-    if (params.get("logout")) document.getElementById("logoutBox").classList.remove("d-none");
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const alertBox = document.getElementById("statusAlertContainer");
+        if (!alertBox) return;
+
+        if (params.get("error") === "true") {
+            alertBox.innerHTML = `
+                    <div class="alert alert-danger py-2 px-3 small rounded-3 d-flex align-items-center gap-2" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span>Invalid username or password. Please try again.</span>
+                    </div>`;
+        } else if (params.get("logout") === "true") {
+            alertBox.innerHTML = `
+                    <div class="alert alert-success py-2 px-3 small rounded-3 d-flex align-items-center gap-2" role="alert">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>You have been logged out safely.</span>
+                    </div>`;
+        }
+    });
 </script>
 </body>
 </html>
