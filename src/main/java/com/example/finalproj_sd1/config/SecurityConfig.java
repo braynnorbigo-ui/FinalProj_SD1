@@ -25,6 +25,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        // Public pages and static assets
                         .requestMatchers(
                                 "/",
                                 "/BookWebCATC.html",
@@ -35,13 +36,24 @@ public class SecurityConfig {
                                 "/js/**",
                                 "/error"
                         ).permitAll()
-                        .requestMatchers("/BookWebCATC_Librariandashboard.html").hasRole("LIBRARIAN")
-                        .requestMatchers("/BookWebCATC_Studentdashboard.html").hasRole("STUDENT")
+
+                        // API rules
+                        .requestMatchers("/api/students").hasRole("LIBRARIAN")
+                        .requestMatchers("/api/users/register-student").hasRole("LIBRARIAN")
+                        .requestMatchers("/api/me").authenticated()
+
+                        // Dashboards (with and without .html)
+                        .requestMatchers("/BookWebCATC_Librariandashboard",
+                                "/BookWebCATC_Librariandashboard.html").hasRole("LIBRARIAN")
+                        .requestMatchers("/BookWebCATC_Studentdashboard",
+                                "/BookWebCATC_Studentdashboard.html").hasRole("STUDENT")
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/BookWebCATC_LoginView.html")
                         .loginProcessingUrl("/login")
+                        // Uses PortalPageController: sends each role to its own dashboard
                         .defaultSuccessUrl("/login-redirect", true)
                         .failureUrl("/BookWebCATC_LoginView.html?error=true")
                         .permitAll()
@@ -60,6 +72,7 @@ public class SecurityConfig {
     @Bean
     public CommandLineRunner seedUsers(AppUserRepository repo, PasswordEncoder encoder) {
         return args -> {
+            // Usernames checked here now match the ones saved
             if (repo.findByUsername("librarian").isEmpty()) {
                 repo.save(new AppUser("librarian", encoder.encode("LIB-111-222"), "LIBRARIAN", "Engr.Jerelle Flores"));
             }
@@ -71,8 +84,6 @@ public class SecurityConfig {
             }
             if (repo.findByUsername("jadebernal").isEmpty()) {
                 repo.save(new AppUser("jadebernal", encoder.encode("C24-000333"), "STUDENT", "Jade Bernal"));
-            }if (repo.findByUsername("braynorbigo").isEmpty()) {
-                repo.save(new AppUser("braynorbigo", encoder.encode("C24-000444"), "STUDENT", "Brayn Orbigo"));
             }
         };
     }
